@@ -8,6 +8,8 @@ import ujson
 import aiohttp
 from jinja2 import Environment, PackageLoader
 
+from .utils import get_stack_variable
+
 env = Environment(loader=PackageLoader('app', 'templates'))
 session_interface = Session(app, interface=InMemorySessionInterface())
 
