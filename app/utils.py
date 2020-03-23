@@ -1,4 +1,6 @@
 import inspect
+from functools import wraps
+from sanic import response
 
 def get_stack_variable(name):
     stack = inspect.stack()
