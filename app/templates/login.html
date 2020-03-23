@@ -1,3 +1,5 @@
+{% import 'macros.html' as macros %}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -6,10 +8,10 @@
     <link rel="stylesheet" href="../static/style.css">
   </head>
   <body>
-      <form class="box" action="form.html" method="post">
+      <form class="box" method="post">
         <h1>Login to OPhO*</h1>
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
+        {{ macros.render_field(form.username, label_visible=true, placeholder='Username', type='text') }}
+				{{ macros.render_field(form.password, label_visible=true, placeholder='Password', type='password') }}
         <input type="submit" name="" value="Submit">
         <p>*If you did not recieve login information, please contact -----</p>
       </form>

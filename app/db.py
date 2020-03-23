@@ -1,4 +1,3 @@
-from app import app
 import asyncpg
 
 class AsyncPostgresDB():
@@ -23,12 +22,19 @@ class AsyncPostgresDB():
             await con.execute(query, *args)
         await self.pool.release(con)
     
-    async def fetch_row(self, query, *args):
+    async def fetchrow(self, query, *args):
         con = await self.pool.acquire()
         async with con.transaction():
             row = await con.fetchrow(query, *args)
-        await self.pool.release()
+        await self.pool.release(con)
         return row
+    
+    async def fetchval(self, query, *args):
+        con = await self.pool.acquire()
+        async with con.transaction():
+            value = await con.fetchval(query, *args)
+        await self.pool.release(con)
+        return value
     
     async def close(self):
         await self.pool.close()
