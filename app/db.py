@@ -1,5 +1,6 @@
 import asyncpg
 import ssl
+
 class AsyncPostgresDB():
     def __init__(self, dsn, user, loop):
         self.dsn = dsn
@@ -14,14 +15,13 @@ class AsyncPostgresDB():
         
         self.pool = await asyncpg.create_pool(
             dsn=self.dsn, 
-            ssl=ssl_object,
+            #ssl=ssl_object,
             user=self.user, 
             command_timeout=60, 
             loop=self.loop
         )
     
     async def execute_job(self, query, *args):
-	    # args = list(args)
         con = await self.pool.acquire()
         async with con.transaction():
             await con.execute(query, *args)
@@ -40,6 +40,35 @@ class AsyncPostgresDB():
             value = await con.fetchval(query, *args)
         await self.pool.release(con)
         return value
+
+    async def fetchall(self, query, *args):
+        con = await self.pool.acquire()
+        async with con.transaction():
+            values = await con.fetch(query, *args)
+        await self.pool.release(con)
+        return values
     
     async def close(self):
         await self.pool.close()
+
+
+async def initialize_db(db):
+    create_user_table = """
+       CREATE TABLE user_details(user_id serial PRIMARY KEY,username VARCHAR (35) UNIQUE NOT NULL, password VARCHAR (35) NOT NULL);
+    """
+
+    create_contestant_table = """
+        CREATE TABLE contestants (user_id integer REFERENCES user_details, team_name VARCHAR (9) UNIQUE NOT NULL);
+    """
+
+    await db.execute_job(create_user_table)
+
+async def create_team_table(db, name, problem_number):
+    create_table = f"""
+        CREATE TABLE {name}(problem_no integer PRIMARY KEY,solved BOOLEAN NOT NULL, attempts_left integer);
+    """
+    insert_query = f"""
+        INSERT INTO {name} (problem_no, solved, attempts_left) VALUES """ + ', '.join(f"({number}, FALSE, 3)" for number in range(1, problem_number+1)) + ";"
+    
+    await db.execute_job(create_table)
+    await db.execute_job(insert_query)

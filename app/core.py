@@ -9,11 +9,12 @@ import aiohttp
 from jinja2 import Environment, PackageLoader
 
 from .utils import get_stack_variable
-from .db import AsyncPostgresDB
-from .forms import LoginForm
+from .db import AsyncPostgresDB, create_team_table
+from .forms import LoginForm, ContestForm
 from .models import User
 
-env = Environment(loader=PackageLoader('app', 'templates'))
+
+env = Environment(loader=PackageLoader('app', 'templates'), enable_async=True)
 session_interface = Session(app, interface=InMemorySessionInterface())
 
 app.config.AUTH_LOGIN_ENDPOINT = 'login'
@@ -25,7 +26,7 @@ with open("./config/config.json") as f:
 
 app.config.SECRET_KEY = global_config['SECRET_KEY']
 
-def template(tpl, *args, **kwargs):
+async def template(tpl, *args, **kwargs):
     template = env.get_template(tpl)
     request = get_stack_variable('request')
     user = None
@@ -35,12 +36,14 @@ def template(tpl, *args, **kwargs):
     kwargs['session'] = request['session']
     kwargs['user'] = user
     kwargs.update(globals())
-    return html(template.render(*args,**kwargs))
+    return html(await template.render_async(*args,**kwargs))
 
 @app.listener('before_server_start')
 async def server_begin(app, loop):
-    app.db = AsyncPostgresDB(dsn=global_config['psql_dsn'], user=global_config['psql_username'], loop=app.loop)
+    app.db = AsyncPostgresDB(dsn=global_config['local_psql_dsn'], user=global_config['local_psql_username'], loop=app.loop)
     await app.db.init();
+
+    await create_team_table(app.db, "test_team", 30)
     # initialize database here
 
 @app.listener('after_server_stop')
@@ -61,8 +64,16 @@ async def _login(request):
                     login_user(request, User(id=user_raw['user_id'], username=username))
                     return response.text("sucess!")
             form.username.errors.append('Incorrect username or password')
-        return template("login.html", form=form)
-    return template('login.html', form=LoginForm())
+        return await template("login.html", form=form)
+    return await template('login.html', form=LoginForm())
+
+@app.get('/')
+async def _home(request):
+    return await template("home.html")
+
+@app.get('/contest')
+async def _contest_home(request):
+    return await template("contest.html", form=ContestForm())
 
 async def fetchuser(username):
     return await app.db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
@@ -72,3 +83,4 @@ def login_user(request, user):
         return template('home.html', user=user)
     request['session']['logged_in'] = True
     request['session']['user'] = user.to_dict()
+

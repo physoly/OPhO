@@ -1,6 +1,8 @@
 import inspect
 from functools import wraps
 from sanic import response
+import string
+import random
 
 def get_stack_variable(name):
     stack = inspect.stack()
@@ -27,3 +29,6 @@ def auth_required():
             return response.redirect('/login')
         return decorated_function
     return decorator
+
+def id_generator(size, chars=string.ascii_letters + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))

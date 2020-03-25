@@ -12,3 +12,11 @@ class User():
     
     def to_dict(self):
         return {'id': self.id, 'username' : self.username}
+
+class Problem():
+    def __init__(self, number):
+        self.number = number
+        self.solved = False
+        self.id = "Problem " + self.number
+        self.attempts_remaining = 0
+    
