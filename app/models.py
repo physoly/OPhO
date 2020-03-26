@@ -14,9 +14,16 @@ class User():
         return {'id': self.id, 'username' : self.username}
 
 class Problem():
-    def __init__(self, number):
+    def __init__(self, number, solved, attempts_remaining):
         self.number = number
-        self.solved = False
-        self.id = "Problem " + self.number
-        self.attempts_remaining = 0
+        self.solved = solved
+        self.id = "Problem " + str(self.number)
+        self.attempts_remaining = attempts_remaining
     
+    @classmethod
+    def record_to_problem(cls, record):
+        return cls(
+            number=record[0], 
+            solved=record[1],
+            attempts_remaining=record[2]
+        )

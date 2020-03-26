@@ -65,7 +65,7 @@ async def initialize_db(db):
 
 async def create_team_table(db, name, problem_number):
     create_table = f"""
-        CREATE TABLE {name}(problem_no integer PRIMARY KEY,solved BOOLEAN NOT NULL, attempts_left integer);
+        CREATE TABLE {name}(problem_no integer PRIMARY KEY,solved BOOLEAN NOT NULL, attempts_left integer, answers integer[]);
     """
     insert_query = f"""
         INSERT INTO {name} (problem_no, solved, attempts_left) VALUES """ + ', '.join(f"({number}, FALSE, 3)" for number in range(1, problem_number+1)) + ";"

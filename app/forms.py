@@ -1,4 +1,4 @@
-from wtforms import SubmitField, StringField, PasswordField, Form, IntegerField
+from wtforms import SubmitField, StringField, PasswordField, Form, IntegerField, FieldList
 from wtforms.validators import DataRequired
 
 class LoginForm(Form):
@@ -6,7 +6,4 @@ class LoginForm(Form):
 	password = PasswordField('Password', validators=[DataRequired()])
 
 class ContestForm(Form):
-    problem1 = IntegerField('Problem 1', validators=[DataRequired()])
-    problem2 = IntegerField('Problem 2', validators=[DataRequired()])
-    problem3 = IntegerField('Problem 3', validators=[DataRequired()])
-    problem4 = IntegerField('Problem 4', validators=[DataRequired()])
+    problems = FieldList(IntegerField(validators=[DataRequired()]), min_entries=30, max_entries=30)
