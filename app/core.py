@@ -13,6 +13,8 @@ from .db import AsyncPostgresDB, create_team_table
 from .forms import LoginForm, ContestForm
 from .models import User, Problem
 
+import urllib
+
 
 env = Environment(loader=PackageLoader('app', 'templates'), enable_async=True)
 session_interface = Session(app, interface=InMemorySessionInterface())
@@ -71,16 +73,22 @@ async def _home(request):
 @app.route('/contest', methods=['GET', 'POST'])
 @auth_required()
 async def _contest_home(request):
+    teamname = request['session']['user']['username']
     if request.method== 'POST':
-        answer = list(request.form.values())[0][0]
-        # query problem answer database and verify it
-        # if correct, add a point, update question in team database
-        # if incorrect, remove an attempt
+        print("FORM POST: ",request.form)
         return response.redirect('/contest')
-    problems = await fetch_problems(teamname=request['session']['user']['username'])
+    problems = await fetch_problems(teamname=teamname)
     form = ContestForm()
     print(len(form.problems))
     return await template("contest.html", form=form, problems_and_input=sorted(list(zip(problems,form.problems)), key=lambda x: x[0].number))
+
+@app.post('/api/answer_submit')
+async def _answer_submit(request):
+    print(request.body)
+    print(request.headers['Authorization'])
+    print("REQUEST BODY",ujson.dumps(urllib.parse.parse_qs(request.body)))
+    return response.json({'hello':'world'})
+
 
 async def fetchuser(username):
     return await app.db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
@@ -93,7 +101,13 @@ def login_user(request, user):
 
 async def fetch_problems(teamname):
     query = f"""
-        SELECT (problem_no, solved, attempts_left) FROM {teamname} 
+        SELECT (problem_no, solved, attempts_left) FROM {teamname}
     """
     problem_records = await app.db.fetchall(query)
     return [Problem.record_to_problem(record[0]) for record in problem_records]
+
+async def add_answer(teamname, answer, problem_number):
+    query = f"""
+        UPDATE {teamname} SET answers = array_append(answers, {answer}) WHERE 
+    """
+    await app.db.execute_job(query)

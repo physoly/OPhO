@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <title>OPhO Contest Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   </head>
   <body>
@@ -31,25 +32,69 @@
 
     </div>
 
-    <h2 class="display-4">Submissions</h2>
-    
-      {% for problem,input in problems_and_input %}
-      <p>Problem {{ problem.number }}</p>
-      {% if problem.solved %}
-      <p>You have solved {{ problem.number }} correctly!</p>
-      {% elif problem.attempts_remaining == 0 %}
-      <p>You have no more attempts remianing :(</p>
-      {% else %}
-      <form class="box" method="post">
-      {{ macros.render_field(input, label_visible=false, placeholder='Answer', type='text') }}
-      <input type="submit" name="" value="Submit">
-    </form>
-      <p>Attempts remaining: {{ problem.attempts_remaining }}</p>
-      {% endif %}
+   
+    <form id="contestform" action="api/answer_submit">
+      <ol>
+      {% for problem, x in problems_and_input %}
+      <input id="{{ problem.number }}" name="{{ problem.number }}">
+      <label for="{{ problem.numer }}" class="control-label">{{ problem.number }}</label>
+      <input type="submit" name="{{ problem.number }}">
       {% endfor %}
+    </ol>
+    </form>
+  </form>
+      
 
+    <script>
+      $("#contestform").submit(function(e)
+      {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        let form = $(this)
+        console.log(postData);
+        e.preventDefault(); //STOP default action
+        $.ajax(
+        {
+            url : formURL,
+            type: "POST",
+            data: postData,
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Bearer t-7614f875-8423-4f20-a674-d7cf3096290e');
+            },
+            success:function(data, textStatus, jqXHR) 
+            {
+                //data: return data from server
+                console.log("we made it")
+                console.log(data)
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+                var $btn = $(document.activeElement);
+                console.log($btn)
+                if (
+                  /* there is an activeElement at all */
+                  $btn.length &&
+
+                  /* it's a child of the form */ 
+                  form.has($btn) &&
+
+                  /* it's really a submit element */
+                  $btn.is('button[type="submit"], input[type="submit"], input[type="image"]') &&
+
+                  /* it has a "name" attribute */
+                  $btn.is('[name]')
+              ) {
+                  console.log("Seems, that this element was clicked:", $btn.attr("name"));
+                  /* access $btn.attr("name") and $btn.val() for data */
+              } 
+            },
+            error: function(jqXHR, textStatus, errorThrown) 
+            {
+                //if fails      
+            }
+        });
+
+        e.preventDefault();
+    });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
