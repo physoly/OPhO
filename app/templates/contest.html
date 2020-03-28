@@ -33,58 +33,39 @@
     </div>
 
    
-    <form id="contestform" action="api/answer_submit">
+    <div id="contestform" action="api/answer_submit" name="{{ user.username }}">
       <ol>
       {% for problem, x in problems_and_input %}
-      <input id="{{ problem.number }}" name="{{ problem.number }}">
+      <input id="input{{ problem.number }}" name="{{ problem.number }}">
       <label for="{{ problem.numer }}" class="control-label">{{ problem.number }}</label>
-      <input type="submit" name="{{ problem.number }}">
+      <input type="submit" name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')">
       {% endfor %}
     </ol>
-    </form>
-  </form>
+  </div>
       
 
     <script>
-      $("#contestform").submit(function(e)
-      {
-        var postData = $(this).serializeArray();
-        var formURL = $(this).attr("action");
-        let form = $(this)
-        console.log(postData);
-        e.preventDefault(); //STOP default action
+      function submitOnClick(elmnt, buttonNumber) {
+        let inputField = $("#input"+buttonNumber);
+        let inputVal = inputField.val();
+        if (inputVal === "" || isNaN(inputVal)) {
+          console.log("Please enter a valid number");
+          return false;
+        }
+        let postData = [{name:"problem_no", value: buttonNumber}, {name:"answer", value: inputVal}, {name : "teamname", value : $("#contestform").attr("name")}]
         $.ajax(
         {
-            url : formURL,
+            url : "api/answer_submit",
             type: "POST",
             data: postData,
             beforeSend: function (xhr) {
-              xhr.setRequestHeader('Authorization', 'Bearer t-7614f875-8423-4f20-a674-d7cf3096290e');
+              xhr.setRequestHeader('Authorization', 'pdsYU81fnsdfku33-zz6dhsy9GHFe');
             },
             success:function(data, textStatus, jqXHR) 
             {
                 //data: return data from server
-                console.log("we made it")
-                console.log(data)
-
-                var $btn = $(document.activeElement);
-                console.log($btn)
-                if (
-                  /* there is an activeElement at all */
-                  $btn.length &&
-
-                  /* it's a child of the form */ 
-                  form.has($btn) &&
-
-                  /* it's really a submit element */
-                  $btn.is('button[type="submit"], input[type="submit"], input[type="image"]') &&
-
-                  /* it has a "name" attribute */
-                  $btn.is('[name]')
-              ) {
-                  console.log("Seems, that this element was clicked:", $btn.attr("name"));
-                  /* access $btn.attr("name") and $btn.val() for data */
-              } 
+                console.log("we made it");
+                console.log(data);
             },
             error: function(jqXHR, textStatus, errorThrown) 
             {
@@ -92,8 +73,9 @@
             }
         });
 
-        e.preventDefault();
-    });
+        console.log('buttonPressed: ' + buttonNumber);
+        console.log(inputField.val());
+      }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

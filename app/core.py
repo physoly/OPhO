@@ -15,6 +15,7 @@ from .models import User, Problem
 
 import urllib
 
+from decimal import Decimal
 
 env = Environment(loader=PackageLoader('app', 'templates'), enable_async=True)
 session_interface = Session(app, interface=InMemorySessionInterface())
@@ -84,10 +85,27 @@ async def _contest_home(request):
 
 @app.post('/api/answer_submit')
 async def _answer_submit(request):
-    print(request.body)
-    print(request.headers['Authorization'])
-    print("REQUEST BODY",ujson.dumps(urllib.parse.parse_qs(request.body)))
-    return response.json({'hello':'world'})
+    auth_token = request.headers['Authorization']
+
+    if auth_token not in global_config['auth_tokens']:
+        return response.json({'error' : 'unauthorized'}, status=401)
+
+    payload = dict(urllib.parse.parse_qs(str(request.body, 'utf8')))
+
+    problem_no = payload['problem_no'][0]
+    team_answer = payload['answer'][0]
+    teamname = payload['teamname'][0]
+
+    real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no={problem_no}")
+    attempts_left = await app.db.fetchval(
+        f"UPDATE {teamname} SET attempts_left = attempts_left - 1, answers=array_append(answers, {team_answer}) WHERE problem_no = {problem_no} and attempts_left > 0 RETURNING attempts_left;"
+    )
+
+    if attempts_left is None:
+        return response.json({'correct': False, 'attempts_left': 0})        
+
+    is_correct = Decimal(real_answer) == Decimal(team_answer)
+    return response.json({'correct' : is_correct, 'attempts_left' : attempts_left})
 
 
 async def fetchuser(username):
