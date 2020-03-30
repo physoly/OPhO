@@ -34,13 +34,41 @@
 
    
     <div id="contestform" action="api/answer_submit" name="{{ user.username }}">
-      <ol>
-      {% for problem, x in problems_and_input %}
-      <input id="input{{ problem.number }}" name="{{ problem.number }}">
-      <label for="{{ problem.numer }}" class="control-label">{{ problem.number }}</label>
-      <input type="submit" name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')">
+      <table class="table">
+        <tr>
+          <th>No.</th>
+          <th>Answer</th>
+          <th>Submit</th>
+          <th>Result</th>
+          <th>Attempts left</th>
+          <th>Attempts</th>
+        </tr>
+      {% for problem in problems %}
+      <tr>
+      <td><label for="{{ problem.number }}" class="control-label">{{ problem.number }}</label></td>
+      {% if problem.solved %}
+      <td><input class="form-control" id="input{{ problem.number }}" name="{{ problem.number }}" value="{{ problem.answers[-1] }}" disabled></td>
+      <td><input class="btn btn-primary" type="submit" id = '{{ problem.number }}' name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')" disabled></td>
+      <td><img id="imgright{{ problem.number }}" src="https://img.icons8.com/doodle/48/000000/checkmark.png"/></td>
+      {% elif problem.attempts_remaining == 0 %}
+      <td><input class="form-control" id="input{{ problem.number }}" name="{{ problem.number }}" value="{{ problem.answers[-1] }}" disabled></td>
+      <td><input class="btn btn-primary" type="submit" id = '{{ problem.number }}' name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')" disabled></td>
+      <td><img id="imgwrong{{ problem.number }}" src="https://img.icons8.com/ios/50/000000/circled-x.png"/></td>      
+      {% else %}
+      <td><input class="form-control" id="input{{ problem.number }}" name="{{ problem.number }}"></td>
+      <td><input class="btn btn-primary" type="submit" id = '{{ problem.number }}' name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')"></td>
+      <td id="imagebox{{ problem.number }}"></td>
+      {% endif %}
+      <td>{{ problem.attempts_remaining }}</td>
+      <td>
+        {% if problem.answers is not none %}
+        {{ problem.answers|join(', ') }}      
+        {% endif %}
+      </td>
+      </tr>
       {% endfor %}
-    </ol>
+    
+    </table>
   </div>
       
 
@@ -48,6 +76,7 @@
       function submitOnClick(elmnt, buttonNumber) {
         let inputField = $("#input"+buttonNumber);
         let inputVal = inputField.val();
+
         if (inputVal === "" || isNaN(inputVal)) {
           console.log("Please enter a valid number");
           return false;
@@ -66,6 +95,17 @@
                 //data: return data from server
                 console.log("we made it");
                 console.log(data);
+                if (data.correct) {
+                  inputField.prop('disabled', true);
+                  $('#'+buttonNumber).prop('disabled', true);
+                  $('#imgright'+buttonNumber).show();
+                  $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/doodle/48/000000/checkmark.png" />');
+                } else if (data.attempts_left === 0) {
+                  inputField.prop('disabled', true);
+                  $('#'+buttonNumber).prop('disabled', true);
+                  $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/ios/50/000000/circled-x.png" />');
+                }
+                
             },
             error: function(jqXHR, textStatus, errorThrown) 
             {
