@@ -10,7 +10,7 @@ from jinja2 import Environment, PackageLoader
 
 from .utils import get_stack_variable, auth_required
 from .db import AsyncPostgresDB, create_team_table
-from .forms import LoginForm, ContestForm
+from .forms import LoginForm, CreateContestForm
 from .models import User, Problem
 
 import urllib
@@ -111,6 +111,14 @@ async def _answer_submit(request):
 
     return response.json({'correct' : is_correct, 'attempts_left' : attempts_left})
 
+@app.route('/admin/createcontest', methods=['GET', 'POST'])
+async def _create_contest(request):
+    if request.method == 'POST':
+        form = request.form
+        for field in request.form.values():
+            val = field[0]
+            print(val)
+    return await template('create_contest.html')
 
 async def fetchuser(username):
     return await app.db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
@@ -151,3 +159,10 @@ async def add_answer(teamname, answer, problem_number):
 async def _logout(request):
     request['session'].clear()
     return text('logged out')
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False

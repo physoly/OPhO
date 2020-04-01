@@ -5,7 +5,6 @@ class LoginForm(Form):
 	username = StringField('Username', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
 
-class ProblemForm(Form):
-    answer = IntegerField('Answer', validators=[])
-class ContestForm(Form):
-    problems = FieldList(FormField(ProblemForm), min_entries=30, max_entries=30)
+class CreateContestForm(Form):
+    contest_name = StringField('Contest Name', validators=[DataRequired()])
+    answer_fields = FieldList(FormField(StringField('Answer', validators=[DataRequired()])), min_entries=30, max_entries=30)

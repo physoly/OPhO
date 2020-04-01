@@ -1,0 +1,59 @@
+{% import 'macros.html' as macros %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Create Contest</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+  <body>
+      <form class="box" method="post" id="createcontestform">
+        <h1>Create Contest</h1>
+
+        <table class="table">
+            <tr>
+                <th>No.</th>
+                <th>Answer</th>
+              </tr>
+              {% for i in range(1, 31) %}
+              <tr>
+                  <td>{{ i }}</td>
+                  <td><input class="form-control" name="input{{i}}" size="8"></td>
+              </tr>
+              {% endfor %}
+        </table>
+        <input class="btn btn-primary" type="submit">
+    </form>
+        <p>*If you did not recieve login information, please contact -----</p>
+  </body>
+
+  <script>
+      function submitOnClick(elmnt) {
+        console.log('gay')
+        let form = $("#createcontestform");
+        let postData = form.serializeArray();
+
+        console.log(postData);
+        return false;
+
+        $.ajax(
+        {
+            url : "api/answer_submit",
+            type: "POST",
+            data: postData,
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('Authorization', 'pdsYU81fnsdfku33-zz6dhsy9GHFe');
+            },
+            success:function(data, textStatus, jqXHR) {
+                console.log('success!')
+            },
+            error: function(jqXHR, textStatus, errorThrown) 
+            {
+                //if fails      
+                console.log('urmomgay')
+            }
+      });
+      }
+  </script>
+</html>

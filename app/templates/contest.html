@@ -59,8 +59,8 @@
       <td><input class="btn btn-primary" type="submit" id = '{{ problem.number }}' name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')"></td>
       <td id="imagebox{{ problem.number }}"></td>
       {% endif %}
-      <td>{{ problem.attempts_remaining }}</td>
-      <td>
+      <td id="attempts{{ problem.number }}">{{ problem.attempts_remaining }}</td>
+      <td id = "answers{{ problem.number }}">
         {% if problem.answers is not none %}
         {{ problem.answers|join(', ') }}      
         {% endif %}
@@ -76,11 +76,32 @@
       function submitOnClick(elmnt, buttonNumber) {
         let inputField = $("#input"+buttonNumber);
         let inputVal = inputField.val();
+        let answersCell = $("#answers"+buttonNumber);
+        let attemptsCell = $("#attempts"+buttonNumber);
 
         if (inputVal === "" || isNaN(inputVal)) {
           console.log("Please enter a valid number");
           return false;
         }
+
+        let currentAnswerString = answersCell.html();
+        let currentAnswerNumbers = currentAnswerString.split(',').filter(x => x.trim().length).map(Number);
+        let userAnswer = parseFloat(inputVal);
+
+        let anyAnswer = false;
+        for (let i = 0; i < currentAnswerNumbers.length; i++) {
+          if (Math.abs(userAnswer - currentAnswerNumbers[i]) < Number.EPSILON) {
+            anyAnswer = true;
+            break;
+          }
+        }
+
+        if (anyAnswer) {
+          console.log('already enetered that answer');
+          return false;
+        }
+
+
         let postData = [{name:"problem_no", value: buttonNumber}, {name:"answer", value: inputVal}, {name : "teamname", value : $("#contestform").attr("name")}]
         $.ajax(
         {
@@ -105,6 +126,18 @@
                   $('#'+buttonNumber).prop('disabled', true);
                   $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/ios/50/000000/circled-x.png" />');
                 }
+
+
+                
+                console.log(currentAnswerNumbers)
+                
+                let currentAttempts = parseInt(attemptsCell.html());
+
+                console.log(currentAnswerString);
+                console.log(currentAttempts);
+
+                answersCell.html(currentAnswerString + ", " + inputVal);
+                attemptsCell.html(currentAttempts -1 );
                 
             },
             error: function(jqXHR, textStatus, errorThrown) 
