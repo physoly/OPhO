@@ -32,3 +32,10 @@ def auth_required():
 
 def id_generator(size, chars=string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False

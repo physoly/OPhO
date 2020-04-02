@@ -9,7 +9,7 @@ import aiohttp
 from jinja2 import Environment, PackageLoader
 
 from .utils import get_stack_variable, auth_required
-from .db import AsyncPostgresDB, create_team_table
+from .db import AsyncPostgresDB, create_team_table, create_problem_table
 from .forms import LoginForm, CreateContestForm
 from .models import User, Problem
 
@@ -77,7 +77,6 @@ async def _home(request):
 async def _contest_home(request):
     teamname = request['session']['user']['username']
     if request.method== 'POST':
-        print("FORM POST: ",request.form)
         return response.redirect('/contest')
 
     problems = await fetch_problems(teamname=teamname)
@@ -113,11 +112,18 @@ async def _answer_submit(request):
 
 @app.route('/admin/createcontest', methods=['GET', 'POST'])
 async def _create_contest(request):
+    query_string = "INSERT INTO problems(problem_no, answer) VALUES "
+    value_strings = []
+
     if request.method == 'POST':
-        form = request.form
-        for field in request.form.values():
-            val = field[0]
-            print(val)
+        contest_name = request.form.pop('contestname')[0]
+        values = request.form.values()
+
+        for i, field in enumerate(values):
+            value_strings.append(f"({i+1}, {field[0]})")
+        query = query_string + ', '.join(value_strings) + ';'
+        await create_problem_table(db=app.db, contest_name=contest_name)
+        #await app.db.execute_job(query)
     return await template('create_contest.html')
 
 async def fetchuser(username):
@@ -160,9 +166,3 @@ async def _logout(request):
     request['session'].clear()
     return text('logged out')
 
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False

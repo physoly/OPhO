@@ -23,4 +23,5 @@ sniffio==1.1.0
 ujson==2.0.2
 uvloop==0.14.0
 websockets==8.1
+WTForms==2.2.1
 yarl==1.4.2

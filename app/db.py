@@ -52,7 +52,7 @@ class AsyncPostgresDB():
         await self.pool.close()
 
 
-async def initialize_db(db):
+async def initialize_db(conn, admin_list):
     create_user_table = """
        CREATE TABLE user_details(user_id serial PRIMARY KEY,username VARCHAR (35) UNIQUE NOT NULL, password VARCHAR (35) NOT NULL);
     """
@@ -61,7 +61,18 @@ async def initialize_db(db):
         CREATE TABLE contestants (user_id integer REFERENCES user_details, team_name VARCHAR (9) UNIQUE NOT NULL);
     """
 
-    await db.execute_job(create_user_table)
+    create_admin_table = """
+        CREATE TABLE admins(username VARCHAR (35) UNIQUE NOT NULL);
+    """
+
+    admin_insert = """
+        INSERT INTO admins(username) VALUES
+    """ + ', '.join([f"('{uname}')" for uname in admin_list])
+
+    await conn.execute(create_user_table)
+    await conn.execute(create_contestant_table)
+    await conn.execute(create_admin_table)
+    await conn.execute(admin_insert)
 
 async def create_team_table(db, name, problem_number):
     create_table = f"""
@@ -72,3 +83,10 @@ async def create_team_table(db, name, problem_number):
     
     await db.execute_job(create_table)
     await db.execute_job(insert_query)
+
+async def create_problem_table(db, contest_name):
+    query = f"""
+        CREATE TABLE {contest_name}_problems(question_no integer, answer decimal);
+    """
+
+    await db.execute_job(query)
