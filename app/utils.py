@@ -18,19 +18,25 @@ def get_stack_variable(name):
     finally:
         del stack
 
-def auth_required():
+def auth_required(admin_required=False):
     def decorator(f):
         @wraps(f)
         async def decorated_function(request, *args, **kwargs):
-            is_authorized = request['session'].get('logged_in', False)
-            if is_authorized:
-                resp = await f(request, *args, **kwargs)
-                return resp
+            logged_in = request['session'].get('logged_in', False)
+            if logged_in:
+                if admin_required:
+                    is_admin = request['session']['user']['admin']
+                    if is_admin:
+                        resp = await f(request, *args, **kwargs)
+                        return resp
+                else:
+                    resp = await f(request, *args, **kwargs)
+                    return resp
             return response.redirect('/login')
         return decorated_function
     return decorator
 
-def id_generator(size, chars=string.ascii_letters + string.digits):
+def string_generator(size, chars=string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 def is_number(s):

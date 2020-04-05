@@ -1,0 +1,35 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Rankings</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    {% block body %}
+    {{ macros.render_nav(user) }}
+    <body>
+    <div id="rankings" action="api/answer_submit">
+        <table class="table">
+            <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Problems Solved</th>
+            </tr>
+
+              {% for team in ranked_teams %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ team.teamname }}</td>
+                    <td>{{ team.problems_solved }}</td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+    </body>
+    {% endblock %}
+</html>

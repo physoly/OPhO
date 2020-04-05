@@ -12,3 +12,22 @@
     {% endif %}
 </div>
 {%- endmacro %} 
+
+{% macro render_nav (user) -%}
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">OPhO</a>
+            <ul class="nav justify-content-end">
+                {% if user is not none %}
+                    <a class="navbar-brand" href="/">Welcome {{ user.username }}</a>
+                {% else %}
+                    <form class="form-inline ml-auto">
+                        <a href="/login" class="btn btn-outline-primary">Log in</a>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                    </form>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+{%- endmacro %}

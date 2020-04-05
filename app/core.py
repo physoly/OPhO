@@ -3,15 +3,17 @@ from app import app
 from sanic import Sanic, response
 from sanic.response import html, text, json, HTTPResponse, redirect
 from sanic_session import Session, InMemorySessionInterface
+from sanic.blueprints import Blueprint
+
 
 import ujson
 import aiohttp
 from jinja2 import Environment, PackageLoader
 
-from .utils import get_stack_variable, auth_required
+from .utils import get_stack_variable, auth_required, string_generator
 from .db import AsyncPostgresDB, create_team_table, create_problem_table
 from .forms import LoginForm, CreateContestForm
-from .models import User, Problem
+from .models import User, Problem, RankedTeam
 
 import urllib
 import sys
@@ -28,6 +30,8 @@ with open("./config/config.json") as f:
     global_config = ujson.loads(f.read())
 
 app.config.SECRET_KEY = global_config['SECRET_KEY']
+
+bp = Blueprint("")
 
 async def template(tpl, *args, **kwargs):
     template = env.get_template(tpl)
@@ -62,7 +66,13 @@ async def _login(request):
             user_raw = await fetchuser(username)
             if user_raw is not None:
                 if user_raw['password'] == password:
-                    await login_user(request, User(id=user_raw['user_id'], username=username))
+                    query = f"SELECT username FROM admins WHERE username='{username}'"
+                    is_admin = await app.db.fetchval(query)
+                    await login_user(request, User(
+                        id=user_raw['user_id'],
+                        username=username, 
+                        admin=False if is_admin is None else True
+                    ))
                     return response.redirect('/contest')
             form.username.errors.append('Incorrect username or password')
         return await template("login.html", form=form)
@@ -81,6 +91,12 @@ async def _contest_home(request):
 
     problems = await fetch_problems(teamname=teamname)
     return await template("contest.html", problems=sorted(problems, key=lambda x: x.number))
+
+
+@app.route('/rankings')
+async def _rankings(request):
+    ranked_teams = sorted(await fetch_teams(), key=lambda x: x.problems_solved, reverse=True)
+    return await template("rankings.html", ranked_teams=ranked_teams)
 
 @app.post('/api/answer_submit')
 async def _answer_submit(request):
@@ -106,11 +122,18 @@ async def _answer_submit(request):
         )
 
     if attempts_left is None:
-        return response.json({'correct': False, 'attempts_left': 0})        
+        return response.json({'correct': False, 'attempts_left': 0})     
+
+    if is_correct:
+        await app.db.execute_job(f"""
+            UPDATE rankings SET problems_solved = problems_solved + 1 WHERE teamname='{teamname}'
+        """
+        )   
 
     return response.json({'correct' : is_correct, 'attempts_left' : attempts_left})
 
 @app.route('/admin/createcontest', methods=['GET', 'POST'])
+#@auth_required(admin_required=True)
 async def _create_contest(request):
     query_string = "INSERT INTO problems(problem_no, answer) VALUES "
     value_strings = []
@@ -125,6 +148,7 @@ async def _create_contest(request):
         await create_problem_table(db=app.db, contest_name=contest_name)
         #await app.db.execute_job(query)
     return await template('create_contest.html')
+
 
 async def fetchuser(username):
     return await app.db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
@@ -154,6 +178,21 @@ async def fetch_problems(teamname):
     
     print(problems[0].answers)
     return problems
+
+async def fetch_teams():
+    query = f"""
+        SELECT (teamname, problems_solved) FROM rankings;
+    """
+    record_rows = await app.db.fetchall(query)
+
+    teams = []
+    for record_row in record_rows:
+        teams.append(RankedTeam(
+            teamname=record_row[0][0],
+            problems_solved=record_row[0][1]
+        ))
+    
+    return teams
 
 async def add_answer(teamname, answer, problem_number):
     query = f"""
