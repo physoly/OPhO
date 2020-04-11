@@ -1,5 +1,4 @@
 import asyncpg
-import ssl
 
 class AsyncPostgresDB():
     def __init__(self, dsn, user, loop):
@@ -8,14 +7,9 @@ class AsyncPostgresDB():
         self.loop = loop
         self.pool = None
     
-    async def init(self):
-        ssl_object = ssl.create_default_context(capath=r"./config/cert.pem")
-        ssl_object.check_hostname = False
-        ssl_object.verify_mode = ssl.CERT_NONE
-        
+    async def init(self):        
         self.pool = await asyncpg.create_pool(
             dsn=self.dsn, 
-            #ssl=ssl_object,
             user=self.user, 
             command_timeout=60, 
             loop=self.loop

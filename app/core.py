@@ -203,5 +203,5 @@ async def add_answer(teamname, answer, problem_number):
 @app.get('/logout')
 async def _logout(request):
     request['session'].clear()
-    return text('logged out')
+    return response.redirect('/')
 
