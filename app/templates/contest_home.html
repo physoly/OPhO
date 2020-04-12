@@ -1,0 +1,64 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <title>OPhO Contest Page</title>
+
+
+  </head>
+  {% block body %}
+  {{ macros.render_nav(user) }}
+  <body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">Contest Home</h1>
+          <p class="lead">The contest paper is available <a href="#">here</a></p>
+        </div>
+    </div>
+
+    <div class="card-group" style="margin-left:20px; margin-right: 20px;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Submit Answers</h5>
+            <p class="card-text">Submit Answers to the Contest Problems</p>
+            <a href="#" class="btn btn-info">Submission Portal</a>
+        </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">See Leaderboard</h5>
+            <p class="card-text">View a list of all the teams and their progress, live!</p>
+            <a href="#" class="btn btn-info">View</a>
+          </div>
+        </div>
+    </div>
+
+    <div class="card-group" style="margin-left:20px; margin-right: 20px;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">FAQs</h5>
+            <p class="card-text">Confused about anything? Check here first!</p>
+            <a href="#" class="btn btn-info">Get Help</a>
+        </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Clarifications</h5>
+            <p class="card-text">If clarifications need to be made, they will be available here.</p>
+            <a href="#" class="btn btn-info">See Clarifications</a>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+  {% endblock %}
+</html>
