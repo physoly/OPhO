@@ -26,9 +26,8 @@
     <h2 class="display-4">Stats</h2>
     <div class="card">
         <div class="card-body">
-          Total Score: 5 <br>
-          Problems Solved: 1 <br>
-          Ranking: 10th (out of 100) <br>
+          <p id="solved">Problems Solved: {{ team_stats.problems_solved }} </p>
+          <p id="ranking"> Ranking: {{ team_stats.rank }} </p>
         </div>
 
     </div>
@@ -122,24 +121,21 @@
                   $('#'+buttonNumber).prop('disabled', true);
                   $('#imgright'+buttonNumber).show();
                   $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/doodle/48/000000/checkmark.png" />');
+
                 } else if (data.attempts_left === 0) {
                   inputField.prop('disabled', true);
                   $('#'+buttonNumber).prop('disabled', true);
                   $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/ios/50/000000/circled-x.png" />');
                 }
 
+                console.log("ANSWERS: " + data.answers)
 
-                
-                console.log(currentAnswerNumbers)
-                
-                let currentAttempts = parseInt(attemptsCell.html());
+                answersCell.html(data.answers.join(", "));
+                attemptsCell.html(data.attempts_left);
 
-                console.log(currentAnswerString);
-                console.log(currentAttempts);
+                $("#solved").html("Problems Solved: ", data.problems_solved);
+                $("#ranking").html("Ranking: ", data.rank);
 
-                answersCell.html(currentAnswerString + ", " + inputVal);
-                attemptsCell.html(currentAttempts -1 );
-                
             },
             error: function(jqXHR, textStatus, errorThrown) 
             {
