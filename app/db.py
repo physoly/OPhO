@@ -51,10 +51,6 @@ async def initialize_db(conn, admin_list):
        CREATE TABLE user_details(user_id serial PRIMARY KEY,username VARCHAR (35) UNIQUE NOT NULL, password VARCHAR (35) NOT NULL);
     """
 
-    create_contestant_table = """
-        CREATE TABLE contestants (user_id integer REFERENCES user_details, team_name VARCHAR (9) UNIQUE NOT NULL);
-    """
-
     create_admin_table = """
         CREATE TABLE admins(username VARCHAR (35) UNIQUE NOT NULL);
     """
@@ -64,16 +60,23 @@ async def initialize_db(conn, admin_list):
     """ + ', '.join([f"('{uname}')" for uname in admin_list])
 
     await conn.execute(create_user_table)
-    await conn.execute(create_contestant_table)
     await conn.execute(create_admin_table)
     await conn.execute(admin_insert)
 
-async def create_team_table(db, name, problem_number):
+async def initialize_team(db, teamname, password, problem_number):
+    insert_and_return = f"""
+        INSERT INTO user_details(username, password) VALUES ('{teamname}', '{password}') RETURNING user_id
+    """
+    
+    team_id = await db.fetchval(insert_and_return)
+
+    print("TEAM ID:", team_id)
+
     create_table = f"""
-        CREATE TABLE {name}(problem_no integer PRIMARY KEY,solved BOOLEAN NOT NULL, attempts_left integer, answers decimal[]);
+        CREATE TABLE team{team_id}(problem_no integer references problems,solved BOOLEAN NOT NULL, attempts_left integer, answers decimal[]);
     """
     insert_query = f"""
-        INSERT INTO {name} (problem_no, solved, attempts_left) VALUES """ + ', '.join(f"({number}, FALSE, 3)" for number in range(1, problem_number+1)) + ";"
+        INSERT INTO team{team_id} (problem_no, solved, attempts_left) VALUES """ + ', '.join(f"({number}, FALSE, 3)" for number in range(1, problem_number+1)) + ";"
     
     await db.execute_job(create_table)
     await db.execute_job(insert_query)

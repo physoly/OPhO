@@ -20,6 +20,8 @@
             <ul class="nav justify-content-end">
                 {% if user is not none %}
                     <a class="navbar-brand" href="/">Welcome {{ user.username }}</a>
+                    <a href="/contesthome" class="btn btn-outline-primary">HOME</a>
+                    <p>&nbsp;</p>
                     <a href="/logout" class="btn btn-outline-primary">Log Out</a>
                 {% else %}
                     <form class="form-inline ml-auto">

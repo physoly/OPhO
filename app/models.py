@@ -23,7 +23,8 @@ class Problem():
         self.answers = answers
 
 class RankedTeam():
-    def __init__(self, teamname, problems_solved):
+    def __init__(self, teamname, problems_solved, rank):
         self.teamname = teamname
         self.problems_solved = problems_solved
+        self.rank = rank
     
