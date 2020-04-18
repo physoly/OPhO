@@ -14,15 +14,19 @@
 {%- endmacro %} 
 
 {% macro render_nav (user) -%}
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: rgb(56, 56, 56) !important;">
         <div class="container">
-            <a class="navbar-brand" href="/">OPhO</a>
+            <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 100px;
+                padding: 15px;
+                width: auto;">
+            </a>
             <ul class="nav justify-content-end">
                 {% if user is not none %}
-                    <a class="navbar-brand" href="/">Welcome {{ user.username }}</a>
-                    <a href="/contesthome" class="btn btn-outline-primary">HOME</a>
+                    <a class="navbar-brand" style="margin-top: 8px;" href="#">Welcome {{ user.username }}</a>
+                    <a href="/contesthome" class="btn btn-outline-primary" style="border-radius: 12px;">OPhO Home</a>
                     <p>&nbsp;</p>
-                    <a href="/logout" class="btn btn-outline-primary">Log Out</a>
+                    <p>&nbsp;</p>
+                    <a href="/logout" class="btn btn-outline-primary" style="border-radius: 12px;">Log Out</a>
                 {% else %}
                     <form class="form-inline ml-auto">
                         <a href="/login" class="btn btn-outline-primary">Log in</a>

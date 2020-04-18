@@ -1,12 +1,16 @@
+{% import 'macros.html' as macros %}
+
 <!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="static/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="static/css/custom.css" />
+    <link rel="stylesheet" href="static/css/cover.css" />
     <link rel="icon" href="favicon.ico">
     <title>Physics Olympiad</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -19,6 +23,8 @@
   gtag('config', 'UA-161438140-1');
 </script>
   </head>
+  {% block body %}
+  {{ macros.render_nav(user) }}
   <body>
 
 <main role="main">
@@ -26,20 +32,22 @@
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <div><h1 class="display-4">Physics Olympiad Hub</h1></div>
+      <div class="logo"><img class ="opho" src="https://cdn.discordapp.com/attachments/691110103926964274/699444543539642408/phodstransparent.png"></div>
+      <div class="row"><div><h1 class="display-4">Physics Olympiad Hub</h1></div>
+
       <p class="lead">This page is intended for passionate high school students exploring the realm of contest physics. It acts as a resource hub containing detailed notes, handouts, and a wide variety of problems from different olympiads all around the world.</p><br>
 
       <p class="lead">Join our <a href="https://discord.gg/wyGAa49">official discord</a> to connect with other students training for olympiads!</p>
     </div>
-    <!-- <iframe src="https://discordapp.com/widget?id=601528888908185655&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe> -->
+    </div>
   </div>
   <div class="card">
     <div class="card-body">
       <h1 class="display-5">Featured</h1>
       <p class="lead">Here are some of our best original works!</p>
       <ul>
-        <li class="lead">Stay tuned for our <a href="annual-contest.html">annual online contest</a> happening in late May! Sign-ups will start a month prior.</li>
-        <li class="lead"><a href="files/KaldaMech-120.pdf">Solution Manual to Kalda's Mechanics Handout</a> - Presents unique solutions to all <a href="https://www.ioc.ee/~kalda/ipho/meh_ENG2.pdf">86 challenging problems.</a></li>
+        <li class="lead">Signups for our <a href="/opho">annual online contest</a> happening in late May are now open!</li>
+        <li class="lead">Translations/Solutions to Jaan Kalda's handouts are underway. If you wish to participate and/or view them, see <a href="/kalda">here.</a></li>
         <li class="lead"><a href="files/MockFMA-2020.pdf">2020 Mock F=ma Exam</a> - Brought to you by members from the AOPS community. The <a href="files/MockFMA-2020-S.pdf">solutions manual</a> is also available!</li>
         <li class="lead">Stay tuned for more original works! (more solution manuals in progress)</li>
       </ul>
@@ -53,18 +61,26 @@
       <a href="/problems" class="btn btn-primary">View</a>
     </div>
   </div>
+<div class="card text-center">
 
+    <div class="card-body">
+      <h5 class="card-title">Solutions to Jaan Kalda's Handouts</h5>
+      <p class="card-text">View elegant solutions manuals to Kalda's favored handouts for olympiad preparation.</p>
+      <a href="/kalda/" class="btn btn-primary">View</a>
+    </div>
+  </div>
   <div class="card text-center">
+
     <div class="card-body">
       <h5 class="card-title">Resources</h5>
       <p class="card-text">View a comprehensive list of helpful resources. They are either completely original, or hand picked <br> from pre-existing sources around the internet.</p>
-      <a href="#" class="btn btn-primary">Coming Soon!</a>
+      <a href="#" class="btn btn-primary disabled">Coming Soon!</a>
     </div>
   </div>
 
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="static/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script></body>
-</html>
-© 2020 GitHub, Inc.
+      <script src="static/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script></body>
+      {% endblock %}
+      </html>
