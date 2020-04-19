@@ -15,12 +15,13 @@ class User():
         return {'id': self.id, 'username' : self.username, 'admin' : self.admin}
 
 class Problem():
-    def __init__(self, number, solved, attempts_remaining, answers):
+    def __init__(self, number, solved, attempts, answers, timestamp):
         self.number = number
         self.solved = solved
         self.id = "Problem " + str(self.number)
-        self.attempts_remaining = attempts_remaining
+        self.attempts = attempts
         self.answers = answers
+        self.timestamp = timestamp
 
 class RankedTeam():
     def __init__(self, teamname, problems_solved, rank):
@@ -28,3 +29,7 @@ class RankedTeam():
         self.problems_solved = problems_solved
         self.rank = rank
     
+class ScoredUser():
+    def __init__(self, team_id, score):
+        self.team_id = team_id
+        self.score = score

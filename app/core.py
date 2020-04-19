@@ -10,7 +10,7 @@ import ujson
 import aiohttp
 from jinja2 import Environment, PackageLoader
 
-from .utils import get_stack_variable, auth_required, string_generator
+from .utils import get_stack_variable, auth_required, string_generator, fetch_problems, fetch_team_stats, fetch_teams
 from .db import AsyncPostgresDB, initialize_team, create_problem_table
 from .forms import LoginForm, CreateContestForm
 from .models import User, Problem, RankedTeam
@@ -47,7 +47,7 @@ async def template(tpl, *args, **kwargs):
 
 @app.listener('before_server_start')
 async def server_begin(app, loop):
-    app.db = AsyncPostgresDB(dsn=global_config['psql_dsn'], user=global_config['psql_username'], loop=app.loop)
+    app.db = AsyncPostgresDB(dsn=global_config['remote_psql_dsn'], user=global_config['psql_username'], loop=app.loop)
     await app.db.init();
     #await initialize_team(app.db, "jakey", "fatty", 9)
     #print(await app.db.fetchall("SELECT answers FROM johnny"))
@@ -91,8 +91,8 @@ async def _contest_home(request):
     if request.method== 'POST':
         return response.redirect('/contest')
 
-    problems = await fetch_problems(team_id=team_id)
-    team_stats = await fetch_team_stats(teamname=teamname)
+    problems = await fetch_problems(db=app.db, team_id=team_id)
+    team_stats = await fetch_team_stats(db=app.db, teamname=teamname)
 
     return await template("contest.html", team_stats=team_stats, problems=sorted(problems, key=lambda x: x.number))
 
@@ -124,7 +124,7 @@ async def _answer_submit(request):
     solved_str = 't' if is_correct else 'f'
     
     solve_data = await app.db.fetchrow(
-            f"UPDATE team{team_id} SET solved='{solved_str}', attempts_left = attempts_left - 1, answers=array_append(answers, {team_answer}) WHERE problem_no = {problem_no} and attempts_left > 0 RETURNING *;"
+            f"UPDATE team{team_id} SET solved='{solved_str}', attempts_left = attempts_left - 1, answers=array_append(answers, {team_answer}), timestamp = current_timestamp WHERE problem_no = {problem_no} and attempts_left > 0 RETURNING *;"
     )
 
     if is_correct:
@@ -164,6 +164,9 @@ async def _create_contest(request):
 async def _contest_home(request):
     return await template('contest_home.html')
 
+@app.get('/opho')
+async def _opho_promo(request):
+    return await template('rob.html')
 
 async def fetchuser(username):
     return await app.db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
@@ -173,51 +176,6 @@ async def login_user(request, user):
         return await template('home.html', user=user)
     request['session']['logged_in'] = True
     request['session']['user'] = user.to_dict()
-
-async def fetch_problems(team_id):
-    query = f"""
-        SELECT (problem_no, solved, attempts_left) FROM team{team_id}
-    """
-    problem_records = await app.db.fetchall(query)
-    answers = await app.db.fetchall(f"SELECT answers FROM team{team_id}")
-
-    problems = []
-    for problem_rec, answer_rec in zip(problem_records, answers):
-        problems.append(Problem(
-            number=problem_rec[0][0],
-            solved=problem_rec[0][1],
-            attempts_remaining=problem_rec[0][2],
-            answers=answer_rec[0]
-        ))
-
-    
-    print(problems[0].answers)
-    return problems
-
-async def fetch_teams():
-    query = f"""
-        SELECT teamname, problems_solved, RANK() OVER ( ORDER BY problems_solved DESC ) rank_number FROM rankings;
-    """
-    record_rows = await app.db.fetchall(query)
-
-    teams = []
-    for record_row in record_rows:
-        teams.append(RankedTeam(
-            teamname=record_row[0],
-            problems_solved=record_row[1],
-            rank=record_row[2]
-        ))
-    
-    print("TEAMNAME: ", teams[0].teamname)
-    
-    return teams
-
-async def fetch_team_stats(teamname):
-    teams = await fetch_teams()
-    for team in teams:
-        if team.teamname == teamname:
-            return team
-    return None 
 
 @app.get('/logout')
 async def _logout(request):

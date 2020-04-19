@@ -1,12 +1,236 @@
-  
 /* .jumbotron{
     margin-top: 20px;
-    background-image: 
+    background-image:
 } */
 
-html {
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     scroll-behavior: smooth;
-   }
-   a {
-    color: hotpink;
+  }
+  a{
+      color: hotpink;
+  }
+  body{
+    background: #42455a;
+  }
+  #particles-js canvas {
+      display: block;
+      vertical-align: bottom;
+      -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+      -webkit-transition: opacity .8s ease, -webkit-transform 1.4s ease;
+      transition: opacity .8s ease, transform 1.4s ease
+  }
+  
+  #particles-js {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      z-index: -10;
+      top: 0;
+      left: 0
+  }
+  
+  
+  .container{
+    width: 100%;
+    height: 100%;
+    background: #42455a;
+  }
+  
+  .menu ul{
+    display: inline-flex;
+    margin: 50px;
+  }
+  
+  .menu ul li{
+    list-style: none;
+    margin: 0 20px;
+    color: #b2b1b1;
+    cursor: pointer;
+  }
+  .logo img{
+    width: 30px;
+    margin-top: -7px;
+    margin-right: 48px;
+  
+  }
+  .active{
+    color: #19dafa !important;
+  }
+  .hub-btn{
+    top:40px;
+    left: 180px;
+    position: absolute;
+    text-decoration: none;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background-image: linear-gradient(#42455a,#42455a),radial-gradient(circle at top left, rgb(19, 127, 198), rgb(249, 199, 46));
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+  .signup-btn{
+    top: 40px;
+    right: 80px;
+    position: absolute;
+    text-decoration: none;
+    color: #fff;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background-image: linear-gradient(#42455a,#42455a),radial-gradient(circle at top left, rgb(19, 127, 198), rgb(249, 199, 46));
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+  .signup-btn span{
+    display: block;
+    padding: 8px 22px;
+  
+  }
+  .small-btn{
+    /* top: 40px;
+    right: 80px; */
+    left: 20%;
+    position: absolute;
+    text-decoration: none;
+    color: #fff;
+    border: 4px solid transparent;
+    border-radius: 20px;
+    background-image: linear-gradient(#42455a,#42455a),radial-gradient(circle at top left, rgb(19, 127, 198), rgb(249, 199, 46));
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    font-size:x-large;
+  }
+  .small-btn span{
+    display: block;
+    padding: 8px 22px;
+  
+  }
+  .hub-btn span{
+    color: #fff !important;
+    display: block;
+    padding: 8px 22px;
+  
+  }
+  
+  .banner{
+    width: 80%;
+    height: 70%;
+    top: 5%;
+    left: 130px;
+    position: absolute;
+    color: #fff
+  }
+  
+  .app-text{
+    width:100%;
+    float: left;
+  }
+  
+  .app-text h1{
+     font-size: 60px;
+     width: 640px;
+     position: relative;
+     margin-left: 40px;
+  
+  }
+  
+  .app-text h2{
+     font-size: 43px;
+     width: linewidth;
+     position: relative;
+     margin-left: 40px;
+  
+  }
+  .app-text p{
+     font-size: 17px;
+     margin: 30px 0 30px 40px;
+     line-height: 25px;
+     color: #ffffff;
+  }
+  /* .app-picture{
+    width: 120%;
+    float: center;
+  } */
+  .app-picture img{
+    width: 100%;
+    margin-top: -20px;
+    padding-left: 50px;
+  }
+  
+  small{
+    margin: auto 20px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #19dafa;
+    letter-spacing: 3px;
+  }
+  .sponsors ul li img{
+    height: 120px;
+    width: auto;
+  }
+  .sponsors{
+    width:100%;
+    float: left;
+    height: 150px;
+    left: 0;
+    bottom:0;
+    /* position: absolute; */
+    /* background: #42455a; */
+  }
+  .sponsors h3{
+     font-size: 20px;
+     width: 200px;
+     text-align: center;
+     color: #fff
+  }
+  
+  .sponsors ul{
+    display: inline-flex;
+    margin: 25px auto;
+    text-align: center;
+  }
+  .sponsors ul li{
+    list-style: none;
+    margin: 0 50px;
+    cursor: pointer;
+  }
+  .sponsors ul li .fa{
+    font-size: 25px;
+    color: #fff;
+  }
+  .sponsors ul li p{
+    margin-top: 15px;
+    font-size: 18px;
+    color: #fff;
+  }
+  .social-icons{
+    right: 72px;
+    bottom: 35px;
+    position: absolute;
+  }
+  
+  
+  .social-icons ul li{
+    list-style: none;
+    margin-top: 15px;
+    text-align: center;
+  }
+  .social-icons ul li a{
+    color: #999;
+    border-radius: 50%;
+    border: 1px solid #999;
+    padding: 5px;
+    display: block;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
   }
