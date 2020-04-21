@@ -10,7 +10,7 @@ print("Only run this script on an empty database!")
 resp = input("WARNING! Initialization could cause some data to be overriten. Are you sure you want to continue? [y/n]")
 
 async def do_init():
-    conn = await asyncpg.connect(f'')
+    conn = await asyncpg.connect(f'postgres://opho-admin:i-read-kalda@127.0.0.1:5433/opho')
     await initialize_db(
         conn=conn, 
         admin_list=["Qcumber","Lolman","Epsilon"]

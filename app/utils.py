@@ -55,7 +55,7 @@ def is_number(s):
 
 async def fetch_problems(db, team_id):
     query = f"""
-        SELECT (problem_no, solved, attempts_left) FROM team{team_id}
+        SELECT (problem_no, solved, attempts) FROM team{team_id}
     """
     problem_records = await db.fetchall(query)
     answers = await db.fetchall(f"SELECT answers FROM team{team_id}")
@@ -65,7 +65,7 @@ async def fetch_problems(db, team_id):
         problems.append(Problem(
             number=problem_rec[0][0],
             solved=problem_rec[0][1],
-            attempts_remaining=problem_rec[0][2],
+            attempts=problem_rec[0][2],
             answers=answer_rec[0]
         ))
 
@@ -74,27 +74,26 @@ async def fetch_problems(db, team_id):
     return problems
 
 async def fetch_teams(db):
-    query = f"""
-        SELECT teamname, problems_solved, RANK() OVER ( ORDER BY problems_solved DESC ) rank_number FROM rankings;
-    """
+    query=f"""select user_details.user_id, user_details.username, rankings.problems_solved, RANK() OVER ( ORDER BY rankings.problems_solved DESC ) rank from user_details,rankings where rankings.team_id = user_details.user_id;"""
     record_rows = await db.fetchall(query)
 
     teams = []
     for record_row in record_rows:
         teams.append(RankedTeam(
-            teamname=record_row[0],
-            problems_solved=record_row[1],
-            rank=record_row[2]
+            id=record_row[0],
+            teamname=record_row[1],
+            problems_solved=record_row[2],
+            rank=record_row[3]
         ))
     
     print("TEAMNAME: ", teams[0].teamname)
     
     return teams
 
-async def fetch_team_stats(teamname):
-    teams = await fetch_teams()
+async def fetch_team_stats(db,team_id):
+    teams = await fetch_teams(db)
     for team in teams:
-        if team.teamname == teamname:
+        if team.id == team_id:
             return team
     return None 
 

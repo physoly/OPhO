@@ -73,10 +73,10 @@ async def initialize_team(db, teamname, password, problem_number):
     print("TEAM ID:", team_id)
 
     create_table = f"""
-        CREATE TABLE team{team_id}(problem_no integer references problems,solved BOOLEAN NOT NULL, attempts_left integer, answers decimal[]);
+        CREATE TABLE team{team_id}(problem_no integer references problems,solved BOOLEAN NOT NULL, attempts integer, answers decimal[], timestamp timestamp);
     """
     insert_query = f"""
-        INSERT INTO team{team_id} (problem_no, solved, attempts_left) VALUES """ + ', '.join(f"({number}, FALSE, 3)" for number in range(1, problem_number+1)) + ";"
+        INSERT INTO team{team_id} (problem_no, solved, attempts) VALUES """ + ', '.join(f"({number}, FALSE, 0)" for number in range(1, problem_number+1)) + ";"
     
     await db.execute_job(create_table)
     await db.execute_job(insert_query)
