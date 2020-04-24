@@ -47,7 +47,7 @@ async def template(tpl, *args, **kwargs):
 
 @app.listener('before_server_start')
 async def server_begin(app, loop):
-    app.db = AsyncPostgresDB(dsn=global_config['psql_dsn'], user=global_config['psql_username'], loop=app.loop)
+    app.db = AsyncPostgresDB(dsn=global_config['remote_psql_dsn'], user=global_config['psql_username'], loop=app.loop)
     await app.db.init();
     #await initialize_team(app.db, "jakey", "fatty", 9)
     #print(await app.db.fetchall("SELECT answers FROM johnny"))
