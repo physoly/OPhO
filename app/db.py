@@ -1,16 +1,21 @@
 import asyncpg
 
 class AsyncPostgresDB():
-    def __init__(self, dsn, user, loop):
-        self.dsn = dsn
+    def __init__(self,user,password,host,port,db_name,loop):
         self.user = user
+        self.password = password
+        self.host = host
+        self.port = port
+        self.db_name = db_name
         self.loop = loop
-        self.pool = None
     
     async def init(self):        
         self.pool = await asyncpg.create_pool(
-            dsn=self.dsn, 
             user=self.user, 
+            password=self.password,
+            host=self.host,
+            port=self.port,
+            database=self.db_name,
             command_timeout=60, 
             loop=self.loop
         )
