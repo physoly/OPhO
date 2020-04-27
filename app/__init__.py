@@ -16,6 +16,8 @@ def create_app(config=Config):
     Session(app, interface=InMemorySessionInterface())
 
     app.static('/static', './app/static')
+
+    print(root.host)
     
     app.blueprint(root)
     app.blueprint(opho)
@@ -24,5 +26,5 @@ def create_app(config=Config):
 
     for handler, (rule, router) in app.router.routes_names.items():
         print(rule)
-
+    
     return app

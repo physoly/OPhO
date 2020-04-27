@@ -13,7 +13,7 @@ import urllib
 
 import sys
 
-opho = Blueprint('opho')
+opho = Blueprint('opho', host=f'opho.{Config.DEV_DOMAIN}:{Config.PORT}')
 
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
