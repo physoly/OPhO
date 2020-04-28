@@ -9,6 +9,8 @@ import random
 
 from .models import Problem, RankedTeam
 
+import sys
+
 N = 1.0
 n = 1.0
 
@@ -121,3 +123,5 @@ async def login_user(request, user):
     request['session']['logged_in'] = True
     request['session']['user'] = user.to_dict()
 
+def float_eq(f1, f2):
+    return abs(f1 - f2) < sys.float_info.epsilon

@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -13,7 +13,11 @@ import urllib
 
 import sys
 
+from app.config import Config
+
 opho = Blueprint('opho', host=f'opho.{Config.DEV_DOMAIN}:{Config.PORT}')
+
+from decimal import Decimal
 
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
@@ -75,25 +79,27 @@ async def _answer_submit(request):
 
     auth_token = request.headers.get('Authorization', None)
 
-    # if auth_token is None or auth_token not in global_config['auth_tokens']:
-        # return response.json({'error' : 'unauthorized'}, status=401)
+    if auth_token is None or auth_token != Config.API_AUTH_TOKEN:
+        return response.json({'error' : 'unauthorized'}, status=401)
 
     payload = dict(urllib.parse.parse_qs(str(request.body, 'utf8')))
 
     problem_no = payload['problem_no'][0]
 
-    team_answer = float(payload['answer'][0])
+    team_answer = Decimal(payload['answer'][0])
     team_id = request['session']['user']['id']
 
     real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no={problem_no}")
 
-    is_correct = abs(float(real_answer) - team_answer) < sys.float_info.epsilon
+    is_correct = float_eq(real_answer, team_answer)
 
     solved_str = 't' if is_correct else 'f'
     
     solve_data = await app.db.fetchrow(
             f"UPDATE team{team_id} SET solved='{solved_str}', attempts = attempts + 1, answers=array_append(answers, {team_answer}), timestamp = current_timestamp WHERE problem_no = {problem_no} and attempts < 3 RETURNING *;"
     )
+
+    duplicate = solve_data['answers'].count()
 
     if is_correct:
         await app.db.execute_job(f"""

@@ -55,7 +55,9 @@
       <td><input class="btn btn-primary" type="submit" id = '{{ problem.number }}' name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')" disabled></td>
       <td><img id="imgwrong{{ problem.number }}" src="https://img.icons8.com/ios/50/000000/circled-x.png"/></td>      
       {% else %}
-      <td><input class="form-control" id="input{{ problem.number }}" name="{{ problem.number }}"></td>
+      <td><input class="form-control" id="input{{ problem.number }}" name="{{ problem.number }}">
+        <small id="answerHelp{{ problem.number }}" class="form-text text-muted"></small>
+      </td>
       <td><input class="btn btn-primary" type="submit" id = '{{ problem.number }}' name="{{ problem.number }}" onclick="submitOnClick(this, '{{ problem.number }}')"></td>
       <td id="imagebox{{ problem.number }}"></td>
       {% endif %}
@@ -121,11 +123,14 @@
                   $('#'+buttonNumber).prop('disabled', true);
                   $('#imgright'+buttonNumber).show();
                   $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/doodle/48/000000/checkmark.png" />');
-
+                  $("#answerHelp"+buttonNumber).html("Correct!")
                 } else if (data.attempts_left === 0) {
                   inputField.prop('disabled', true);
                   $('#'+buttonNumber).prop('disabled', true);
                   $('#imagebox'+buttonNumber).html('<img src="https://img.icons8.com/ios/50/000000/circled-x.png" />');
+                  $("#answerHelp"+buttonNumber).html("Out of attempts")
+                } else {
+                  $("#answerHelp"+buttonNumber).html("Incorrect. Please try again. ")
                 }
 
                 console.log("ANSWERS: " + data.answers)
@@ -135,6 +140,7 @@
 
                 $("#solved").html("Problems Solved: ", data.problems_solved);
                 $("#ranking").html("Ranking: ", data.rank);
+                
 
             },
             error: function(jqXHR, textStatus, errorThrown) 

@@ -15,3 +15,5 @@ class Config:
     DB_NAME = os.getenv('DB_NAME')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = int(os.getenv('DB_PORT'))
+
+    API_AUTH_TOKEN = os.getenv("API_AUTH_TOKEN")
