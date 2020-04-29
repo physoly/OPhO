@@ -138,8 +138,10 @@
                 answersCell.html(data.answers.join(", "));
                 attemptsCell.html(data.attempts_left);
 
-                $("#solved").html("Problems Solved: ", data.problems_solved);
-                $("#ranking").html("Ranking: ", data.rank);
+                console.log("problems solved: ", data.problems_solved)
+                $("#solved").html("Problems Solved: " + data.problems_solved);
+                $("#ranking").html("Ranking: " + data.rank);
+                
                 
 
             },

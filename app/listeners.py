@@ -21,7 +21,7 @@ async def server_begin(app, loop):
     
     await app.db.init();
 
-    # await initialize_team(app.db, "myteam", "mypassword", 6)
+    # await initialize_team(app.db, "john", "doe", 6)
 
 @listeners.listener('after_server_stop')
 async def server_end(app, loop):
