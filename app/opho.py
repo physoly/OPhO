@@ -147,3 +147,8 @@ async def _contest_home(request):
 async def _logout(request):
     request['session'].clear()
     return response.redirect('/')
+
+@opho.get('/team')
+async def _team(request):
+    app = request.app
+    return await render_template(app.env, 'opho/team.html')

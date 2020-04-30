@@ -86,23 +86,6 @@
           return false;
         }
 
-        let currentAnswerString = answersCell.html();
-        let currentAnswerNumbers = currentAnswerString.split(',').filter(x => x.trim().length).map(Number);
-        let userAnswer = parseFloat(inputVal);
-
-        let anyAnswer = false;
-        for (let i = 0; i < currentAnswerNumbers.length; i++) {
-          if (Math.abs(userAnswer - currentAnswerNumbers[i]) < Number.EPSILON) {
-            anyAnswer = true;
-            break;
-          }
-        }
-
-        if (anyAnswer) {
-          console.log('already enetered that answer');
-          return false;
-        }
-
 
         let postData = [{name:"problem_no", value: buttonNumber}, {name:"answer", value: inputVal}, {name : "teamname", value : $("#contestform").attr("name")}]
         $.ajax(
