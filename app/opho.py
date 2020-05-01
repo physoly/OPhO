@@ -38,7 +38,7 @@ async def _login(request):
                         username=username, 
                         admin=False if is_admin is None else True
                     ))
-                    return response.redirect('/contesthome')
+                    return response.redirect('/')
             form.username.errors.append('Incorrect username or password')
         return await render_template(app.env, "opho/login.html", form=form)
     return await render_template(app.env, 'opho/login.html', form=LoginForm())
@@ -138,7 +138,7 @@ async def _create_contest(request):
     return await template('opho/create_contest.html')
 """
 
-@opho.route('/contesthome')
+@opho.route('/')
 async def _contest_home(request):
     app = request.app
     return await render_template(app.env, 'opho/contest_home.html')
