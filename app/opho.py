@@ -31,8 +31,8 @@ async def _login(request):
             user_raw = await fetchuser(app.db, username)
             if user_raw is not None:
                 if user_raw['password'] == password:
-                    query = f"SELECT username FROM admins WHERE username='{username}'"
-                    is_admin = await app.db.fetchval(query)
+                    query = "SELECT username FROM admins WHERE username=$1"
+                    is_admin = await app.db.fetchval(query, username)
                     await login_user(request, User(
                         id=user_raw['user_id'],
                         username=username, 
@@ -84,27 +84,28 @@ async def _answer_submit(request):
 
     payload = dict(urllib.parse.parse_qs(str(request.body, 'utf8')))
 
-    problem_no = payload['problem_no'][0]
+    problem_no = int(payload['problem_no'][0])
 
     team_answer = Decimal(payload['answer'][0])
     team_id = request['session']['user']['id']
 
-    real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no={problem_no}")
+    real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
     is_correct = float_eq(real_answer, team_answer)
 
     solved_str = 't' if is_correct else 'f'
     
     solve_data = await app.db.fetchrow(
-            f"UPDATE team{team_id} SET solved='{solved_str}', attempts = attempts + 1, answers=array_append(answers, {float(team_answer)}), timestamp = current_timestamp WHERE problem_no = {problem_no} and attempts < 3 RETURNING *;"
+            f"UPDATE team{team_id} SET solved=$1, attempts = attempts + 1, answers=array_append(answers, $2), timestamp = current_timestamp WHERE problem_no = $3 and attempts < 3 RETURNING *;",
+            is_correct, team_answer, problem_no
     )
 
     duplicate = solve_data['answers'].count(team_answer)
 
     if is_correct:
         await app.db.execute_job(f"""
-            UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id={team_id}
-        """
+            UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1
+        """, team_id
         )
 
     stats = await fetch_team_stats(app.db, team_id)   

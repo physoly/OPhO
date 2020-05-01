@@ -69,12 +69,13 @@ async def initialize_db(conn, admin_list):
     """
 
     create_rankings_table = """
-        CREATE TABLE rankings(team_id integer, problems_solved integer);
+        CREATE TABLE rankings(team_id integer references user_details, problems_solved integer);
     """
     await conn.execute_job(create_user_table)
     await conn.execute_job(create_admin_table)
     await conn.execute_job(admin_insert)
     await conn.execute_job(create_problem_table)
+    await conn.execute_job(create_rankings_table)
 
 async def initialize_team(db, teamname, password, problem_number):
     insert_and_return = f"""

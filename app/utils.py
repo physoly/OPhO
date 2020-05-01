@@ -91,7 +91,7 @@ async def fetch_problems(db, team_id):
     return problems
 
 async def fetch_teams(db):
-    query=f"""select user_details.user_id, user_details.username, rankings.problems_solved, RANK() OVER ( ORDER BY rankings.problems_solved DESC ) rank from user_details,rankings where rankings.team_id = user_details.user_id;"""
+    query="""select user_details.user_id, user_details.username, rankings.problems_solved, RANK() OVER ( ORDER BY rankings.problems_solved DESC ) rank from user_details,rankings where rankings.team_id = user_details.user_id;"""
     record_rows = await db.fetchall(query)
 
     teams = []
@@ -124,4 +124,4 @@ async def login_user(request, user):
 
 def float_eq(f1, f2):
     # f1 is real answer
-    return abs(f1 - f2)/f1 < 0.01
+    return abs(f1 - f2) < 0.01
