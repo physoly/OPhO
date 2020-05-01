@@ -124,4 +124,5 @@ async def login_user(request, user):
     request['session']['user'] = user.to_dict()
 
 def float_eq(f1, f2):
-    return abs(f1 - f2) < sys.float_info.epsilon
+    # f1 is real answer
+    return abs(f1 - f2)/f1 < 0.01
