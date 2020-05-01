@@ -64,9 +64,17 @@ async def initialize_db(conn, admin_list):
         INSERT INTO admins(username) VALUES
     """ + ', '.join([f"('{uname}')" for uname in admin_list])
 
-    await conn.execute(create_user_table)
-    await conn.execute(create_admin_table)
-    await conn.execute(admin_insert)
+    create_problem_table = """
+        CREATE TABLE problems(question_no integer, answer decimal);
+    """
+
+    create_rankings_table = """
+        CREATE TABLE rankings(team_id integer, problems_solved integer);
+    """
+    await conn.execute_job(create_user_table)
+    await conn.execute_job(create_admin_table)
+    await conn.execute_job(admin_insert)
+    await conn.execute_job(create_problem_table)
 
 async def initialize_team(db, teamname, password, problem_number):
     insert_and_return = f"""

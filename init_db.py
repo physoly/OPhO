@@ -1,4 +1,5 @@
-from app.db import initialize_db
+from app.db import initialize_db, AsyncPostgresDB
+from app.config import Config
 import asyncpg
 import asyncio
 import ujson
@@ -10,9 +11,19 @@ print("Only run this script on an empty database!")
 resp = input("WARNING! Initialization could cause some data to be overriten. Are you sure you want to continue? [y/n]")
 
 async def do_init():
-    conn = await asyncpg.connect(f'')
+    db = AsyncPostgresDB(
+        user=Config.DB_USERNAME,
+        password=Config.DB_PASSWORD,
+        host=Config.DB_HOST,
+        port=Config.DB_PORT,
+        db_name=Config.DB_NAME,
+        loop=asyncio.get_event_loop()
+    )
+
+    await db.init()
+    
     await initialize_db(
-        conn=conn, 
+        conn=db, 
         admin_list=["Qcumber","Lolman","Epsilon"]
     )
 

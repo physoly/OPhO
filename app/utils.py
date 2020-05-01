@@ -103,7 +103,6 @@ async def fetch_teams(db):
             rank=record_row[3]
         ))
     
-    print("TEAMNAME: ", teams[0].teamname)
     
     return teams
 
