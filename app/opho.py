@@ -15,7 +15,7 @@ import sys
 
 from app.config import Config
 
-opho = Blueprint('opho', host=f'opho.{Config.DEV_DOMAIN}:{Config.PORT}')
+opho = Blueprint('opho', host=f'opho.{Config.DOMAIN}:{Config.PORT}')
 
 from decimal import Decimal
 
