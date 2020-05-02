@@ -25,3 +25,5 @@ async def _resources(request):
 @root.get('/problems')
 async def _problems(request):
     return await render_template(request.app.env, "problems.html")
+
+
