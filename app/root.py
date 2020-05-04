@@ -12,7 +12,7 @@ async def _home(request):
 
 @root.get('/opho')
 async def _opho_info(request):
-    return await render_template(request.app.env, "opho.html")
+    return await response.redirect('//opho.physoly.tech/info')
 
 @root.get('/kalda')
 async def _kalda(request):
