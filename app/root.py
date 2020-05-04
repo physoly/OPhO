@@ -12,8 +12,7 @@ async def _home(request):
 
 @root.get('/opho')
 async def _opho_info(request):
-    url = request.app.url_for('/info')
-    return await response.redirect(url)
+    return await response.redirect('https://opho.physoly.tech/info')
 
 @root.get('/kalda')
 async def _kalda(request):
