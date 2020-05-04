@@ -154,7 +154,7 @@ async def _team(request):
     app = request.app
     return await render_template(app.env, 'opho/team.html')
 
-@opho.get('/info')
+@opho.get('/info', name='opho_info')
 async def _opho_info(request):
     app = request.app
     return await render_template(app.env, 'opho.html')
