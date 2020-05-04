@@ -1,5 +1,3 @@
-{% import 'macros.html' as macros %}
-{% extends 'base.html' %}
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -20,8 +18,6 @@
   gtag('config', 'UA-161438140-1');
 </script>
   </head>
-  {% block body %}
-  {{ macros.render_nav(user) }}
   <body>
     <div class="header">
       <div id="particles-js"></div>
@@ -31,7 +27,7 @@
       <div class="banner">
         <div class="row">
           <div class="column"><div class="app-text">
-            <h1>OPhO</h1>
+			  <h1><a href="//opho.physoly.tech">OPhO🔗</a></h1>
             <h2>Largest Online Student-Run<br>Physics Olympiad</h2>
             <p>Get ready for our team-based online physics olympiad! This week long<br> contest will be held from <b>12:00 AM UTC May 25, 2020 - 11:59 PM UTC May 30, 2020</b> and will cover topics<br> from mechanics, electromagnetism, thermodynamics, relativity, waves,<br> and more. The problems will start off easy and become harder towards the end.</p>
             <a href="https://forms.gle/k79MKhEv4aYcJet4A"class="small-btn"><span>Sign Up Here!</span></a><br><br><br>
@@ -68,5 +64,4 @@
     <script src="static/js/particles.js"></script>
     <script src="static/js/main.js"></script>
   </body>
-  {% endblock %}
 </html>
