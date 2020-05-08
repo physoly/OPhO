@@ -16,7 +16,7 @@ def create_app(config=Config):
     Session(app, interface=InMemorySessionInterface())
 
     app.static('/static', './app/static')
-    app.static('/favicon.ico', './app/static/files/favicon.ico', name='favicon')
+    app.static('/favicon.ico', './app/static/files/favicon.ico?', name='favicon')
 
     print(root.host)
     
