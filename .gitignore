@@ -6,3 +6,5 @@ data/
 .vscode/
 app/.vscode/
 .env
+
+scripts/opho.csv

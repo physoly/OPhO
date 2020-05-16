@@ -15,6 +15,8 @@ import sys
 
 from app.config import Config
 
+import datetime
+
 opho = Blueprint('opho', host=f'opho.{Config.DOMAIN}')
 
 from decimal import Decimal
@@ -45,8 +47,12 @@ async def _login(request):
 
 @opho.route('/contest', methods=['GET', 'POST'])
 @auth_required()
-async def _contest_home(request):
+async def _contest(request):
     app = request.app
+
+    admin = request['session']['user']['admin']
+    if not admin and datetime.datetime.utcnow().day < 25:
+        return response.redirect('/')
 
     team_id = request['session']['user']['id']
 
