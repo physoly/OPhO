@@ -25,7 +25,7 @@ def string_generator(size, chars=string.ascii_letters + string.digits):
 
 async def execute():
     names = []
-    conn = await asyncpg.connect('postgresql://opho-admin:uiewrnjkfsdoifhauqpks@127.0.0.1:5433/opho')
+    conn = await asyncpg.connect('')
     insert_details_query = await conn.prepare('''INSERT INTO user_details(username, password) VALUES ($1, $2) RETURNING user_id''')
     insert_into_rankings = await conn.prepare('''INSERT INTO rankings(team_id, problems_solved) VALUES ($1, 0) RETURNING team_id''')
     with open('opho.csv', 'r') as csvin:
