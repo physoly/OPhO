@@ -125,3 +125,6 @@ async def login_user(request, user):
 def float_eq(f1, f2):
     # f1 is real answer
     return abs(f1 - f2) < sys.float_info.epsilon
+
+def check_answer(attempt, answer, error=0.01):
+    return abs(attempt-answer) < error * answer

@@ -8,3 +8,4 @@ app/.vscode/
 .env
 
 scripts/opho.csv
+data/

@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -97,7 +97,7 @@ async def _answer_submit(request):
 
     real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
-    is_correct = float_eq(real_answer, team_answer)
+    is_correct = check_answer(attempt=team_answer, answer=real_answer)
 
     solved_str = 't' if is_correct else 'f'
     
