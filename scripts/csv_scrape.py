@@ -34,7 +34,7 @@ async def execute():
 
             for line in csv.reader(csvin):
                 if valid_entry(line):
-                    uname = line[9].replace(" ", "_")
+                    uname = line[9].strip().replace(" ", "_")
 
                     if len(uname) > 25:
                         uname=uname[:26]
