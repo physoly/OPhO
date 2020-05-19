@@ -114,6 +114,7 @@
                   $("#answerHelp"+buttonNumber).html("Out of attempts")
                 } else {
                   $("#answerHelp"+buttonNumber).html("Incorrect. Please try again. ")
+                  $('#'+buttonNumber).val('');
                 }
 
                 console.log("ANSWERS: " + data.answers)
