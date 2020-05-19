@@ -65,7 +65,7 @@ async def initialize_db(conn, admin_list):
     """ + ', '.join([f"('{uname}')" for uname in admin_list])
 
     create_problem_table = """
-        CREATE TABLE problems(question_no integer, answer decimal);
+        CREATE TABLE problems(problem_no PRIMARY KEY integer, answer decimal);
     """
 
     create_rankings_table = """

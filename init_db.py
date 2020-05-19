@@ -4,7 +4,7 @@ import asyncpg
 import asyncio
 import ujson
 
-db_name = "testdb"
+db_name = "opho"
 
 print(f"Script to initialize database for OPhO portal. Target database: {db_name}")
 print("Only run this script on an empty database!")

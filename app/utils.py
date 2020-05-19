@@ -15,6 +15,7 @@ N = 1.0
 n = 1.0
 
 from math import exp, floor, log
+from decimal import Decimal
 
 def get_stack_variable(name):
     stack = inspect.stack()
@@ -126,5 +127,5 @@ def float_eq(f1, f2):
     # f1 is real answer
     return abs(f1 - f2) < sys.float_info.epsilon
 
-def check_answer(attempt, answer, error=0.01):
+def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
