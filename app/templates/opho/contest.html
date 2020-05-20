@@ -83,7 +83,9 @@
         let attemptsCell = $("#attempts"+buttonNumber);
 
         if (inputVal === "" || isNaN(inputVal)) {
-          console.log("Please enter a valid number");
+          return false;
+        } else if (isNan(inputVal)) {
+          $("#answerHelp"+buttonNumber).html("Your answer must be numerical!")
           return false;
         }
 
