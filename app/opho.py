@@ -101,14 +101,12 @@ async def _answer_submit(request):
     is_correct = check_answer(attempt=team_answer, answer=real_answer)
 
     solved_str = 't' if is_correct else 'f'
-    
+
     solve_data = await app.db.fetchrow(
             f"UPDATE team{team_id} SET solved=$1, attempts = attempts + 1, answers=array_append(answers, $2), timestamp = current_timestamp WHERE problem_no = $3 and attempts < 3 RETURNING *;",
             is_correct, team_answer, problem_no
     )
-
-    duplicate = solve_data['answers'].count(team_answer)
-
+    
     if is_correct:
         await app.db.execute_job(f"""
             UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1

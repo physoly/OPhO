@@ -76,6 +76,7 @@
 
     <script>
       function submitOnClick(elmnt, buttonNumber) {
+        $('#'+buttonNumber).prop('disabled', true);
         let inputField = $("#input"+buttonNumber);
         let inputVal = inputField.val();
         let answersCell = $("#answers"+buttonNumber);
@@ -115,6 +116,7 @@
                 } else {
                   $("#answerHelp"+buttonNumber).html("Incorrect. Please try again. ")
                   inputField.val('');
+                  $('#'+buttonNumber).prop('disabled', false);
                 }
 
                 console.log("ANSWERS: " + data.answers)
