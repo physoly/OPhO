@@ -82,9 +82,9 @@
         let answersCell = $("#answers"+buttonNumber);
         let attemptsCell = $("#attempts"+buttonNumber);
 
-        if (inputVal === "" || isNaN(inputVal)) {
+        if (inputVal === "") {
           return false;
-        } else if (isNan(inputVal)) {
+        } else if (isNaN(inputVal)) {
           $("#answerHelp"+buttonNumber).html("Your answer must be numerical!")
           return false;
         }
