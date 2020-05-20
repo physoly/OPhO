@@ -76,7 +76,7 @@
 
     <script>
       function submitOnClick(elmnt, buttonNumber) {
-        $('#'+buttonNumber).prop('disabled', true);
+        
         let inputField = $("#input"+buttonNumber);
         let inputVal = inputField.val();
         let answersCell = $("#answers"+buttonNumber);
@@ -87,6 +87,7 @@
           return false;
         }
 
+        $('#'+buttonNumber).prop('disabled', true);
 
         let postData = [{name:"problem_no", value: buttonNumber}, {name:"answer", value: inputVal}, {name : "teamname", value : $("#contestform").attr("name")}]
         $.ajax(
