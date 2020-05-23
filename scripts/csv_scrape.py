@@ -23,8 +23,8 @@ async def execute():
     conn = await get_connection()
     insert_details_query = await conn.prepare('''INSERT INTO user_details(username, password) VALUES ($1, $2) RETURNING user_id''')
     insert_into_rankings = await conn.prepare('''INSERT INTO rankings(team_id, problems_solved) VALUES ($1, 0) RETURNING team_id''')
-    with open('../data/opho_final.csv', 'r') as csvin:
-        with open('../data/opho_logins.csv', 'w') as csvout:
+    with open('../data/opho-late.csv', 'r') as csvin:
+        with open('../data/opho_late_logins.csv', 'w') as csvout:
             writer = csv.writer(csvout)
 
             for line in csv.reader(csvin):

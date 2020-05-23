@@ -4,7 +4,7 @@ problem_number = 55
 
 async def execute():
     conn = await get_connection()
-    team_ids = await conn.fetch('SELECT user_id FROM user_details')
+    team_ids = await conn.fetch('SELECT user_id FROM user_details WHERE user_id > 333')
     
     for team_id in team_ids:
         create_table = f"""
