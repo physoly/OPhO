@@ -95,6 +95,10 @@ async def _answer_submit(request):
 
     team_answer = Decimal(payload['answer'][0])
     team_id = request['session']['user']['id']
+    solved = await app.db.fetchval(f"SELECT solved from team{team_id} WHERE problem_no = $1", problem_no)
+
+    if solved:
+        return response.json({'error': 'forbidden'}, status=403)
 
     real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
