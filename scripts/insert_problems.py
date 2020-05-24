@@ -6,9 +6,9 @@ with open('../data/problems.txt') as f:
 
 async def insert_problems():
     conn = await get_connection()
-    insert_problem_query = await conn.prepare('''INSERT INTO problems(problem_no, answer) VALUES ($1, $2) RETURNING problem_no''')
+    insert_problem_query = await conn.prepare('''UPDATE problems SET answer=$1 WHERE problem_no=$2 RETURNING problem_no''')
     
     for question_no, answer in questions:
-        _ = await insert_problem_query.fetchval(question_no, answer)
+        _ = await insert_problem_query.fetchval(answer, question_no)
 
 run_async(insert_problems())
