@@ -51,7 +51,7 @@ async def _contest(request):
     app = request.app
 
     admin = request['session']['user']['admin']
-    if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30:
+    if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30):
         return response.redirect('/')
 
     team_id = request['session']['user']['id']
