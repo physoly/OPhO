@@ -1,8 +1,8 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-problem_no = 44
-answer = Decimal(717600)
+problem_no = 32
+answer = Decimal(4.62)
 
 def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
@@ -25,12 +25,13 @@ async def execute():
         if solved:
             print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details where user_id=$1', team_id[0]))
             continue
+
         if answers is not None and not solved:
             attempts, is_correct = get_attempt_details(answers, answer)
             if is_correct:
-                #await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 WHERE problem_no=$2', True, problem_no)
-                #await conn.execute(f'UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1', team_id[0])
-                #await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
+                await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 WHERE problem_no=$2', True, problem_no)
+                await conn.execute(f'UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1', team_id[0])
+                await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
                 print("TEAM ID: ", team_id[0], "ATTEMPTS: ", attempts)
 
 

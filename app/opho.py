@@ -51,7 +51,7 @@ async def _contest(request):
     app = request.app
 
     admin = request['session']['user']['admin']
-    if not admin and datetime.datetime.utcnow().day < 25:
+    if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30:
         return response.redirect('/')
 
     team_id = request['session']['user']['id']
@@ -86,7 +86,7 @@ async def _answer_submit(request):
     auth_token = request.headers.get('Authorization', None)
 
     admin = request['session']['user']['admin']
-    if not admin and datetime.datetime.utcnow().day < 25:
+    if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30):
         return response.json({'error' : 'unauthorized'}, status=401)
 
     payload = dict(urllib.parse.parse_qs(str(request.body, 'utf8')))
