@@ -1,8 +1,8 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-problem_no = 32
-answer = Decimal(4.62)
+problem_no = 24
+answer = Decimal(600)
 
 def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
