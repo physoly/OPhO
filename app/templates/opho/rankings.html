@@ -25,19 +25,44 @@
     <body>
     <div id="rankings" action="api/answer_submit" style="margin-left:2%; margin-right: 2%;">
         <h1 class="display-4">Leaderboard</h1>
-        <p class="lead">Note: Due to the complicated and dynamic nature of the scoring, the leaderboard below is <i>not</i> representative of your place, which is based on the scoring algorithm <a href="https://opho.physoly.tech/static/files/rules.pdf">here</a>. In general, questions that come later in the test and with fewer teams who solved it will be rewarded more points. This leaderboard only serves as a general indicator of where your team stands.</p>
+        <p class="lead">Here are the FINAL scores.</p>
+        <p>
+            <img src="/static/files/gold_medal.png" height="42" width="42"> = 1st place &nbsp; 
+            <img src="/static/files/silver_medal.png" height="42" width="42"> = 2nd place &nbsp;
+            <img src="/static/files/bronze_medal.png" height="42" width="42"> = 3rd place &nbsp;
+        </p>
+        <p>
+            <img src="/static/files/win.png" height="42" width="42"> = Honors (Achieved a score of 140 or higher) &nbsp;
+            <img src="/static/files/advanced.png" height="42" width="42"> = Advanced to invitationals (Achieved a score of 130 or higher) &nbsp;
+            <img src="/static/files/close.png" height="42" width="42"> = Did not advance
+        </p>
+
         <table class="table">
             <tr>
                 <th>Rank</th>
                 <th>Team</th>
-                <th>Problems Solved</th>
+                <th>Score</th>
+                <th>Award</th>
             </tr>
 
               {% for team in ranked_teams %}
                 <tr>
                     <td>{{ team.rank }}</td>
                     <td>{{ team.teamname }}</td>
-                    <td>{{ team.problems_solved }}</td>
+                    <td>{{ team.score }}</td>
+                    {% if team.rank == 1 %}
+                    <td><img src="/static/files/gold_medal.png" height="42" width="42"></td>
+                    {% elif team.rank == 2 %}
+                    <td><img src="/static/files/silver_medal.png" height="42" width="42"></td>
+                    {% elif team.rank == 3 %}
+                    <td><img src="/static/files/bronze_medal.png" height="42" width="42"></td>
+                    {% elif team.score >= 140.0 %}
+                    <td><img src="/static/files/win.png" height="42" width="42"></td>
+                    {% elif team.score  >= 130.0 %}
+                    <td><img src="/static/files/advanced.png" height="42" width="42"></td>
+                    {% else %}
+                    <td><img src="/static/files/close.png" height="42" width="42"></td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
         </table>

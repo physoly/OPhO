@@ -30,6 +30,13 @@ class RankedTeam():
         self.problems_solved = problems_solved
         self.rank = rank
     
+class FinalRankedTeam():
+    def __init__(self, id, teamname, score, rank):
+        self.id = id
+        self.teamname = teamname
+        self.score = score
+        self.rank = rank
+    
 class ScoredUser():
     def __init__(self, team_id, score):
         self.team_id = team_id
