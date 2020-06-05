@@ -22,6 +22,10 @@ async def execute():
     for problem_no in range(1, 56):
         solve_stats[problem_no] = get_num_solved(conn, all_team_stats, problem_no)
     
+    print(solve_stats)
+
+    """
+    
     for team_id, data in all_team_stats.items():
         for problem in data:
             if problem['solved']:
@@ -44,10 +48,12 @@ async def execute():
             teamname = await query.fetchval(team_id)
             f.write(f'{count},{teamname},{team_id},{score}\n')
             count = count + 1
+"""
 
 async def get_team_stats(conn, team_id):
     query = await conn.prepare(f'SELECT * from team{team_id}')
     return await query.fetch()
+
 
 def get_num_solved(conn, all_team_stats, question_no):
     count = 0
