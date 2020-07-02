@@ -9,3 +9,5 @@ app/.vscode/
 
 scripts/opho.csv
 data/
+.gitignore
+static/files/locked/
