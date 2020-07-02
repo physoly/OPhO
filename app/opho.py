@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -72,7 +72,24 @@ async def _contest(request):
         key=lambda x: x.number)
     )
 
+@opho.route('/invitational')
+@auth_required()
+async def _invi(request):
+    app = request.app
+    user = request['session']['user']
+    admin = user['admin']
+    team_id = user['id']
 
+    in_time = datetime.datetime.utcnow().day >= 3 and datetime.datetime.utcnow().day < 6
+    qualified = await is_advanced(app.db, team_id)
+
+    print("IN TIME", in_time)
+
+    if not admin and not (qualified and in_time):
+        return response.redirect('/')
+    
+    return await render_template(app.env, "opho/invi.html")
+    
 @opho.route('/rankings')
 async def _rankings(request):
     app = request.app

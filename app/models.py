@@ -41,3 +41,4 @@ class ScoredUser():
     def __init__(self, team_id, score):
         self.team_id = team_id
         self.score = score
+

@@ -43,6 +43,9 @@ async def render_template(env, tpl,*args, **kwargs):
     kwargs.update(globals())
     return html(await template.render_async(*args,**kwargs))
 
+async def is_advanced(db, team_id):
+    return await db.fetchval('SELECT score FROM final_rankings WHERE team_id = $1', team_id) >= 130.0
+
 def auth_required(admin_required=False):
     def decorator(f):
         @wraps(f)

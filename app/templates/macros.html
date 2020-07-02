@@ -14,32 +14,32 @@
 {%- endmacro %} 
 
 {% macro render_nav (user) -%}
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: rgb(56, 56, 56) !important;">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: rgb(56, 56, 56) !important; height: 80px">
         <div class="container">
-            <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 100px;
+            <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 80px;
                 padding: 15px;
                 width: auto;">
             </a>
             <ul class="nav justify-content-end">
                 {% if user is not none %}
                     <a class="navbar-brand" style="margin-top: 8px;" href="#">Welcome {{ user.username }}</a>
-                    <a href="//opho.physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px;">OPhO Home</a>
+                    <a href="//opho.physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; ">OPhO Home</a>
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
-                    <a href="//physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px;">Home</a>
+                    <a href="//physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px;">Home</a>
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
-                    <a href="/logout" class="btn btn-outline-primary" style="border-radius: 12px;">Log Out</a>
+                    <a href="/logout" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px;">Log Out</a>
                 {% else %}
                     <form class="form-inline ml-auto">
             
-                        <a href="//opho.physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px">OPhO Home</a>
+                        <a href="//opho.physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px;"">OPhO Home</a>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
-                        <a href="//physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px"">Home</a>
+                        <a href="//physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px;">Home</a>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
-                        <a href="//opho.physoly.tech/login" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px"">Log in</a>
+                        <a href="//opho.physoly.tech/login" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px;">Log in</a>
 
                     </form>
                 {% endif %}

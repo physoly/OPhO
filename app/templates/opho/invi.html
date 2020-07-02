@@ -1,0 +1,35 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-166042318-1');
+    </script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <title>OPhO Contest Page</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+    
+
+  </head>
+  {% block body %}
+  {{ macros.render_nav(user) }}
+  <body>
+    <object data="/static/files/opho2020_open.pdf" type="application/pdf" width="100%" height="800px"> 
+        <p>It appears you don't have a PDF plugin for this browser.
+        <a href="/static/files/opho2020_open.pdf">click here to
+        download the PDF file.</a></p>  
+    </object>
+  </body>
+{% endblock %}
+</html>
