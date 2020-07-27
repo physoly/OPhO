@@ -85,7 +85,7 @@ async def _invi(request):
 
     print("IN TIME", in_time)
 
-    if not admin and not (qualified and in_time):
+    if not admin and not qualified:
         return response.redirect('/')
     
     return await render_template(app.env, "opho/invi.html")
