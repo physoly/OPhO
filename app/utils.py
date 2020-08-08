@@ -127,6 +127,7 @@ async def login_user(request, user):
 
 async def get_all_invi_scores(db):
     scores = await db.fetchall('SELECT * FROM invi_scores')
+    return sorted(scores, key=lambda x: x['rank'])
 
 def float_eq(f1, f2):
     # f1 is real answer

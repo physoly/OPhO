@@ -22,5 +22,61 @@
     {% block body %}
     {{ macros.render_nav(user) }}
     <body>
+        <h1 class="display-4">Invitational Results</h1>
+        <p class="lead">Here are the final invitational results and awards.</p>
+        <p>
+            <img src="/static/files/gold_medal.png" height="42" width="42"> = Gold Medalist &nbsp; 
+            <img src="/static/files/silver_medal.png" height="42" width="42"> = Silver Medalist &nbsp;
+            <img src="/static/files/bronze_medal.png" height="42" width="42"> = Bronze Medalist &nbsp;
+            <img src="/static/files/win.png" height="42" width="42"> = Honorable Mention &nbsp;
+        </p>
+    </div>
+        <table class="table">
+            <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>P1</th>
+                <th>P2</th>
+                <th>P3</th>
+                <th>P4</th>
+                <th>P5</th>
+                <th>P6</th>
+                <th>P7</th>
+                <th>P8</th>
+                <th>P9</th>
+                <th>P10</th>
+                <th>Score</th>
+                <th>Award</th>
+            </tr>
+
+              {% for record in invi_records %}
+                <tr>
+                    <td>{{ record["rank"] }}</td>
+                    <td>{{ record["teamname"] }}</td>
+                    <td>{{ record["pr_1"] }}</td>
+                    <td>{{ record["pr_2"] }}</td>
+                    <td>{{ record["pr_3"] }}</td>
+                    <td>{{ record["pr_4"] }}</td>
+                    <td>{{ record["pr_5"] }}</td>
+                    <td>{{ record["pr_6"] }}</td>
+                    <td>{{ record["pr_7"] }}</td>
+                    <td>{{ record["pr_8"] }}</td>
+                    <td>{{ record["pr_9"] }}</td>
+                    <td>{{ record["pr_10"] }}</td>
+                    <td>{{ record["total_score"] }}</td>
+                    {% if record["rank"] < 5 %}
+                    <td><img src="/static/files/gold_medal.png" height="42" width="42"></td>
+                    {% elif record["rank"] < 10 %}
+                    <td><img src="/static/files/silver_medal.png" height="42" width="42"></td>
+                    {% elif record["rank"] < 20 %}
+                    <td><img src="/static/files/bronze_medal.png" height="42" width="42"></td>
+                    {% elif record["rank"] < 25 %}
+                    <td><img src="/static/files/win.png" height="42" width="42"></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+        </table>
+        <p>[U] indicates a university team and they will be exempt from prizes.</p>
     </body>
+    {% endblock %}
 </html>

@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced, get_all_invi_scores
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -94,6 +94,11 @@ async def _invi(request):
 async def _rankings(request):
     app = request.app
     return await render_template(app.env, "opho/rankings.html", ranked_teams=await fetch_teams(app.db))
+
+@opho.route('/invitational_rankings')
+async def _invi_rankings(request):
+    app = request.app
+    return await render_template(app.env, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.db))
 
 @opho.post('/api/answer_submit')
 @auth_required()
