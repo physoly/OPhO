@@ -42,3 +42,8 @@ class ScoredUser():
         self.team_id = team_id
         self.score = score
 
+class InviRankedTeam():
+    def __init__(self, teamname, problem_scores, rank):
+        self.teamname = teamname
+        self.problem_scores = problem_scores
+        self.rank = rank

@@ -125,6 +125,9 @@ async def login_user(request, user):
     request['session']['logged_in'] = True
     request['session']['user'] = user.to_dict()
 
+async def get_all_invi_scores(db):
+    scores = await db.fetchall('SELECT * FROM invi_scores')
+
 def float_eq(f1, f2):
     # f1 is real answer
     return abs(f1 - f2) < sys.float_info.epsilon
