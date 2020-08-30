@@ -51,10 +51,10 @@ for (var i = 0; i < probList.length; i++) {
         if(j == 0){
             var u=probList[i][col[0]].split(" ")[0]+"-"+probList[i][col[0]].split(" ")[1];
             if(u !== "Physics-Cup"){
-                tabCell.innerHTML = "<a href='/static/files/archive/"+u+".pdf'>"+probList[i][col[j]]+"</a><a href='static/files/archive/"+u+"-S.pdf'> [S]";
+                tabCell.innerHTML = "<p>"+probList[i][col[j]]+"</p>";
             }
             else if(u == "Physics-Cup"){
-                tabCell.innerHTML = "<a href='https://physicscup.ee/'>"+probList[i][col[j]]+"</a>";
+                tabCell.innerHTML = "<p>"+probList[i][col[j]]+"</p>";
             }
         }
         else{
