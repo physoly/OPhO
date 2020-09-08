@@ -27,3 +27,8 @@ async def _resources(request):
 async def _problems(request):
     return await render_template(request.app.env, "problems.html")
 
+
+@root.get('/potd')
+async def _problems(request):
+    return await render_template(request.app.env, "potd.html")
+
