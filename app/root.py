@@ -23,6 +23,10 @@ async def _kalda(request):
 async def _resources(request):
     return await render_template(request.app.env, "resources.html")
 
+@root.get('/team')
+async def _resources(request):
+    return await render_template(request.app.env, "team.html")
+
 @root.get('/problems')
 async def _problems(request):
     return await render_template(request.app.env, "problems.html")
