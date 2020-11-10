@@ -115,7 +115,7 @@ function prepare(tab){
         if(t[i] != "-"){
             var temp = {};
             temp["Date"] = t[i];
-            temp["Day of Week"] = t[i+1];
+            temp["Day"] = t[i+1];
             temp["Curator"] = t[i+2]
             temp["Source"] = t[i+3];
             temp["Problem"] = t[i+4].split("\n");
