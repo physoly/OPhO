@@ -14,40 +14,6 @@
 {%- endmacro %} 
 
 {% macro render_nav (user) -%}
-    <!--
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: rgb(56, 56, 56) !important; height: 80px; width: auto;">
-        <div class="container">
-            <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 80px;
-                padding: 15px;
-                width: auto;">
-            </a>
-            <ul class="nav justify-content-end">
-                {% if user is not none %}
-                    <a class="navbar-brand" style="margin-top: 8px;" href="#">Welcome {{ user.username }}</a>
-                    <a href="//opho.physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; color:rgb(204, 204, 255); border-color:rgb(204, 204, 255);">OPhO Home</a>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <a href="//physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; color:rgb(204, 204, 255); border-color:rgb(204, 204, 255);">Home</a>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <a href="/logout" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; color:rgb(204, 204, 255); border-color:rgb(204, 204, 255);">Log Out</a>
-                {% else %}
-                    <form class="form-inline ml-auto">
-            
-                        <a href="//opho.physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; color:rgb(204, 204, 255); border-color:rgb(204, 204, 255);">OPhO Home</a>
-                        <p>&nbsp;</p>
-                        <p>&nbsp;</p>
-                        <a href="//physoly.tech/" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; color:rgb(204, 204, 255); border-color:rgb(204, 204, 255);">Home</a>
-                        <p>&nbsp;</p>
-                        <p>&nbsp;</p>
-                        <a href="//opho.physoly.tech/login" class="btn btn-outline-primary" style="border-radius: 12px; width: 140px; height: 50px; color:rgb(204, 204, 255); border-color:rgb(204, 204, 255);">Log in</a>
-
-                    </form>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-    -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(56, 56, 56)">
         <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 60px;
             padding: 5px;
@@ -87,3 +53,4 @@
         </div>
       </nav>
 {%- endmacro %}
+

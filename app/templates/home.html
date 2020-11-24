@@ -1,86 +1,93 @@
 {% import 'macros.html' as macros %}
+{% extends 'base.html' %}
 
 <!doctype html>
 <html lang="en">
   <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-166042318-1');
+    </script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/css/cover.css" />
-    <link rel="icon" href="favicon.ico?" type="image/x-icon">
-    <title>Physics Olympiad</title>
+    <title>Physoly Home</title>
+    <link rel="stylesheet" href="/static/css/contest.css" integrity="">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
   </head>
   {% block body %}
-  {{ macros.render_nav(user) }}
+  {{ macros.render_nav(None) }}
   <body>
-
-<main role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <div class="container">
-      <div class="logo"><img class ="opho" src="https://cdn.discordapp.com/attachments/691110103926964274/699444543539642408/phodstransparent.png"></div>
-      <div class="row"><div><h1 class="display-4">Physics Olympiad Hub</h1></div>
-
-      <p class="lead">This page is intended for passionate high school students exploring the realm of contest physics. It acts as a resource hub containing detailed notes, handouts, and a wide variety of problems from different olympiads all around the world.</p><br>
-
-      <p class="lead">Join our <a href="https://discord.gg/wyGAa49">official discord</a> to connect with other students training for olympiads!</p>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="logo"><img class ="opho" src="https://cdn.discordapp.com/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height:100px; width:100px"></div>
+        <div class="row"><div><h1 class="display-4">Physics Olympiad Hub</h1></div>
+  
+        <p class="lead">This page is intended for passionate high school students exploring the realm of contest physics. It acts as a resource hub containing detailed notes, handouts, and a wide variety of problems from different olympiads all around the world.</p><br>
+  
+        <p class="lead">Join our <a href="https://discord.gg/wyGAa49">official discord</a> to connect with other students training for olympiads!</p>
+      </div>
+      <a href="/team/" class="btn btn-primary">Meet the Team</a>
+  
     </div>
-    <a href="/team/" class="btn btn-primary">Meet the Team</a>
-
-  </div>
-  </div>
-  <div class="card">
-    <div class="card-body" style="margin-left:10%; margin-right: 10%;">
-      <h1 class="display-5">Featured</h1>
-      <p class="lead">Here are some of our best original works!</p>
-      <ul>
-        <li class="lead">Our <a href="https://opho.physoly.tech">annual online contest</a> has recently concluded!</li> 
-        <li class="lead">Translations/Solutions to Jaan Kalda's handouts are underway. If you wish to participate and/or view them, see <a href="/kalda">here.</a></li>
-        <li class="lead"><a href="static/files/MockFMA-2020.pdf">2020 Mock F=ma Exam</a> - Brought to you by members from the AOPS community. The <a href="static/files/MockFMA-2020-S.pdf">solutions manual</a> is also available!</li>
-        <li class="lead"><a href="/potd/">Problem of the Day</a> - Over 300 problems, either taken or modified from a diverse range of sources, used as problems of the day on the Physics Olympiad Discord Server.</li>
-
-        <li class="lead">Stay tuned for more original works! (more solution manuals in progress)</li>
-      </ul>
-      <p>If you would like to be a volunteer to help curate content for this site, please fill out this <a href="https://forms.gle/MXpgZvUgDDMcy29u9">form.</a></p>
     </div>
-  </div>
-  <div class="card text-center">
-    <div class="card text-center">
-      <div class="card-body">
-        <h5 class="card-title">OPhO</h5>
-        <p class="card-text">View information and sign up for our online annual contest.</p>
-        <a href="//opho.physoly.tech/info" class="btn btn-primary">View</a>
+    <div class="card">
+      <div class="card-body" style="margin-left:10%; margin-right: 10%;">
+        <h1 class="display-5">Featured</h1>
+        <p class="lead">Here are some of our best original works!</p>
+        <ul>
+          <li class="lead">Our <a href="https://opho.physoly.tech">annual online contest</a> has recently concluded!</li> 
+          <li class="lead">Translations/Solutions to Jaan Kalda's handouts are underway. If you wish to participate and/or view them, see <a href="/kalda">here.</a></li>
+          <li class="lead"><a href="static/files/MockFMA-2020.pdf">2020 Mock F=ma Exam</a> - Brought to you by members from the AOPS community. The <a href="static/files/MockFMA-2020-S.pdf">solutions manual</a> is also available!</li>
+          <li class="lead"><a href="/potd/">Problem of the Day</a> - Over 300 problems, either taken or modified from a diverse range of sources, used as problems of the day on the Physics Olympiad Discord Server.</li>
+  
+          <li class="lead">Stay tuned for more original works! (more solution manuals in progress)</li>
+        </ul>
+        <p>If you would like to be a volunteer to help curate content for this site, please fill out this <a href="https://forms.gle/MXpgZvUgDDMcy29u9">form.</a></p>
       </div>
     </div>
-  <div class="card text-center">
-    <div class="card-body">
-      <h5 class="card-title">Resources and Translations</h5>
-      <p class="card-text">View a comprehensive list of helpful resources. They are either completely original, or hand picked <br> from pre-existing sources around the internet.</p>
-      <a href="/resources/" class="btn btn-primary">View</a>
+    <div class="card text-center">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">OPhO</h5>
+          <p class="card-text">View information and sign up for our online annual contest.</p>
+          <a href="//opho.physoly.tech/info" class="btn btn-primary">View</a>
+        </div>
+      </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Resources and Translations</h5>
+        <p class="card-text">View a comprehensive list of helpful resources. They are either completely original, or hand picked <br> from pre-existing sources around the internet.</p>
+        <a href="/resources/" class="btn btn-primary">View</a>
+      </div>
     </div>
-  </div>
-  <div class="card text-center">
-    <div class="card-body">
-      <h5 class="card-title">Solutions to Jaan Kalda's Handouts</h5>
-      <p class="card-text">View elegant solutions manuals to Kalda's favored handouts for olympiad preparation.</p>
-      <a href="/kalda/" class="btn btn-primary">View</a>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Solutions to Jaan Kalda's Handouts</h5>
+        <p class="card-text">View elegant solutions manuals to Kalda's favored handouts for olympiad preparation.</p>
+        <a href="/kalda/" class="btn btn-primary">View</a>
+      </div>
     </div>
-  </div>
-  <div class="card text-center">
-    <div class="card-body">
-      <h5 class="card-title">Problem Collection</h5>
-      <p class="card-text">See a collection of problems from past olympiads such as IPhO, APhO, USAPhO, EstFinnPho, CAP, CPhO... <br> sorted by topic and difficulty.</p>
-      <a href="/problems" class="btn btn-primary">View</a>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Problem Collection</h5>
+        <p class="card-text">See a collection of problems from past olympiads such as IPhO, APhO, USAPhO, EstFinnPho, CAP, CPhO... <br> sorted by topic and difficulty.</p>
+        <a href="/problems" class="btn btn-primary">View</a>
+      </div>
     </div>
-  </div>
-</main>
+
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script src="/static/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script></body>
-      {% endblock %}
-      </html>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+  {% endblock %}
+  </html>
