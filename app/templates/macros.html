@@ -14,6 +14,7 @@
 {%- endmacro %} 
 
 {% macro render_nav (user) -%}
+    <!--
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: rgb(56, 56, 56) !important; height: 80px; width: auto;">
         <div class="container">
             <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 80px;
@@ -46,4 +47,43 @@
             </ul>
         </div>
     </nav>
+    -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(56, 56, 56)">
+        <a class="navbar-brand" style="padding: 0;" href="/"><img src="https://media.discordapp.net/attachments/691110103926964274/699444543539642408/phodstransparent.png" style="height: 60px;
+            padding: 5px;
+            width: auto;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            {% if user is not none %}
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="font-size: 15px">Welcome {{ user.username }} <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="//opho.physoly.tech/" style="font-size: 15px">OPhO Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="//physoly.tech/" style="font-size: 15px">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="//opho.physoly.tech/logout" style="font-size: 15px">Log Out</a>
+              </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="//opho.physoly.tech/" style="font-size: 15px">OPhO Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="//physoly.tech/" style="font-size: 15px">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="//opho.physoly.tech/login" style="font-size: 15px">Log In</a>
+                </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
 {%- endmacro %}
