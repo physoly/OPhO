@@ -50,6 +50,7 @@ class AsyncPostgresDB():
     async def close(self):
         await self.pool.close()
 
+# create refresh db command
 
 async def initialize_db(conn, admin_list):
     create_user_table = """
@@ -101,3 +102,4 @@ async def create_problem_table(db, contest_name):
     """
 
     await db.execute_job(query)
+    
