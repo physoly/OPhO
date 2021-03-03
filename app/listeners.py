@@ -5,7 +5,6 @@ from sanic import Blueprint
 
 from app.db import initialize_team
 
-
 listeners = Blueprint('listeners')
 
 @listeners.listener('before_server_start')
@@ -20,8 +19,6 @@ async def server_begin(app, loop):
     )
     
     await app.db.init();
-
-    #await initialize_team(app.db, "john", "doe", 7)
 
 @listeners.listener('after_server_stop')
 async def server_end(app, loop):
