@@ -13,7 +13,7 @@ httptools==0.1.1
 httpx==0.9.3
 hyperframe==5.2.0
 idna==2.9
-Jinja2==2.11.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 multidict==4.7.5
 python-dotenv==0.13.0
