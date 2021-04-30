@@ -12,4 +12,4 @@ async def execute():
     query = root + ','.join(entries)
     conn = await get_connection()
     await conn.execute(query)
-run_async(execute())
+run_async(execute()) 
