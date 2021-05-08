@@ -81,7 +81,7 @@ async def _invi(request):
     team_id = user['id']
 
     in_time = datetime.datetime.utcnow().day >= 3 and datetime.datetime.utcnow().day < 6
-    qualified = await is_advanced(app.db, team_id)
+    qualified = await is_advanced(app.db, team_id, 2020)
 
     print("IN TIME", in_time)
 
@@ -90,15 +90,15 @@ async def _invi(request):
     
     return await render_template(app.env, "opho/invi.html")
     
-@opho.route('/rankings')
-async def _rankings(request):
+@opho.route('/<year>/rankings')
+async def _rankings(request, year):
     app = request.app
-    return await render_template(app.env, "opho/rankings.html", ranked_teams=await fetch_teams(app.db))
+    return await render_template(app.env, "opho/rankings.html", ranked_teams=await fetch_teams(app.db, year))
 
-@opho.route('/invitational_rankings')
-async def _invi_rankings(request):
+@opho.route('/<year>/invitational_rankings')
+async def _invi_rankings(request,year):
     app = request.app
-    return await render_template(app.env, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.db))
+    return await render_template(app.env, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.db, year))
 
 @opho.post('/api/answer_submit')
 @auth_required()
@@ -195,3 +195,8 @@ async def _team(request):
 async def _opho_info(request):
     app = request.app
     return await render_template(app.env, 'opho.html')
+
+@opho.get('/archives')
+async def _archives(request):
+    app = request.app
+    return await render_template(app.env, 'opho/archives.html')
