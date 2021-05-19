@@ -43,8 +43,8 @@ async def render_template(env, tpl,*args, **kwargs):
     kwargs.update(globals())
     return html(await template.render_async(*args,**kwargs))
 
-async def is_advanced(db, team_id):
-    return await db.fetchval('SELECT score FROM final_rankings WHERE team_id = $1', team_id) >= 130.0
+async def is_advanced(db, team_id, year):
+    return await db.fetchval(f'SELECT score FROM final_rankings_{year} WHERE team_id = $1', team_id) >= 130.0
 
 def auth_required(admin_required=False):
     def decorator(f):
@@ -94,8 +94,9 @@ async def fetch_problems(db, team_id):
     print(problems[0].answers)
     return problems
 
-async def fetch_teams(db):
-    query="""select user_details.user_id, user_details.username, final_rankings.score, RANK() OVER ( ORDER BY final_rankings.score DESC ) rank from user_details,final_rankings where final_rankings.team_id = user_details.user_id;"""
+async def fetch_teams(db, year):
+    final_rankings_table = f"final_rankings_{year}"
+    query=f"""select user_details.user_id, user_details.username, {final_rankings_table}.score, RANK() OVER ( ORDER BY {final_rankings_table}.score DESC ) rank from user_details,{final_rankings_table} where {final_rankings_table}.team_id = user_details.user_id;"""
     record_rows = await db.fetchall(query)
 
     teams = []
@@ -125,8 +126,8 @@ async def login_user(request, user):
     request['session']['logged_in'] = True
     request['session']['user'] = user.to_dict()
 
-async def get_all_invi_scores(db):
-    scores = await db.fetchall('SELECT * FROM invi_scores')
+async def get_all_invi_scores(db, year):
+    scores = await db.fetchall(f'SELECT * FROM invi_scores_{year}')
     return sorted(scores, key=lambda x: x['rank'])
 
 def float_eq(f1, f2):
