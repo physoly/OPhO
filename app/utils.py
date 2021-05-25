@@ -17,6 +17,18 @@ n = 1.0
 from math import exp, floor, log
 from decimal import Decimal
 
+import datetime
+
+OPEN_START_DAY = 4
+OPEN_END_DAY = 7
+OPEN_START_MONTH = 6
+OPEN_END_MONTH = 7
+
+INVI_START_DAY = 31
+INVI_END_DAY = 2
+INVI_START_MONTH = 7
+INVI_END_MONTH = 8
+
 def get_stack_variable(name):
     stack = inspect.stack()
     try:
@@ -63,6 +75,7 @@ def auth_required(admin_required=False):
             return response.redirect('/login')
         return decorated_function
     return decorator
+
 
 def string_generator(size, chars=string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -136,3 +149,5 @@ def float_eq(f1, f2):
 
 def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
+
+def during_contest():
