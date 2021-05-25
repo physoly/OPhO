@@ -150,4 +150,3 @@ def float_eq(f1, f2):
 def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
 
-def during_contest():
