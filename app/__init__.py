@@ -23,9 +23,5 @@ def create_app(config=Config):
     app.blueprint(root)
     app.blueprint(opho)
     app.blueprint(listeners)
-
-
-    for handler, (rule, router) in app.router.routes_names.items():
-        print(rule)
     
     return app

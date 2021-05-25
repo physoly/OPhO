@@ -4,7 +4,7 @@ from app.config import Config
 from sanic import Blueprint, response
 from sanic.response import json, HTTPResponse, redirect
 
-root = Blueprint('root')
+root = Blueprint('root', host=Config.DOMAIN)
 
 @root.get('/')
 async def _home(request):
@@ -24,13 +24,12 @@ async def _resources(request):
     return await render_template(request.app.env, "resources.html")
 
 @root.get('/team')
-async def _resources(request):
+async def _physoly_team(request):
     return await render_template(request.app.env, "team.html")
 
 @root.get('/problems')
 async def _problems(request):
     return await render_template(request.app.env, "problems.html")
-
 
 @root.get('/potd')
 async def _problems(request):

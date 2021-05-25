@@ -186,7 +186,7 @@ async def _team(request):
     return await render_template(app.env, 'opho/team.html')
 
 @opho.get('/winners')
-async def _team(request):
+async def _winners(request):
     app = request.app
     return await render_template(app.env, 'opho/winners.html')
 
