@@ -10,7 +10,7 @@ from app.config import Config
 
 def create_app(config=Config):
     app = Sanic(__name__)
-    app.config.from_object(config)
+    app.update_config(config)
 
     app.env = Environment(loader=PackageLoader('app', 'templates'), enable_async=True)
     Session(app, interface=InMemorySessionInterface())
