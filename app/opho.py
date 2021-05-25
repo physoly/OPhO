@@ -4,7 +4,7 @@ from app.utils import render_template, fetch_problems, \
 from app.config import Config
 from app.models import RankedTeam, User
 
-from sanic import Blueprint, response
+from sanic import Blueprint, response, Sanic
 from sanic.response import json, HTTPResponse, redirect
 
 from app.forms import LoginForm
@@ -21,51 +21,53 @@ opho = Blueprint('opho', host=f'opho.{Config.DOMAIN}')
 
 from decimal import Decimal
 
+app = Sanic.get_app()
+
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
-    app = request.app
     form = LoginForm(request.form)
 
     if request.method == 'POST':
         if form.validate():
             username = form.username.data
             password = form.password.data
-            user_raw = await fetchuser(app.db, username)
+            user_raw = await fetchuser(app.ctx.db, username)
             if user_raw is not None:
                 if user_raw['password'] == password:
                     query = "SELECT username FROM admins WHERE username=$1"
-                    is_admin = await app.db.fetchval(query, username)
-                    await login_user(request, User(
+                    is_admin = await app.ctx.db.fetchval(query, username)
+                    user = User(
                         id=user_raw['user_id'],
                         username=username, 
                         admin=False if is_admin is None else True
-                    ))
+                    )
+                    res = await login_user(request.ctx.session, user)
+                    if not res:
+                        return await render_template(app.ctx.env, 'home.html', user=user)
                     return response.redirect('/')
             form.username.errors.append('Incorrect username or password')
-        return await render_template(app.env, "opho/login.html", form=form)
-    return await render_template(app.env, 'opho/login.html', form=LoginForm())
+        return await render_template(app.ctx.env, "opho/login.html", form=form)
+    return await render_template(app.ctx.env, 'opho/login.html', form=LoginForm())
 
 @opho.route('/contest', methods=['GET', 'POST'])
 @auth_required()
 async def _contest(request):
-    app = request.app
-
-    admin = request['session']['user']['admin']
+    admin = request.ctx.session['user']['admin']
     if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30):
         return response.redirect('/')
 
-    team_id = request['session']['user']['id']
+    team_id = request.ctx.session['user']['id']
 
     if request.method== 'POST':
         return response.redirect('/contest')
 
-    problems = await fetch_problems(db=app.db, team_id=team_id)
-    team_stats = await fetch_team_stats(db=app.db, team_id=team_id)
+    problems = await fetch_problems(db=app.ctx.db, team_id=team_id)
+    team_stats = await fetch_team_stats(db=app.ctx.db, team_id=team_id)
 
     print(problems[0].attempts)
 
     return await render_template(
-        app.env,
+        app.ctx.env,
         "opho/contest.html", 
         team_stats=team_stats, 
         problems=sorted(problems, 
@@ -75,39 +77,34 @@ async def _contest(request):
 @opho.route('/invitational')
 @auth_required()
 async def _invi(request):
-    app = request.app
-    user = request['session']['user']
+    user = request.ctx.session['user']
     admin = user['admin']
     team_id = user['id']
 
     in_time = datetime.datetime.utcnow().day >= 3 and datetime.datetime.utcnow().day < 6
-    qualified = await is_advanced(app.db, team_id, 2020)
+    qualified = await is_advanced(app.ctx.db, team_id, 2020)
 
     print("IN TIME", in_time)
 
     if not admin and not qualified:
         return response.redirect('/')
     
-    return await render_template(app.env, "opho/invi.html")
+    return await render_template(app.ctx.env, "opho/invi.html")
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
-    app = request.app
-    return await render_template(app.env, "opho/rankings.html", ranked_teams=await fetch_teams(app.db, year))
+    return await render_template(app.ctx.env, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
 
 @opho.route('/<year>/invitational_rankings')
 async def _invi_rankings(request,year):
-    app = request.app
-    return await render_template(app.env, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.db, year))
+    return await render_template(app.ctx.env, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
 
 @opho.post('/api/answer_submit')
 @auth_required()
 async def _answer_submit(request):
-    app = request.app
-
     auth_token = request.headers.get('Authorization', None)
 
-    admin = request['session']['user']['admin']
+    admin = request.ctx.session['user']['admin']
     if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30):
         return response.json({'error' : 'unauthorized'}, status=401)
 
@@ -116,30 +113,30 @@ async def _answer_submit(request):
     problem_no = int(payload['problem_no'][0])
 
     team_answer = Decimal(payload['answer'][0])
-    team_id = request['session']['user']['id']
-    current = await app.db.fetchrow(f"SELECT * from team{team_id} WHERE problem_no = $1", problem_no)
+    team_id = request.ctx.session['user']['id']
+    current = await app.ctx.db.fetchrow(f"SELECT * from team{team_id} WHERE problem_no = $1", problem_no)
 
     if current['solved'] or current['attempts'] >= 3:
         return response.json({'error': 'forbidden'}, status=403)
 
-    real_answer = await app.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
+    real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
     is_correct = check_answer(attempt=team_answer, answer=real_answer)
 
     solved_str = 't' if is_correct else 'f'
 
-    solve_data = await app.db.fetchrow(
+    solve_data = await app.ctx.db.fetchrow(
             f"UPDATE team{team_id} SET solved=$1, attempts = attempts + 1, answers=array_append(answers, $2), timestamp = current_timestamp WHERE problem_no = $3 and attempts < 3 RETURNING *;",
             is_correct, team_answer, problem_no
     )
     
     if is_correct:
-        await app.db.execute_job(f"""
+        await app.ctx.db.execute_job(f"""
             UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1
         """, team_id
         )
 
-    stats = await fetch_team_stats(app.db, team_id)   
+    stats = await fetch_team_stats(app.ctx.db, team_id)   
 
     return response.json({
         'correct' : is_correct, 
@@ -153,7 +150,7 @@ async def _answer_submit(request):
 @app.route('/admin/createcontest', methods=['GET', 'POST'])
 #@auth_required(admin_required=True)
 async def _create_contest(request):
-    request = request.app
+    request = app
 
     query_string = "INSERT INTO problems(problem_no, answer) VALUES "
     value_strings = []
@@ -165,38 +162,33 @@ async def _create_contest(request):
         for i, field in enumerate(values):
             value_strings.append(f"({i+1}, {field[0]})")
         query = query_string + ', '.join(value_strings) + ';'
-        await create_problem_table(db=app.db, contest_name=contest_name)
-        #await app.db.execute_job(query)
+        await create_problem_table(db=app.ctx.db, contest_name=contest_name)
+        #await app.ctx.db.execute_job(query)
     return await template('opho/create_contest.html')
 """
 
 @opho.route('/')
 async def _contest_home(request):
-    app = request.app
-    return await render_template(app.env, 'opho/contest_home.html')
+    return await render_template(app.ctx.env, 'opho/contest_home.html')
 
 @opho.get('/logout')
 async def _logout(request):
-    request['session'].clear()
+    request.ctx.session.clear()
     return response.redirect('/')
 
 @opho.get('/team')
 async def _team(request):
-    app = request.app
-    return await render_template(app.env, 'opho/team.html')
+    return await render_template(app.ctx.env, 'opho/team.html')
 
 @opho.get('/winners')
 async def _winners(request):
-    app = request.app
-    return await render_template(app.env, 'opho/winners.html')
+    return await render_template(app.ctx.env, 'opho/winners.html')
 
 
 @opho.get('/info', name='opho_info')
 async def _opho_info(request):
-    app = request.app
-    return await render_template(app.env, 'opho.html')
+    return await render_template(app.ctx.env, 'opho.html')
 
 @opho.get('/archives')
 async def _archives(request):
-    app = request.app
-    return await render_template(app.env, 'opho/archives.html')
+    return await render_template(app.ctx.env, 'opho/archives.html')

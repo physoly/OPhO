@@ -47,10 +47,10 @@ async def render_template(env, tpl,*args, **kwargs):
     template = env.get_template(tpl)
     request = get_stack_variable('request')
     user = None
-    if request['session'].get('logged_in'):
-        user = request['session']['user']
+    if request.ctx.session.get('logged_in'):
+        user = request.ctx.session['user']
     kwargs['request'] = request
-    kwargs['session'] = request['session']
+    kwargs['session'] = request.ctx.session
     kwargs['user'] = user
     kwargs.update(globals())
     return html(await template.render_async(*args,**kwargs))
@@ -62,10 +62,10 @@ def auth_required(admin_required=False):
     def decorator(f):
         @wraps(f)
         async def decorated_function(request, *args, **kwargs):
-            logged_in = request['session'].get('logged_in', False)
+            logged_in = request.ctx.session.get('logged_in', False)
             if logged_in:
                 if admin_required:
-                    is_admin = request['session']['user']['admin']
+                    is_admin = request.ctx.session['user']['admin']
                     if is_admin:
                         resp = await f(request, *args, **kwargs)
                         return resp
@@ -133,11 +133,11 @@ async def fetch_team_stats(db,team_id):
 async def fetchuser(db, username):
     return await db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
 
-async def login_user(request, user):
-    if request['session'].get('logged_in', False):
-        return await render_template(request.app.env, 'home.html', user=user)
-    request['session']['logged_in'] = True
-    request['session']['user'] = user.to_dict()
+async def login_user(session, user):
+    if session.get('logged_in', False):
+        return False
+    session['logged_in'] = True
+    session['user'] = user.to_dict()
 
 async def get_all_invi_scores(db, year):
     scores = await db.fetchall(f'SELECT * FROM invi_scores_{year}')
