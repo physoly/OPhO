@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced, get_all_invi_scores
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced, get_all_invi_scores, in_time_open
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -55,7 +55,7 @@ async def _login(request):
 @auth_required()
 async def _contest(request):
     admin = request.ctx.session['user']['admin']
-    if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30):
+    if not admin and not in_time_open():
         return response.redirect('/')
 
     team_id = request.ctx.session['user']['id']
@@ -107,7 +107,7 @@ async def _answer_submit(request):
     auth_token = request.headers.get('Authorization', None)
 
     admin = request.ctx.session['user']['admin']
-    if not admin and (datetime.datetime.utcnow().day < 25 or datetime.datetime.utcnow().day >= 30):
+    if not admin and not in_time_open():
         return response.json({'error' : 'unauthorized'}, status=401)
 
     payload = dict(urllib.parse.parse_qs(str(request.body, 'utf8')))
@@ -171,7 +171,7 @@ async def _create_contest(request):
 
 @opho.route('/')
 async def _contest_home(request):
-    return await render_template(app.ctx.env, 'opho/contest_home.html')
+    return await render_template(app.ctx.env, request, 'opho/contest_home.html', in_time_open=in_time_open())
 
 @opho.get('/logout')
 async def _logout(request):
@@ -180,17 +180,17 @@ async def _logout(request):
 
 @opho.get('/team')
 async def _team(request):
-    return await render_template(app.ctx.env, 'opho/team.html')
+    return await render_template(app.ctx.env, request, 'opho/team.html')
 
 @opho.get('/winners')
 async def _winners(request):
-    return await render_template(app.ctx.env, 'opho/winners.html')
+    return await render_template(app.ctx.env, request, 'opho/winners.html')
 
 
 @opho.get('/info', name='opho_info')
 async def _opho_info(request):
-    return await render_template(app.ctx.env, 'opho.html')
+    return await render_template(app.ctx.env, request, 'opho.html')
 
 @opho.get('/archives')
 async def _archives(request):
-    return await render_template(app.ctx.env, 'opho/archives.html')
+    return await render_template(app.ctx.env, request, 'opho/archives.html')

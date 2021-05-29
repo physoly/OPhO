@@ -19,21 +19,21 @@ async def _opho_info(request):
 
 @root.get('/kalda')
 async def _kalda(request):
-    return await render_template(app.ctx.env, "kalda.html")
+    return await render_template(app.ctx.env, request, "kalda.html")
 
 @root.get('/resources')
 async def _resources(request):
-    return await render_template(app.ctx.env, "resources.html")
+    return await render_template(app.ctx.env, request, "resources.html")
 
 @root.get('/team')
 async def _physoly_team(request):
-    return await render_template(app.ctx.env, "team.html")
+    return await render_template(app.ctx.env,request, "team.html")
 
 @root.get('/problems')
 async def _problems(request):
-    return await render_template(app.ctx.env, "problems.html")
+    return await render_template(app.ctx.env, request, "problems.html")
 
 @root.get('/potd')
 async def _problems(request):
-    return await render_template(app.ctx.env, "potd.html")
+    return await render_template(app.ctx.env,request, "potd.html")
 

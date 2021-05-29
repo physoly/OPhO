@@ -22,12 +22,19 @@ import datetime
 OPEN_START_DAY = 4
 OPEN_END_DAY = 7
 OPEN_START_MONTH = 6
-OPEN_END_MONTH = 7
+OPEN_END_MONTH = 6
 
 INVI_START_DAY = 31
 INVI_END_DAY = 2
 INVI_START_MONTH = 7
 INVI_END_MONTH = 8
+
+def in_time_open():
+    utc_now = datetime.datetime.utcnow()
+    right_month = utc_now.month >= OPEN_START_MONTH and utc_now.month <= OPEN_END_MONTH
+    right_day = utc_now.day >= OPEN_START_DAY and utc_now.day < OPEN_END_DAY
+    print("IN TIME", right_month and right_day)
+    return right_month and right_day
 
 def get_stack_variable(name):
     stack = inspect.stack()
@@ -43,16 +50,16 @@ def get_stack_variable(name):
     finally:
         del stack
 
-async def render_template(env, tpl,*args, **kwargs):
+async def render_template(env, request, tpl,*args, **kwargs):
     template = env.get_template(tpl)
-    request = get_stack_variable('request')
+    # request = get_stack_variable('request')
     user = None
     if request.ctx.session.get('logged_in'):
         user = request.ctx.session['user']
     kwargs['request'] = request
     kwargs['session'] = request.ctx.session
     kwargs['user'] = user
-    kwargs.update(globals())
+    # kwargs.update(globals())
     return html(await template.render_async(*args,**kwargs))
 
 async def is_advanced(db, team_id, year):
@@ -138,6 +145,7 @@ async def login_user(session, user):
         return False
     session['logged_in'] = True
     session['user'] = user.to_dict()
+    return True
 
 async def get_all_invi_scores(db, year):
     scores = await db.fetchall(f'SELECT * FROM invi_scores_{year}')

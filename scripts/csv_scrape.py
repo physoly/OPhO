@@ -61,6 +61,5 @@ async def execute():
 
 run_async(execute())
 
-execute()
 p = [item for item, count in collections.Counter(emails).items() if count > 1]
 print(p)

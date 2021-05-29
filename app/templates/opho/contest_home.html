@@ -48,10 +48,13 @@
       <div class="card-group" style="margin-left:20px; margin-right: 20px;">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">2020 Results</h5>
-            <p class="card-text">The 2020 contest has ended! You can view the round rankings for both parts below. Congratulations to everyone who participated!</p>
-            <a href="/2020/rankings" class="btn btn-info">Open Results</a>
-            <a href="/2020/invitational_rankings" class="btn btn-info">Invitational Results</a>
+            <h4 class="card-title">Contest Portal</h5>
+            <p class="card-text">Enter the contest portal to submit answers. Will open June 4 and close June 7 at 12 am UTC.</p>
+            {% if in_time_open %}
+            <a href="/contest" class="btn btn-info">Contest Portal</a>
+            {% else %}
+            <button type="button" class="btn btn-info" disabled>Contest Portal</button>
+            {% endif %}
           </div>
         </div>
         <div class="card">
