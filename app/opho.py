@@ -23,6 +23,8 @@ from decimal import Decimal
 
 app = Sanic.get_app()
 
+past_contest_years = [2020]
+
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
     form = LoginForm(request.form)
@@ -96,10 +98,14 @@ async def _invi(request):
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
+    if year not in past_contest_years:
+        return response.redirect('/archives')
     return await render_template(app.ctx.env, request, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
 
 @opho.route('/<year>/invitational_rankings')
 async def _invi_rankings(request,year):
+    if year not in past_contest_years:
+        return response.redirect('/archives')
     return await render_template(app.ctx.env, request, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
 
 @opho.post('/api/answer_submit')
