@@ -32,6 +32,8 @@ async def _login(request):
             username = form.username.data
             password = form.password.data
             user_raw = await fetchuser(app.ctx.db, username)
+            print("USERNAME: ", username)
+            print("USER RAW", user_raw)
             if user_raw is not None:
                 if user_raw['password'] == password:
                     query = "SELECT username FROM admins WHERE username=$1"

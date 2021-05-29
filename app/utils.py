@@ -109,7 +109,7 @@ async def fetch_problems(db, team_id):
 
 async def fetch_teams(db, year):
     final_rankings_table = f"final_rankings_{year}"
-    query=f"""select user_details.user_id, user_details.username, {final_rankings_table}.score, RANK() OVER ( ORDER BY {final_rankings_table}.score DESC ) rank from user_details,{final_rankings_table} where {final_rankings_table}.team_id = user_details.user_id;"""
+    query=f"""select user_details_{year}.user_id, user_details_{year}.username, {final_rankings_table}.score, RANK() OVER ( ORDER BY {final_rankings_table}.score DESC ) rank from user_details_{year},{final_rankings_table} where {final_rankings_table}.team_id = user_details_{year}.user_id;"""
     record_rows = await db.fetchall(query)
 
     teams = []
@@ -131,7 +131,7 @@ async def fetch_team_stats(db,team_id):
     return None 
 
 async def fetchuser(db, username):
-    return await db.fetchrow('SELECT * FROM user_details WHERE username = $1', username)
+    return await db.fetchrow('SELECT * FROM user_details_2021 WHERE username = $1', username)
 
 async def login_user(session, user):
     if session.get('logged_in', False):

@@ -4,10 +4,15 @@ import random
 
 from utils import get_connection, run_async
 
-REQUIRED_FIELDS = [0,1,2,3,4,9,10,11]
+import collections
+
+
+REQUIRED_FIELDS = [0,1,2,3,4]
 PASSWORD_LENGTH = 12
 
+emails = []
 
+YEAR = 2021
 
 def valid_entry(line):
     for field in REQUIRED_FIELDS:
@@ -21,15 +26,16 @@ def string_generator(size, chars=string.ascii_letters + string.digits):
 async def execute():
     names = []
     conn = await get_connection()
-    insert_details_query = await conn.prepare('''INSERT INTO user_details(username, password) VALUES ($1, $2) RETURNING user_id''')
-    insert_into_rankings = await conn.prepare('''INSERT INTO rankings(team_id, problems_solved) VALUES ($1, 0) RETURNING team_id''')
-    with open('../data/opho-late.csv', 'r') as csvin:
-        with open('../data/opho_late_logins.csv', 'w') as csvout:
+    insert_details_query = await conn.prepare(f'''INSERT INTO user_details_{YEAR}(username, password) VALUES ($1, $2) RETURNING user_id''')
+    insert_into_rankings = await conn.prepare(f'''INSERT INTO rankings_{YEAR}(team_id, problems_solved) VALUES ($1, 0) RETURNING team_id''')
+    with open('../data/2021/opho2021.csv', 'r') as csvin:
+        with open('../data/2021/opho2021-out.csv', 'w') as csvout:
             writer = csv.writer(csvout)
 
             for line in csv.reader(csvin):
                 if valid_entry(line):
-                    uname = line[9].strip().replace(" ", "_")
+                    uname = line[1].strip().replace(" ", "_")
+                    email = line[4].strip()
 
                     if len(uname) > 25:
                         uname=uname[:26]
@@ -46,6 +52,15 @@ async def execute():
                     user_id = await insert_details_query.fetchval(uname, password)
                     team_id = await insert_into_rankings.fetchval(user_id)
 
+                    print(f"INSERTING ({uname, password}")
+
                     names.append(uname)
+                    emails.append(email)
+
+
 
 run_async(execute())
+
+execute()
+p = [item for item, count in collections.Counter(emails).items() if count > 1]
+print(p)
