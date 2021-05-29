@@ -10,7 +10,7 @@ app = Sanic.get_app()
 
 @root.get('/')
 async def _home(request):
-    return await render_template(app.ctx.env, "home.html")
+    return await render_template(app.ctx.env,request, "home.html")
 
 @root.get('/opho')
 async def _opho_info(request):
