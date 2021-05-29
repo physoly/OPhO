@@ -45,11 +45,11 @@ async def _login(request):
                     )
                     res = await login_user(request.ctx.session, user)
                     if not res:
-                        return await render_template(app.ctx.env, 'home.html', user=user)
+                        return await render_template(app.ctx.env, request, 'home.html', user=user)
                     return response.redirect('/')
             form.username.errors.append('Incorrect username or password')
-        return await render_template(app.ctx.env, "opho/login.html", form=form)
-    return await render_template(app.ctx.env, 'opho/login.html', form=LoginForm())
+        return await render_template(app.ctx.env, request, "opho/login.html", form=form)
+    return await render_template(app.ctx.env, request, 'opho/login.html', form=LoginForm())
 
 @opho.route('/contest', methods=['GET', 'POST'])
 @auth_required()
@@ -70,6 +70,7 @@ async def _contest(request):
 
     return await render_template(
         app.ctx.env,
+        request,
         "opho/contest.html", 
         team_stats=team_stats, 
         problems=sorted(problems, 
@@ -91,15 +92,15 @@ async def _invi(request):
     if not admin and not qualified:
         return response.redirect('/')
     
-    return await render_template(app.ctx.env, "opho/invi.html")
+    return await render_template(app.ctx.env, request, "opho/invi.html")
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
-    return await render_template(app.ctx.env, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
+    return await render_template(app.ctx.env, request, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
 
 @opho.route('/<year>/invitational_rankings')
 async def _invi_rankings(request,year):
-    return await render_template(app.ctx.env, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
+    return await render_template(app.ctx.env, request, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
 
 @opho.post('/api/answer_submit')
 @auth_required()
