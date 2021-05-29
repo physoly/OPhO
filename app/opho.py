@@ -98,7 +98,7 @@ async def _invi(request):
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
-    if year not in past_contest_years:
+    if int(year) not in past_contest_years:
         return response.redirect('/archives')
     return await render_template(app.ctx.env, request, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
 
