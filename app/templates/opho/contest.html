@@ -35,7 +35,7 @@
     <h2 class="display-4">Stats</h2>
     <div class="card">
         <div class="card-body">
-          <p id="solved">Problems Solved: {{ team_stats.problems_solved }} </p>
+          <p id="solved">Problems Solved: {{ team_stats.score }} </p>
           <p id="ranking"> Ranking: {{ team_stats.rank }} </p>
         </div>
 
@@ -146,6 +146,7 @@
             error: function(jqXHR, textStatus, errorThrown) 
             {
                 //if fails      
+                console.log(errorThrown)
             }
         });
 

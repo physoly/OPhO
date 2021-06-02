@@ -25,6 +25,8 @@ app = Sanic.get_app()
 
 past_contest_years = [2020]
 
+CURRENT_YEAR = 2021
+
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
     form = LoginForm(request.form)
@@ -34,8 +36,6 @@ async def _login(request):
             username = form.username.data
             password = form.password.data
             user_raw = await fetchuser(app.ctx.db, username)
-            print("USERNAME: ", username)
-            print("USER RAW", user_raw)
             if user_raw is not None:
                 if user_raw['password'] == password:
                     query = "SELECT username FROM admins WHERE username=$1"
@@ -89,8 +89,6 @@ async def _invi(request):
     in_time = datetime.datetime.utcnow().day >= 3 and datetime.datetime.utcnow().day < 6
     qualified = await is_advanced(app.ctx.db, team_id, 2020)
 
-    print("IN TIME", in_time)
-
     if not admin and not qualified:
         return response.redirect('/')
     
@@ -98,8 +96,10 @@ async def _invi(request):
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
-    print(year)
-    if int(year) not in past_contest_years:
+    year = int(year)
+    if year == CURRENT_YEAR:
+        return await render_template(app.ctx.env, request, "opho/leaderboard.html", ranked_teams=await fetch_teams(app.ctx.db, year))
+    if year not in past_contest_years:
         return response.redirect('/archives')
     return await render_template(app.ctx.env, request, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
 
@@ -133,6 +133,7 @@ async def _answer_submit(request):
 
     is_correct = check_answer(attempt=team_answer, answer=real_answer)
 
+
     solved_str = 't' if is_correct else 'f'
 
     solve_data = await app.ctx.db.fetchrow(
@@ -142,7 +143,7 @@ async def _answer_submit(request):
     
     if is_correct:
         await app.ctx.db.execute_job(f"""
-            UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1
+            UPDATE rankings_2021 SET score = score + 1 WHERE team_id=$1
         """, team_id
         )
 
@@ -153,7 +154,7 @@ async def _answer_submit(request):
         'attempts_left' : 3 - solve_data['attempts'], 
         'answers' : solve_data['answers'], 
         'rank' : stats.rank, 
-        'problems_solved' : stats.problems_solved 
+        'problems_solved' : stats.score
     })
 
 """

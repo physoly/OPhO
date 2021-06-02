@@ -1,0 +1,48 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-166042318-1');
+        </script>
+        <meta charset="utf-8">
+        <title>Rankings</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+        
+    </head>
+    {% block body %}
+    {{ macros.render_nav(user) }}
+    <body>
+    <div id="rankings" action="api/answer_submit" style="margin-left:2%; margin-right: 2%;">
+        <h1 class="display-4">Leaderboard</h1>
+        <p class="lead">The rankings here are NOT final.</p>
+
+        <table class="table">
+            <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Problems Solved</th>
+            </tr>
+
+              {% for team in ranked_teams %}
+                <tr>
+                    <td>{{ team.rank }}</td>
+                    <td>{{ team.teamname }}</td>
+                    <td>{{ team.score }}</td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+    </body>
+    {% endblock %}
+</html>
