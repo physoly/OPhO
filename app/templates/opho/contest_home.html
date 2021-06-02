@@ -41,17 +41,24 @@
               Participants are given 2 full days to complete the theoretical portion starting from July 31, 12 am (GMT).
               They are given 1 full day to complete the experimental portion starting at August 2, 12 am (GMT).</li>
           </ul>
+<<<<<<< HEAD
           <p class="lead" style="font-size: 20px;">2021 Registration <a href="https://docs.google.com/forms/d/1ReK8oQrX0p_foSDeYeyk36oc0_0MyxLShAZsKXedJXI/edit">here</a>. <b>Signups will close on May 28th.</b></p>
+=======
+          <p class="lead" style="font-size: 20px;">2021 Registration <a href="https://docs.google.com/forms/d/1ReK8oQrX0p_foSDeYeyk36oc0_0MyxLShAZsKXedJXI/edit">here</a>. Registration closes May 29, 12am UTC.</p>
+>>>>>>> a696202ca8fa2f3f67ab8174be83dc5a48cd9a5f
           <p class="lead" style="font-size: 20px;">2021 Contest Rules and Regulations <a href="/static/files/rules.pdf">here</a>.</p>
         </div>
       </div>
       <div class="card-group" style="margin-left:20px; margin-right: 20px;">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">2020 Results</h5>
-            <p class="card-text">The 2020 contest has ended! You can view the round rankings for both parts below. Congratulations to everyone who participated!</p>
-            <a href="/2020/rankings" class="btn btn-info">Open Results</a>
-            <a href="/2020/invitational_rankings" class="btn btn-info">Invitational Results</a>
+            <h4 class="card-title">Contest Portal</h5>
+            <p class="card-text">Enter the contest portal to submit answers. Will open June 4 and close June 7 at 12 am UTC.</p>
+            {% if in_time_open %}
+            <a href="/contest" class="btn btn-info">Contest Portal</a>
+            {% else %}
+            <button type="button" class="btn btn-info" disabled>Contest Portal</button>
+            {% endif %}
           </div>
         </div>
         <div class="card">

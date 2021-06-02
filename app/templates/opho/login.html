@@ -1,4 +1,5 @@
 {% import 'macros.html' as macros %}
+{% extends 'base.html' %}
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -15,6 +16,8 @@
     <title>Login</title>
     <link rel="stylesheet" href="static/css/login.css">
   </head>
+  {% block body %}
+  {{ macros.render_nav(user) }}
   <body>
       <form class="box" method="post">
         <h1>Login to OPhO</h1>
@@ -24,4 +27,5 @@
         <p>You will recieve your login a week before the contest starts.</p>
       </form>
   </body>
+  {% endblock %}
 </html>
