@@ -1,10 +1,10 @@
 from utils import run_async, get_connection
 
-problem_number = 55
+problem_number = 35
 
 async def execute():
     conn = await get_connection()
-    team_ids = await conn.fetch('SELECT user_id FROM user_details WHERE user_id > 333')
+    team_ids = await conn.fetch('SELECT user_id FROM user_details_2021')
     
     for team_id in team_ids:
         create_table = f"""
@@ -15,6 +15,8 @@ async def execute():
         
         await conn.execute(create_table)
         await conn.execute(insert_query)
+
+        print("CREATING TEAM TABLE", team_id)
 
 run_async(execute())
 

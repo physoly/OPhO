@@ -7,7 +7,7 @@ from sanic.response import html
 import string
 import random
 
-from .models import Problem, RankedTeam, FinalRankedTeam
+from .models import Problem, RankedTeam
 
 import sys
 
@@ -115,13 +115,13 @@ async def fetch_problems(db, team_id):
     return problems
 
 async def fetch_teams(db, year):
-    final_rankings_table = f"final_rankings_{year}"
+    final_rankings_table = f"rankings_{year}"
     query=f"""select user_details_{year}.user_id, user_details_{year}.username, {final_rankings_table}.score, RANK() OVER ( ORDER BY {final_rankings_table}.score DESC ) rank from user_details_{year},{final_rankings_table} where {final_rankings_table}.team_id = user_details_{year}.user_id;"""
     record_rows = await db.fetchall(query)
 
     teams = []
     for record_row in record_rows:
-        teams.append(FinalRankedTeam(
+        teams.append(RankedTeam(
             id=record_row[0],
             teamname=record_row[1],
             score=record_row[2],
@@ -131,7 +131,7 @@ async def fetch_teams(db, year):
     return teams
 
 async def fetch_team_stats(db,team_id):
-    teams = await fetch_teams(db)
+    teams = await fetch_teams(db, 2021)
     for team in teams:
         if team.id == team_id:
             return team

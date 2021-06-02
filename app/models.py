@@ -24,18 +24,20 @@ class Problem():
         self.timestamp = timestamp
 
 class RankedTeam():
-    def __init__(self, id, teamname, problems_solved, rank):
+    def __init__(self, id, teamname, score, rank):
         self.id = id
         self.teamname = teamname
-        self.problems_solved = problems_solved
+        self.score = score
         self.rank = rank
     
+"""
 class FinalRankedTeam():
     def __init__(self, id, teamname, score, rank):
         self.id = id
         self.teamname = teamname
         self.score = score
         self.rank = rank
+"""
     
 class ScoredUser():
     def __init__(self, team_id, score):
