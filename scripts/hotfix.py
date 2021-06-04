@@ -1,8 +1,8 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-problem_no = 19
-answer = Decimal(0.996)
+problem_no = 21
+answer = Decimal(1.491)
 
 def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
@@ -15,7 +15,7 @@ def get_attempt_details(answers, answer):
 
 async def execute():
     conn = await get_connection()
-    team_ids = await conn.fetch('SELECT user_id FROM user_details')
+    team_ids = await conn.fetch('SELECT user_id FROM user_details_2021')
 
     for team_id in team_ids:
         data = await conn.fetchrow(f'SELECT * from team{team_id[0]} WHERE problem_no=$1', problem_no)
@@ -23,16 +23,18 @@ async def execute():
         solved = data['solved']
 
         if solved:
-            print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details where user_id=$1', team_id[0]))
+            print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2021 where user_id=$1', team_id[0]))
             continue
-
+        
         if answers is not None and not solved:
             attempts, is_correct = get_attempt_details(answers, answer)
             if is_correct:
                 await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 WHERE problem_no=$2', True, problem_no)
-                await conn.execute(f'UPDATE rankings SET problems_solved = problems_solved + 1 WHERE team_id=$1', team_id[0])
+                await conn.execute(f'UPDATE rankings_2021 SET score=score + 1 WHERE team_id=$1', team_id[0])
                 await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
                 print("TEAM ID: ", team_id[0], "ATTEMPTS: ", attempts)
+
+        
 
 
         #data = await conn.fetchrow(f'SELECT * from team{team_id[0]} WHERE problem_no=$1', problem_no)
