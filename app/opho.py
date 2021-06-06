@@ -5,6 +5,7 @@ from app.config import Config
 from app.models import RankedTeam, User
 
 from sanic import Blueprint, response, Sanic
+import os
 from sanic.response import json, HTTPResponse, redirect
 
 from app.forms import LoginForm
@@ -133,8 +134,9 @@ async def _answer_submit(request):
 
     error = 0.05 if problem_no == 26 else 0.01
     is_correct = check_answer(attempt=team_answer, answer=real_answer)
-    if problem_no==31:
-        is_correct = check_answer(attempt=attempt, answer=Decimal(open('test.txt', 'r').read()))
+    print(os.getcwd())
+    if problem_no==32 and not is_correct:
+        is_correct = check_answer(attempt=team_answer, answer=Decimal(open(os.getcwd() + '/app/test.txt', 'r').read()))
 
     solved_str = 't' if is_correct else 'f'
 
