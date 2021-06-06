@@ -1,22 +1,24 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-problem_no = 21
-answer = Decimal(1.491)
+problem_no = 26
+answer = 0000
+error = 000
 
 def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) < error * answer
 
 def get_attempt_details(answers, answer):
     for i in range(len(answers)):
-        if check_answer(attempt=answers[i], answer=answer):
+        if check_answer(attempt=answers[i], answer=answer,error=error):
             return i+1, True
     return -1, False
 
 async def execute():
     conn = await get_connection()
     team_ids = await conn.fetch('SELECT user_id FROM user_details_2021')
-
+    await conn.execute('UPDATE problems SET answer=$2 WHERE problem_no=$1', problem_no, answer)
+    print(f"Problem {problem_no} now has answer {answer}")
     for team_id in team_ids:
         data = await conn.fetchrow(f'SELECT * from team{team_id[0]} WHERE problem_no=$1', problem_no)
         answers = data['answers']
@@ -25,7 +27,7 @@ async def execute():
         if solved:
             print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2021 where user_id=$1', team_id[0]))
             continue
-        
+    
         if answers is not None and not solved:
             attempts, is_correct = get_attempt_details(answers, answer)
             if is_correct:
