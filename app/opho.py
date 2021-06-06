@@ -132,7 +132,7 @@ async def _answer_submit(request):
 
     real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
-    error = 0.05 if problem_no == 26 else 0.01
+    error = 0.05 if problem_no == 26 or problem_no == 27 else 0.01
     is_correct = check_answer(attempt=team_answer, answer=real_answer)
     print(os.getcwd())
     if problem_no==32 and not is_correct:
