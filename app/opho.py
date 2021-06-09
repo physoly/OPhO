@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced, get_all_invi_scores, in_time_open
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced, get_all_invi_scores, in_time_open, get_cutoffs
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -102,7 +102,9 @@ async def _rankings(request, year):
         return await render_template(app.ctx.env, request, "opho/leaderboard.html", ranked_teams=await fetch_teams(app.ctx.db, year))
     if year not in past_contest_years:
         return response.redirect('/archives')
-    return await render_template(app.ctx.env, request, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year))
+    cutoffs = await get_cutoffs(app.ctx.db, year)
+    print(cutoffs)
+    return await render_template(app.ctx.env, request, "opho/rankings.html", ranked_teams=await fetch_teams(app.ctx.db, year), cutoffs=await get_cutoffs(app.ctx.db, year))
 
 @opho.route('/<year>/invitational_rankings')
 async def _invi_rankings(request,year):

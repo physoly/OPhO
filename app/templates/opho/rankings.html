@@ -32,8 +32,8 @@
             <img src="/static/files/bronze_medal.png" height="42" width="42"> = 3rd place &nbsp;
         </p>
         <p>
-            <img src="/static/files/win.png" height="42" width="42"> = Honors (Achieved a score of 97 or higher) &nbsp;
-            <img src="/static/files/advanced.png" height="42" width="42"> = Advanced to invitationals (Achieved a score of 86 or higher) &nbsp;
+            <img src="/static/files/win.png" height="42" width="42"> = Honors (Achieved a score of {{ cutoffs[1][1] }} or higher) &nbsp;
+            <img src="/static/files/advanced.png" height="42" width="42"> = Advanced to invitationals (Achieved a score of {{ cutoffs[0][1] }} or higher) &nbsp;
         </p>
 
         <table class="table">
@@ -55,9 +55,9 @@
                     <td><img src="/static/files/silver_medal.png" height="42" width="42"></td>
                     {% elif team.rank == 3 %}
                     <td><img src="/static/files/bronze_medal.png" height="42" width="42"></td>
-                    {% elif team.score >= 97 %}
+                    {% elif team.score >= cutoffs[1][1] %}
                     <td><img src="/static/files/win.png" height="42" width="42"></td>
-                    {% elif team.score  >= 86.0 %}
+                    {% elif team.score  >= cutoffs[0][1] %}
                     <td><img src="/static/files/advanced.png" height="42" width="42"></td>
                     {% else %}
                     <td></td>
