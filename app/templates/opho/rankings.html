@@ -57,12 +57,12 @@
                     <td><img src="/static/files/silver_medal.png" height="42" width="42"></td>
                     {% elif team.rank == 3 %}
                     <td><img src="/static/files/bronze_medal.png" height="42" width="42"></td>
-                    {% elif team.score >= 140.0 %}
+                    {% elif team.score >= 97.7 %}
                     <td><img src="/static/files/win.png" height="42" width="42"></td>
-                    {% elif team.score  >= 130.0 %}
+                    {% elif team.score  >= 87.0 %}
                     <td><img src="/static/files/advanced.png" height="42" width="42"></td>
                     {% else %}
-                    <td><img src="/static/files/close.png" height="42" width="42"></td>
+                    <td></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
