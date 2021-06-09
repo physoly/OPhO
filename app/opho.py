@@ -24,7 +24,7 @@ from decimal import Decimal
 
 app = Sanic.get_app()
 
-past_contest_years = [2020]
+past_contest_years = [2020, 2021]
 
 CURRENT_YEAR = 2021
 
