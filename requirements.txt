@@ -10,5 +10,5 @@ sanic-routing==0.6.2
 sanic-session==0.8.0
 ujson==4.0.2
 uvloop==0.15.2
-websockets==8.1
+websockets==9.1
 WTForms==2.3.3
