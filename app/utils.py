@@ -24,9 +24,9 @@ OPEN_END_DAY = 7
 OPEN_START_MONTH = 6
 OPEN_END_MONTH = 6
 
-INVI_START_DAY = 31
-INVI_END_DAY = 2
-INVI_START_MONTH = 7
+INVI_START_DAY = 13
+INVI_END_DAY = 15
+INVI_START_MONTH = 8
 INVI_END_MONTH = 8
 
 def in_time_open():
@@ -34,6 +34,12 @@ def in_time_open():
     right_month = utc_now.month >= OPEN_START_MONTH and utc_now.month <= OPEN_END_MONTH
     right_day = utc_now.day >= OPEN_START_DAY and utc_now.day < OPEN_END_DAY
     print("IN TIME", right_month and right_day)
+    return right_month and right_day
+
+def in_time_invi():
+    utc_now = datetime.datetime.utcnow()
+    right_month = utc_now.month >= INVI_START_MONTH and utc_now.month <= INVI_END_MONTH
+    right_day = utc_now.day >= INVI_START_DAY and utc_now.day < INVI_END_DAY
     return right_month and right_day
 
 def get_stack_variable(name):
@@ -63,7 +69,7 @@ async def render_template(env, request, tpl,*args, **kwargs):
     return html(await template.render_async(*args,**kwargs))
 
 async def is_advanced(db, team_id, year):
-    return await db.fetchval(f'SELECT score FROM final_rankings_{year} WHERE team_id = $1', team_id) >= 130.0
+    return await db.fetchval(f'SELECT score FROM rankings_{year} WHERE team_id = $1', team_id) > 86.0
 
 def auth_required(admin_required=False):
     def decorator(f):

@@ -24,16 +24,16 @@
   </head>
   {% block body %}
   {{ macros.render_nav(user) }}
-  <body style="background-color:grey">
-    <p  style="font-size:30px; color: white">The invitational round will take place from July 3, 12:00 AM UTC to July 6, 12:00 AM UTC.</p>
-    <p  style="font-size:30px; color: white">Submit your answers <a href="https://forms.gle/oktyYMytrMuBG3cc7">here</a></p>
-    <p style="font-size:15px">Clarifications doucment can be found <a href="https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit?usp=sharing" target="_blank">here</a>.</p>
-    <p style="font-size:15px">Request clarifications <a href="https://docs.google.com/forms/d/e/1FAIpQLSdTJ-IpUsbLsbI_WCyu_4eN2Bb_J4UJ_x29UYLcP-YO3lOQRg/viewform" target="_blank">here</a>.</p>
-    <object data="/static/files/opho2020_invi.pdf" type="application/pdf" width="100%" height="800px"> 
-        <p>It appears you don't have a PDF plugin for this browser.
-        <a href="/static/files/opho2020_invi.pdf">click here to
-        download the PDF file.</a></p>  
-    </object>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">OPhO 2021 Invitational Contest</h1>
+      <p class="lead">The invitational paper (PASSWORD PROTECTED) is available <a href="/static/files/opho2021_invi.pdf" target="_blank">here</a>. Do not share this paper or the password.</p>
+      <p class="lead">Password: FeynmanAndFermi2021</p>
+      <p class="lead">Request a clarification <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2VpeePbjPK2SV0FRYLlFCeYNtwaQfujlu7KJCWgcqmo2klQ/viewform" target="_blank">here</a></p>
+      <p class="lead">Review all clarifcations <a href="https://docs.google.com/document/d/1cQ0FDffdpxmjiTb6STJuXg0vyHeNNCHdKtr_jBg8EBo/edit" target="_blank">here</a>. CHECK THIS OFTEN.</p>
+    </div>
+    <!-- <div data-type="countdown" data-id="2581810" class="tickcounter" style="width: 60%; position: relative; margin: auto; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/2581810/opho-ends-in" title="OPhO Ends In">OPhO Ends In</a><a href="//www.tickcounter.com/" title="Countdown">Countdown</a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script> -->
+  </div>
   </body>
 {% endblock %}
 </html>
