@@ -1,0 +1,38 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-166042318-1');
+    </script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <title>OPhO Contest Page</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+    
+
+  </head>
+  {% block body %}
+  {{ macros.render_nav(user) }}
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">OPhO 2021 Invitational Contest</h1>
+      <p class="lead">The invitational paper is available <a href="/static/files/opho2021_invi.pdf" target="_blank">here</a>. Do not share this paper.</p>
+      <p class="lead">Request a clarification <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2VpeePbjPK2SV0FRYLlFCeYNtwaQfujlu7KJCWgcqmo2klQ/viewform" target="_blank">here</a></p>
+      <p class="lead">Review all clarifcations <a href="https://docs.google.com/document/d/1cQ0FDffdpxmjiTb6STJuXg0vyHeNNCHdKtr_jBg8EBo/edit" target="_blank">here</a>. CHECK THIS OFTEN.</p>
+    </div>
+    <!-- <div data-type="countdown" data-id="2581810" class="tickcounter" style="width: 60%; position: relative; margin: auto; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/2581810/opho-ends-in" title="OPhO Ends In">OPhO Ends In</a><a href="//www.tickcounter.com/" title="Countdown">Countdown</a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script> -->
+  </div>
+  </body>
+{% endblock %}
+</html>
