@@ -108,7 +108,9 @@ async def _rankings(request, year):
 async def _invi_rankings(request,year):
     if int(year) not in past_contest_years:
         return response.redirect('/archives')
-    return await render_template(app.ctx.env, request, "opho/invi_rankings.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
+    if int(year) == 2021:
+        return await render_template(app.ctx.env, request, f"opho/invi_rankings_{year}.html", invi_records=await app.ctx.db.fetchall(f'SELECT * FROM invi_scores_{year}'))
+    return await render_template(app.ctx.env, request, f"opho/invi_rankings_{year}.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
 
 @opho.post('/api/answer_submit')
 @auth_required()
