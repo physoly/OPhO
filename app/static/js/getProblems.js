@@ -47,27 +47,27 @@ d3.csv('/static/csv/mech.csv', data => {
 
 d3.csv('/static/csv/kinematics.csv', data => {
 	problems.kinematics = data;
-	tabulate('kinData', problems.mech, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+	tabulate('kinData', problems.kinematics, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
 });
 
 d3.csv('/static/csv/em.csv', data => {
 	problems.em = data;
-	tabulate('emData', problems.mech, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+	tabulate('emData', problems.em, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
 });
 
 d3.csv('/static/csv/thermo.csv', data => {
 	problems.thermo = data;
-	tabulate('thermoData', problems.mech, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+	tabulate('thermoData', problems.thermo, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
 });
 
 d3.csv('/static/csv/waves.csv', data => {
 	problems.waves = data;
-	tabulate('waveData', problems.mech, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+	tabulate('waveData', problems.waves, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
 });
 
 d3.csv('/static/csv/modern.csv', data => {
 	problems.modern = data;
-	tabulate('modernData', problems.mech, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+	tabulate('modernData', problems.modern, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
 });
 
 
