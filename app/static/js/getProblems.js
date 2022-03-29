@@ -1,122 +1,73 @@
-function tabulate(probList,tab){
-    var col = [];
-for (var i = 0; i < probList.length; i++) {
-    for (var key in probList[i]) {
-        if (col.indexOf(key) === -1) {
-            col.push(key);
-        }
-    }
+problems = {
+	mech: {},
+	kinematics: {},
+	em: {},
+	thermo: {},
+	waves: {},
+	modern: {},
 }
 
-// CREATE DYNAMIC TABLE.
-var table = document.createElement("table");
-table.setAttribute("class","sortable table table-sm");
+function tabulate(location, data, columns) {
+	var table = d3.select(`#${location}`).html('').append('table').attr('class', 'table');
+	var thead = table.append('thead');
+	var	tbody = table.append('tbody');
 
-// CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+	// append the header row
+	thead.append('tr')
+	  .selectAll('th')
+	  .data(columns).enter()
+	  .append('th')
+	    .text(function (column) { return column; })
+			.attr('scope', 'col');
 
-var tr = table.insertRow(-1);                   // TABLE ROW.
+	// create a row for each object in the data
+	var rows = tbody.selectAll('tr')
+	  .data(data)
+	  .enter()
+	  .append('tr');
 
+	// create a cell in each row for each column
+	var cells = rows.selectAll('td')
+	  .data(function (row) {
+	    return columns.map(function (column) {
+	      return {column: column, value: row[column]};
+	    });
+	  })
+	  .enter()
+	  .append('td')
+	    .text(function (d) { return d.value; });
 
-var th = document.createElement("th");
-th.setAttribute("width","18%");
-th.innerHTML = col[0];
-tr.appendChild(th);
-
-var th = document.createElement("th");
-th.setAttribute("width","5%");
-th.innerHTML = col[1];
-tr.appendChild(th);
-
-var th = document.createElement("th");
-th.setAttribute("width","5%");
-th.innerHTML = col[2];
-tr.appendChild(th);
-
-var th = document.createElement("th");
-th.setAttribute("width","5%");
-th.innerHTML = col[3];
-tr.appendChild(th);
-
-var th = document.createElement("th");
-th.innerHTML = col[4];
-tr.appendChild(th);
-
-// ADD JSON DATA TO THE TABLE AS ROWS.
-for (var i = 0; i < probList.length; i++) {
-
-    tr = table.insertRow(-1);
-
-    for (var j = 0; j < col.length; j++) {
-        var tabCell = tr.insertCell(-1);
-        if(j == 0){
-            var u=probList[i][col[0]].split(" ")[0]+"-"+probList[i][col[0]].split(" ")[1];
-            if(u !== "Physics-Cup"){
-                tabCell.innerHTML = "<p>"+probList[i][col[j]]+"</p>";
-            }
-            else if(u == "Physics-Cup"){
-                tabCell.innerHTML = "<p>"+probList[i][col[j]]+"</p>";
-            }
-        }
-        else{
-            tabCell.innerHTML = probList[i][col[j]]
-        }
-    }
+  return table;
 }
 
-// FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-var divContainer = document.getElementById(tab);
-divContainer.innerHTML = "";
-divContainer.appendChild(table);
-}
-
-function stars(num){
-    var n = parseInt(num);
-    var s = "";
-    for(var i=0;i<n;i++){
-        s += "★";
-    }
-    return(s);
-}
-function prepare(type,tab){
-
-localStorage.clear();
-var sample_url = "https://spreadsheets.google.com/feeds/list/1rHo8vbP99PSOjoniyIZ88BTQtzG6vQTqrSA3ZrBl90U/od6/public/values?alt=json";
-var url_parameter = document.location.search.split(/\?url=/)[1]
-var url = url_parameter || sample_url;
-var googleSpreadsheet = new GoogleSpreadsheet();
-var t = 1;
-var test = [];
-var start=0;
-googleSpreadsheet.url(url);
-googleSpreadsheet.load(function(result) {
-  t = JSON.parse(JSON.stringify(result).replace(/,/g,",\n")).data;
-  for(var i=0; i<t.length; i+=5){
-      if(t[i]==type){
-          start = i+10;
-      }
-  }
-
-  for(var i=start; i<t.length; i+=5){
-    if(t[i] != "-"){
-        var temp = {};
-        temp["Problem"] = t[i];
-        temp["Rating"] = stars(t[i+1]);
-        temp["Difficulty"] = stars(t[i+2]);
-        temp["Length"] = stars(t[i+3]);
-        temp["Description"] = t[i+4];
-        test.push(temp);
-    }
-    else{
-        break;
-    }
-  }
-  tabulate(test,tab);
+d3.csv('/static/csv/mech.csv', data => {
+	problems.mech = data;
+	tabulate('mechData', problems.mech, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
 });
-}
 
-prepare("mech","mechData");
-prepare("em","emData");
-prepare("thermo","thermoData");
-prepare("waves","waveData");
-prepare("modern","modernData");
-prepare("kinematics","kinData");
+d3.csv('/static/csv/kinematics.csv', data => {
+	problems.kinematics = data;
+	tabulate('kinData', problems.kinematics, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+});
+
+d3.csv('/static/csv/em.csv', data => {
+	problems.em = data;
+	tabulate('emData', problems.em, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+});
+
+d3.csv('/static/csv/thermo.csv', data => {
+	problems.thermo = data;
+	tabulate('thermoData', problems.thermo, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+});
+
+d3.csv('/static/csv/waves.csv', data => {
+	problems.waves = data;
+	tabulate('waveData', problems.waves, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+});
+
+d3.csv('/static/csv/modern.csv', data => {
+	problems.modern = data;
+	tabulate('modernData', problems.modern, ['Problem Name', 'Rating', 'Difficulty', 'Length', 'Description']);
+});
+
+

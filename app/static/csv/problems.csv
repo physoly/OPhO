@@ -1,0 +1,106 @@
+mech,mech,mech,mech,mech
+Problem Name,Rating,Difficulty,Length,Description
+NBPhO 2019 P7,2,2,1,Dominoes on Stairs: Calculating the terminal speed of falling dominos.
+IPhO 2003 P1,2,4,4,A Swing with a Falling Weight: Analysis of a swing's rotational motion in various situations
+NBPhO 2017 P4,3,2,1,Gravitational Waves: Estimating locations of binary black boles by modelling stress and strain
+USAPhO 2018 B3,3,1,2,Poynting–Robertson Effect: Developing a simple model for the time for Dust Particles to be cleared of orbit
+INPhO 2020 P5,3,2,2,Bullet in a Rod: A relatively standard but good practice for problems on rotational collision
+CPhO 2018 P3,2,3,4,Rotating rod collision: Using conservation laws and newton's force equations to analyse the motion of a rod under gravity when a projectile embeds in it
+IPhO 1995 T3,3,2,2,Cylindrical Buoy: Modelling pertubations in a buoy floating on sea-water
+USAPhO 2019 B3,3,2,2,Pitfall: A good exercise using all areas of Classical mechanics to analyse the motion of a falling constrained rod with masses at its ends 
+APhO 2010 T1,1,1,1,TBA
+GPhO 2016 T1,2,2,2,Stabilizing unstable states: A good exercise on rotational motion and provides insight into the working of Kapitza's pendulum
+USAPhO 2017 B1,3,2,2, Dominoes on Table : Toppling of dominoes; Energy lost in collision; Propagation speed of falling Dominoes.
+USAPhO 2017 A1,2,1,1,Two Wedges : Statics problem on two Wedges. Can be solved elegantly using geometry.
+EuPhO 2020 T2,4,3,1,TBA
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+-,-,-,-,-
+kinematics,kinematics,kinematics,kinematics,kinematics
+Problem Name,Rating,Difficulty,Length,Description
+IPhO 2012 T1,2,2,2,Minimization: Minimizing the path of a projectile moving through a sphere.
+Physics Cup 2012 P1,3,3,2,TBA
+Physics Cup 2019 P3,2,3,3,TBA
+EuPhO 2019 T3,3,3,1,TBA
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+-,-,-,-,-
+em,em,em,em,em
+Problem Name,Rating,Difficulty,Length,Description
+USAPhO 2012 B2,2,2,2,Magnetic Monopole: Generalizing Gauss's Law to apply on hyopthetical magnetic monopoles. Introduces neat techniques to calculate flux.
+INPhO 2015 P2,2,2,2,Elestrostatic Shielding: Understanding the nature of electrostatic forces on uncharged spherical confuctor by point charges in various situations
+INPhO 2020 P2,2,1,1,The Feynman Disk Paradox: Analogous to the well known disk paradox; Analyzes the torque produced due to electromagnetic induction in charged cylinder  
+CPhO 2018 P4,3,4,4,Ioffe-Pritchard Magnetic Trap: Model of a famous magnetic trap used to trap atoms and uses calculation of magnetic fields and binding energy requiring clever approximation skills
+IPhO 2010 T1,3,2,3,Image Charges: An excellent problem for practice on image charges. The problem requires having clear fundamentals of elestrostatics of conductors. 
+Physics Cup 2020 P1,1,1,1,TBA
+Physics Cup 2017 P1,4,4,4,Interaction Force: Estimating the interaction force between a point charge and a circular metallic disc kept far away using differential form of Gauss' Law and vector calculus amongst other higher order integration techniques.
+INPhO 2011 P1,2,2,2,Electron Escaping a Wire: An excellent problem describing the parameters in an electron escaping a wire. The problem requires good knowledge of vector components and fundamentals to solve.
+IPhO 1994 P2,3,3,3,-
+APhO 2012 T1,3,3,3,-
+,,,,
+,,,,
+-,-,-,-,-
+thermo,thermo,thermo,thermo,thermo
+Problem Name,Rating,Difficulty,Length,Description
+USAPhO 2011 A4,3,1,1,Stefan Boltzmann Law: Using a simplified model of electromagnetic radiation and quantum mechanics to derive the famous law.
+INPhO 2013 P7,3,3,3,Brunt-Väisälä Frequency: Using a model of a balloon in the atmosphere executing Brunt-Väisälä oscillations
+USAAO 2019 P7,3,2,2,Black Hole Physics: A nice stellar physics problem which provides a crude model of black holes using Chandrashekar limit and Hawking's temperature
+INPhO 2005 P11,4,3,3,Birth of a Star: Estimating the minimum mass a gaseous hydrogen cloud contracting under gravity should have to become a star taking into account Pauli's electron degeneracy pressure. Has many real life applications.
+IPhO 2014 T2,3,3,4,Van Der Waals: Analysis of non-ideal gas using Van Der Waals model and application of different concepts like surface tension using it
+IPhO 1997 T1,2,2,2,Mountain Physics: Analyzing the movement of moist air masses moving on through a mountain.
+IPhO 1992 T3,3,2,2,Satellite in Sunshine: A brilliant mix of conceptual and calculative analysis on Planck's radiation law and the Stefan-Boltzmann's law
+USAPhO 2019 A2,3,2,2,"Green Revolution: Investigating a simple thermodynamic model for the conversion of solar
+energy into wind."
+APhO 2012 T3,4,3,3,-
+Physics Cup 2018 P5,4,5,4,-
+APhO 2010 T3,4,3,4,-
+IPhO 1989 T1,2,2,3,-
+NBPhO 2014 T9,4,3,3,-
+-,-,-,-,-
+waves,waves,waves,waves,waves
+Problem Name,Rating,Difficulty,Length,Description
+USAPhO 2018 B2,1,1,1,Telescope Mirror: Using the Uncertainty Principle to Estimate Size of Telescope to Observe Distant Stars
+INPhO 2020 P4,3,2,2,Source in Circular Motion: A lovely problem requiring detective-like casework on the various possibilities of the position of wave detectors
+NBPhO 2012 P1,3,2,2,-
+IPhO 1995 T2,3,3,3,-
+IPhO 2015 T2(b),4,3,2,-
+Physics Cup 2012 P0,2,3,2,-
+NBPhO 2019 P5,3,2,2,-
+EuPhO 2020 T3,4,4,3,-
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+-,-,-,-,-
+modern,modern,modern,modern,modern
+Problem Name,Rating,Difficulty,Length,Description
+USAPhO 2017 A4,2,1,1,Relativistic Collision: Introduces a clever technique to model the collision between two subatomic praticles at relativistic speeds and also talks briefly about Cosmic Microwave Background Radiation
+INPhO 2020 P3,2,1,2,Two-Electron Bohr Model: Creating a new Bohr Model for a two-electron system revolving around a nucleus
+Physics Cup 2012 P9,3,3,3,Particle Collisions: A problem on an electron that is given electrical power to collide with a positron to produce gamma rays.
