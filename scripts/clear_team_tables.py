@@ -10,6 +10,6 @@ async def execute():
     query = f"DROP TABLE {table_names}"
     print(query)
 
-    #await conn.execute(query)
+    await conn.execute(query)
 
 run_async(execute())
