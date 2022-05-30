@@ -26,7 +26,6 @@ async def execute():
         solve_stats[problem_no] = get_num_solved(conn, all_team_stats, problem_no)
     
     print(solve_stats)
-
     
     for team_id, data in all_team_stats.items():
         for problem in data:

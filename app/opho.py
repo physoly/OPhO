@@ -134,13 +134,7 @@ async def _answer_submit(request):
 
     real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
-    error = 0.05 if problem_no == 26 or problem_no == 27 else 0.01
     is_correct = check_answer(attempt=team_answer, answer=real_answer)
-    print(os.getcwd())
-    if problem_no==32 and not is_correct:
-        is_correct = check_answer(attempt=team_answer, answer=Decimal(open(os.getcwd() + '/app/test.txt', 'r').read()))
-
-    solved_str = 't' if is_correct else 'f'
 
     solve_data = await app.ctx.db.fetchrow(
             f"UPDATE team{team_id} SET solved=$1, attempts = attempts + 1, answers=array_append(answers, $2), timestamp = current_timestamp WHERE problem_no = $3 and attempts < 3 RETURNING *;",
