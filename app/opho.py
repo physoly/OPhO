@@ -173,7 +173,7 @@ async def _announcements(request):
     add_msg_query = f"INSERT INTO announcements(msg) VALUES ('{msg}')"
 
     try:
-        await request.app.sse_send(json_dumps(payload))
+        await request.app.sse_send(request.json['msg'])
     except KeyError:
         abort(HTTPStatus.NOT_FOUND, "channel not found")
     

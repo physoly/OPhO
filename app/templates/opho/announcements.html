@@ -22,10 +22,15 @@
     {% block body %}
     {{ macros.render_nav(user) }}
     <body>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             let source = new EventSource('/events')
             source.onmessage = function(event) {
-                console.log(event.data)
+                Swal.fire(
+                'Announcement',
+                event.data,
+                'info'
+                )
             };
         </script>
         <h1 class="display-4">Announcements</h1>
