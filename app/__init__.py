@@ -1,8 +1,10 @@
 from sanic import Sanic
 from sanic_session import Session, InMemorySessionInterface
 from jinja2 import Environment, PackageLoader
+from sanic_sse import Sse
 
 app = Sanic('OPhO')
+Sse(app, url="/events")
 
 from app.listeners import listeners
 from app.root import root

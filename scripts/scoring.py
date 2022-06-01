@@ -50,7 +50,6 @@ async def execute():
             f.write(f'{count},{teamname},{team_id},{score}\n')
             count = count + 1
 
-
 async def get_team_stats(conn, team_id):
     query = await conn.prepare(f'SELECT * from team{team_id}')
     return await query.fetch()

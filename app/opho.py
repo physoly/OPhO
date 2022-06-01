@@ -6,7 +6,8 @@ from app.models import RankedTeam, User
 
 from sanic import Blueprint, response, Sanic
 import os
-from sanic.response import json, HTTPResponse, redirect
+from sanic.response import json, HTTPResponse, redirect, json_dumps
+from sanic.exceptions import abort
 
 from app.forms import LoginForm
 
@@ -17,6 +18,7 @@ import sys
 from app.config import Config
 
 import datetime
+from http import HTTPStatus
 
 opho = Blueprint('opho', host=f'opho.{Config.DOMAIN}')
 
@@ -27,6 +29,8 @@ app = Sanic.get_app()
 past_contest_years = [2020, 2021]
 
 CURRENT_YEAR = 2022
+
+AUTH_TOKEN = "ffsakfjsldfjaskf"
 
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
@@ -157,6 +161,24 @@ async def _answer_submit(request):
         'problems_solved' : stats.score
     })
 
+@opho.post('/api/announcements')
+async def _announcements(request):
+    # auth_token = request.headers.get('Authorization', None)
+    channel_id = request.json.get("channel_id")
+    msg = "" #get from request
+
+    print("POST RECIEVED", request.json)
+    
+    payload = {"msg":request.json['msg']}
+    add_msg_query = f"INSERT INTO announcements(msg) VALUES ('{msg}')"
+
+    try:
+        await request.app.sse_send(json_dumps(payload))
+    except KeyError:
+        abort(HTTPStatus.NOT_FOUND, "channel not found")
+    
+    return json({"status":"ok"})
+
 """
 @app.route('/admin/createcontest', methods=['GET', 'POST'])
 #@auth_required(admin_required=True)
@@ -186,6 +208,10 @@ async def _contest_home(request):
 async def _logout(request):
     request.ctx.session.clear()
     return response.redirect('/')
+
+@opho.get('/announcements')
+async def _announcements(request):
+    return await render_template(app.ctx.env, request, 'opho/announcements.html')
 
 @opho.get('/team')
 async def _team(request):
