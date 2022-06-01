@@ -34,7 +34,11 @@
             };
         </script>
         <h1 class="display-4">Announcements</h1>
-        
+        <ul>
+        {% for an in announcements %}
+        <li><b>{{ an['timestamp'] }}: </b>{{ an['msg'] }}</li>
+        {% endfor %}
+        </ul>
     </body>
     {% endblock %}
     

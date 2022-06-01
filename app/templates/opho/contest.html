@@ -25,6 +25,17 @@
   {% block body %}
   {{ macros.render_nav(user) }}
   <body>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            let source = new EventSource('/events')
+            source.onmessage = function(event) {
+                Swal.fire(
+                'Announcement',
+                event.data,
+                'info'
+                )
+            };
+        </script>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1 class="display-4">Contest Page</h1>

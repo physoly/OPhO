@@ -60,8 +60,8 @@ async def _login(request):
 @auth_required()
 async def _contest(request):
     admin = request.ctx.session['user']['admin']
-    if not admin and not in_time_open():
-        return response.redirect('/')
+    #if not admin and not in_time_open():
+        #return response.redirect('/')
 
     team_id = request.ctx.session['user']['id']
 
@@ -89,7 +89,7 @@ async def _invi(request):
     admin = user['admin']
     team_id = user['id']
 
-    qualified = await is_advanced(app.ctx.db, team_id, 2021)
+    qualified = await is_advanced(app.ctx.db, team_id, 2022)
 
     if not qualified or not in_time_invi():
         return response.redirect('/')
@@ -145,7 +145,7 @@ async def _answer_submit(request):
     
     if is_correct:
         await app.ctx.db.execute_job(f"""
-            UPDATE rankings_2021 SET score = score + 1 WHERE team_id=$1
+            UPDATE rankings_2022 SET score = score + 1 WHERE team_id=$1
         """, team_id
         )
 
@@ -163,9 +163,11 @@ async def _answer_submit(request):
 async def _announcements(request):
     auth_token = request.headers.get('Authorization', None)
     channel_id = request.json.get("channel_id")
+    msg = request.json['msg']
+    await app.ctx.db.execute_job(f"INSERT INTO announcements(msg) VALUES ('{msg}')")
     if auth_token == app.ctx.sse_token:
         try:
-            await request.app.sse_send(request.json['msg'], channel_id=channel_id)
+            await request.app.sse_send(msg, channel_id=channel_id)
         except KeyError:
             abort(HTTPStatus.NOT_FOUND, "channel not found")
         
@@ -204,7 +206,8 @@ async def _logout(request):
 
 @opho.get('/announcements')
 async def _announcements(request):
-    return await render_template(app.ctx.env, request, 'opho/announcements.html')
+    announcements = await app.ctx.db.fetchall('SELECT * FROM announcements ORDER BY timestamp DESC')
+    return await render_template(app.ctx.env, request, 'opho/announcements.html', announcements=announcements)
 
 @opho.get('/team')
 async def _team(request):
@@ -213,7 +216,6 @@ async def _team(request):
 @opho.get('/winners')
 async def _winners(request):
     return await render_template(app.ctx.env, request, 'opho/winners.html')
-
 
 @opho.get('/info', name='opho_info')
 async def _opho_info(request):

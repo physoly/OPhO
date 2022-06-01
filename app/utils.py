@@ -137,7 +137,7 @@ async def fetch_teams(db, year):
     return teams
 
 async def fetch_team_stats(db,team_id):
-    teams = await fetch_teams(db, 2021)
+    teams = await fetch_teams(db, 2022)
     for team in teams:
         if team.id == team_id:
             return team
