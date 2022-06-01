@@ -19,6 +19,7 @@ async def server_begin(app, loop):
     )
     
     await app.ctx.db.init();
+    app.ctx.sse_token = await app.ctx.db.fetchval('SELECT token from auth_tokens')
 
 @listeners.listener('after_server_stop')
 async def server_end(app, loop):

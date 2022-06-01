@@ -30,8 +30,6 @@ past_contest_years = [2020, 2021]
 
 CURRENT_YEAR = 2022
 
-AUTH_TOKEN = "ffsakfjsldfjaskf"
-
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):
     form = LoginForm(request.form)
@@ -163,21 +161,16 @@ async def _answer_submit(request):
 
 @opho.post('/api/announcements')
 async def _announcements(request):
-    # auth_token = request.headers.get('Authorization', None)
+    auth_token = request.headers.get('Authorization', None)
     channel_id = request.json.get("channel_id")
-    msg = "" #get from request
-
-    print("POST RECIEVED", request.json)
-    
-    payload = {"msg":request.json['msg']}
-    add_msg_query = f"INSERT INTO announcements(msg) VALUES ('{msg}')"
-
-    try:
-        await request.app.sse_send(request.json['msg'])
-    except KeyError:
-        abort(HTTPStatus.NOT_FOUND, "channel not found")
-    
-    return json({"status":"ok"})
+    if auth_token == app.ctx.sse_token:
+        try:
+            await request.app.sse_send(request.json['msg'], channel_id=channel_id)
+        except KeyError:
+            abort(HTTPStatus.NOT_FOUND, "channel not found")
+        
+        return json({"status":"ok"})
+    return response.json({'error' : 'unauthorized'}, status=401)
 
 """
 @app.route('/admin/createcontest', methods=['GET', 'POST'])
