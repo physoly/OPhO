@@ -207,6 +207,10 @@ async def _logout(request):
 @opho.get('/announcements')
 async def _announcements(request):
     announcements = await app.ctx.db.fetchall('SELECT * FROM announcements ORDER BY timestamp DESC')
+    fmt_timestamps = []
+    for an in announcements:
+        fmt_timestamps.append(an['timestamp'].strftime("%m/%d/%Y, %H:%M:%S"))
+    announcements = zip(fmt_timestamps, announcements)
     return await render_template(app.ctx.env, request, 'opho/announcements.html', announcements=announcements)
 
 @opho.get('/team')
