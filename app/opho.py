@@ -120,8 +120,8 @@ async def _answer_submit(request):
     auth_token = request.headers.get('Authorization', None)
 
     admin = request.ctx.session['user']['admin']
-    if not admin and not in_time_open():
-        return response.json({'error' : 'unauthorized'}, status=401)
+    #if not admin and not in_time_open():
+        #return response.json({'error' : 'unauthorized'}, status=401)
 
     payload = dict(urllib.parse.parse_qs(str(request.body, 'utf8')))
 

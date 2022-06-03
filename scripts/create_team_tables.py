@@ -4,7 +4,7 @@ problem_number = 35
 
 async def execute():
     conn = await get_connection()
-    team_ids = await conn.fetch('SELECT user_id FROM user_details_2021')
+    team_ids = await conn.fetch('SELECT user_id FROM user_details_2022')
     
     for team_id in team_ids:
         create_table = f"""
