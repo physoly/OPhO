@@ -26,6 +26,30 @@
   {{ macros.render_nav(user) }}
   <body>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+      function show_new_msg(la) {
+        let data = {seen:true}
+        console.log(la)
+        if (la != 0) {
+          Swal.fire(
+                'Announcement',
+                la,
+                'info'
+                ).then(function() {
+                  let data = {seen: true};
+
+                  fetch("/api/seen", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(data)
+                  }).then(res => {
+                    console.log("Request complete! response:", res);
+                  });
+                });
+        }
+      }
+      show_new_msg( {{ latest_announcement|safe }} );
+    </script>
         <script>
             let source = new EventSource('/events')
             source.onmessage = function(event) {
@@ -33,7 +57,17 @@
                 'Announcement',
                 event.data,
                 'info'
-                )
+                ).then(function() {
+                  let data = {seen: true};
+
+                  fetch("/api/seen", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(data)
+                  }).then(res => {
+                    console.log("Request complete! response:", res);
+                  });
+                });
             };
         </script>
     <div class="jumbotron jumbotron-fluid">

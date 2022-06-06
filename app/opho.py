@@ -67,7 +67,13 @@ async def _contest(request):
 
     if request.method== 'POST':
         return response.redirect('/contest')
-
+    
+    not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
+    latest_announcement = 0
+    print("NOS", not_seen)
+    if not_seen:
+        latest_announcement = await app.ctx.db.fetchval("SELECT msg FROM announcements ORDER BY timestamp DESC LIMIT 1")
+        print("LA", latest_announcement);
     problems = await fetch_problems(db=app.ctx.db, team_id=team_id)
     team_stats = await fetch_team_stats(db=app.ctx.db, team_id=team_id)
 
@@ -78,6 +84,7 @@ async def _contest(request):
         request,
         "opho/contest.html", 
         team_stats=team_stats, 
+        latest_announcement=json_dumps(latest_announcement),
         problems=sorted(problems, 
         key=lambda x: x.number)
     )
@@ -159,6 +166,14 @@ async def _answer_submit(request):
         'problems_solved' : stats.score
     })
 
+@opho.post('/api/seen')
+async def _seen(request):
+    data = request.json
+    team_id = request.ctx.session['user']['id']
+    if data['seen']:
+        await app.ctx.db.execute_job("UPDATE seen SET seen='t' WHERE team_id=$1", team_id)
+    return json({"status": "ok"})
+
 @opho.post('/api/announcements')
 async def _announcements(request):
     auth_token = request.headers.get('Authorization', None)
@@ -171,6 +186,7 @@ async def _announcements(request):
         except KeyError:
             abort(HTTPStatus.NOT_FOUND, "channel not found")
         
+        await app.ctx.db.execute_job("UPDATE seen SET seen='f'")
         return json({"status":"ok"})
     return response.json({'error' : 'unauthorized'}, status=401)
 
