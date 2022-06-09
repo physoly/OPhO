@@ -140,6 +140,8 @@ async def _answer_submit(request):
 
     if current['solved'] or current['attempts'] >= 3:
         return response.json({'error': 'forbidden'}, status=403)
+    
+    await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.ip, team_answer, current['attempts']+1)
 
     real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
 
