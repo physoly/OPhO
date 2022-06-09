@@ -21,4 +21,4 @@ async def initialize_team(teamname, password, problem_number):
     await conn.execute(insert_query)
     await conn.execute(insert_rankings, team_id)
 
-run_async(initialize_team("The_Radiant_Trilogy", "RfIT4MH0rGMg", 35))
+run_async(initialize_team("Epsilon", "playboicarti", 35))

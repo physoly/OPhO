@@ -27,31 +27,32 @@ async def execute():
         solved = data['solved']
 
         if solved and check_solved:
-            print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2021 where user_id=$1', team_id[0]))
-            continue
+            print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2022 where user_id=$1', team_id[0]))
+            continue # here u can see who has solved a question. this is useful in knowing if many teams have gotten some answer
         
         
         if answers is not None:
-            attempts, is_correct = get_attempt_details(answers, answer)
+            attempts, is_correct = get_attempt_details(answers, answer) 
             if is_correct:
-                """
+                
                 if solved:
+                    # if alr correct, give credit on whatever attempt they got it
                     await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
                 else:
-                    await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 WHERE problem_no=$2', True, problem_no)
-                    await conn.execute(f'UPDATE rankings_2021 SET score=score + 1 WHERE team_id=$1', team_id[0])
-                    await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
-                    """
+                    #if q hasnt been solved but is correct, set solved, update rankings
+                    await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1, attempts=$2 WHERE problem_no=$3', True, attempts, problem_no)
+                    await conn.execute(f'UPDATE rankings_2022 SET score=score + 1 WHERE team_id=$1', team_id[0])
+                    
                 print("TEAM ID: ", team_id[0], "ATTEMPTS: ", attempts)
 
         
 
-
+        # everything below here clears attempts for a certain q. if ur using this part, comment out above
         #data = await conn.fetchrow(f'SELECT * from team{team_id[0]} WHERE problem_no=$1', problem_no)
         #solved = data['solved']
         #await conn.execute(f'UPDATE team{team_id[0]} ' + "SET answers='{}', attempts=0, solved='f' WHERE problem_no=$1", problem_no)
         #if solved:
-            #await conn.execute('UPDATE rankings SET problems_solved=problems_solved - 1 WHERE team_id=$1', team_id[0])
+            #await conn.execute('UPDATE rankings_2022 SET score=score - 1 WHERE team_id=$1', team_id[0])
             #print("SOLVED: ", team_id[0])
         
        # print(f"Cleared {problem_no} for TEAM ID: {team_id[0]}")
