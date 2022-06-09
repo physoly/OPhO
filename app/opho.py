@@ -23,6 +23,7 @@ from http import HTTPStatus
 opho = Blueprint('opho', host=f'opho.{Config.DOMAIN}')
 
 from decimal import Decimal
+from dhooks import Embed
 
 app = Sanic.get_app()
 
@@ -144,8 +145,8 @@ async def _answer_submit(request):
     await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.ip, team_answer, current['attempts']+1)
 
     real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
-
-    is_correct = check_answer(attempt=team_answer, answer=real_answer)
+    error_bound = await app.ctx.db.fetchval("SELECT (error_bound) FROM problems where problem_no=$1", problem_no)
+    is_correct = check_answer(attempt=team_answer, answer=real_answer, error=error_bound)
 
     solve_data = await app.ctx.db.fetchrow(
             f"UPDATE team{team_id} SET solved=$1, attempts = attempts + 1, answers=array_append(answers, $2), timestamp = current_timestamp WHERE problem_no = $3 and attempts < 3 RETURNING *;",
@@ -181,6 +182,7 @@ async def _announcements(request):
     auth_token = request.headers.get('Authorization', None)
     channel_id = request.json.get("channel_id")
     msg = request.json['msg']
+    webhook = request.json.get('webhook',False)
     await app.ctx.db.execute_job(f"INSERT INTO announcements(msg) VALUES ('{msg}')")
     if auth_token == app.ctx.sse_token:
         try:
@@ -189,6 +191,12 @@ async def _announcements(request):
             abort(HTTPStatus.NOT_FOUND, "channel not found")
         
         await app.ctx.db.execute_job("UPDATE seen SET seen='f'")
+        if webhook:
+            em = Embed(color=0x2ecc71, timestamp='now')
+            em.set_author('Announcement', icon_url='https://cdn.discordapp.com/attachments/782105673928146984/984431266516598844/unknown.png')
+            em.description = msg
+            em.set_footer(text='https://opho.physoly.tech/announcements', icon_url='https://cdn.discordapp.com/attachments/782105673928146984/984431266516598844/unknown.png')
+            await app.ctx.webhook.send(embed=em)
         return json({"status":"ok"})
     return response.json({'error' : 'unauthorized'}, status=401)
 
