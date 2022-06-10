@@ -15,5 +15,7 @@ class Config:
     DB_NAME = os.getenv('DB_NAME')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = int(os.getenv('DB_PORT'))
-
+    FORWARDED_SECRET = os.getenv('FORWARDED_SECRET')
     API_AUTH_TOKEN = os.getenv("API_AUTH_TOKEN")
+    PROXIES_COUNT = 1
+    REAL_IP_HEADER = "x-real-ip"
