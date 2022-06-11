@@ -162,7 +162,7 @@ def float_eq(f1, f2):
     return abs(f1 - f2) < sys.float_info.epsilon
 
 def check_answer(attempt, answer, error=Decimal(0.01)):
-    return abs(attempt-answer) <= error * answer
+    return abs(attempt-answer) <= abs(error * answer)
 
 async def get_cutoffs(db, year):
     return await db.fetchall(f'SELECT * from cutoffs_{year}')
