@@ -20,7 +20,7 @@ from decimal import Decimal
 import datetime
 
 OPEN_START_DAY = 10
-OPEN_END_DAY = 12
+OPEN_END_DAY = 13
 OPEN_START_MONTH = 6
 OPEN_END_MONTH = 6
 
