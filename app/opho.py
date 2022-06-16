@@ -27,9 +27,9 @@ from dhooks import Embed
 
 app = Sanic.get_app()
 
-past_contest_years = [2020, 2021]
+past_contest_years = [2020, 2021,2022]
 
-CURRENT_YEAR = 2022
+CURRENT_YEAR = 2023
 
 @opho.route('/login', methods=['GET','POST'])
 async def _login(request):

@@ -5,13 +5,13 @@ time_factor = False
 total_problems = 36
 
 def get_score(attempts, num_teams_solved, question_num, day_solved=0):
-    c1 = pow(0.9, attempts + day_solved)
+    c1 = pow(0.9, attempts + day_solved - 1) # accounts for fact that attempts are 012 not 123
     c2 = exp(question_num/35) + max(5.5 - floor(log(num_teams_solved)), 2)
     return c1 * c2
 
 async def execute():
     conn = await get_connection()
-    team_ids = [team_id[0] for team_id in await conn.fetch('SELECT user_id from user_details_2021')]
+    team_ids = [team_id[0] for team_id in await conn.fetch('SELECT user_id from user_details_2022')]
 
     all_team_stats = {}
     scores = {}
@@ -41,9 +41,9 @@ async def execute():
 
     sorted_scores = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
     
-    query = await conn.prepare(f'SELECT username from user_details_2021 where user_id=$1')
+    query = await conn.prepare(f'SELECT username from user_details_2022 where user_id=$1')
 
-    with open('../data/2021/final_rankings.csv', 'a') as f:
+    with open('../data/2022/final_rankings.csv', 'a') as f:
         count = 1
         for team_id, score in sorted_scores:
             teamname = await query.fetchval(team_id)

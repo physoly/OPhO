@@ -1,8 +1,8 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-problem_no = 4
-answer = Decimal(-2)    
+problem_no = 24
+answer = Decimal(-25.22)    
 answer_list = [Decimal(0.628), Decimal(0.0999), Decimal(2.758), Decimal(0.439)] # in case multiple answers should be accepted
 error=Decimal(0.01)
 check_solved = True
@@ -26,9 +26,9 @@ async def execute():
         answers = data['answers']
         solved = data['solved']
 
-        if solved and check_solved:
-            print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2022 where user_id=$1', team_id[0]))
-            continue # here u can see who has solved a question. this is useful in knowing if many teams have gotten some answer
+        #if solved and check_solved:
+            #print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2022 where user_id=$1', team_id[0]))
+            #continue # here u can see who has solved a question. this is useful in knowing if many teams have gotten some answer
         
         
         if answers is not None:
@@ -45,6 +45,10 @@ async def execute():
                     await conn.execute(f'UPDATE rankings_2022 SET score=score + 1 WHERE team_id=$1', team_id[0])
                     print("TI", team_id[0])
                 print("TEAM ID: ", team_id[0], "ATTEMPTS: ", attempts)
+            else:
+                if solved:
+                    await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1, solved=$2 where problem_no=$3', len(answers), False, problem_no)
+                    await conn.execute(f'UPDATE rankings_2022 SET score=score - 1 WHERE team_id=$1', team_id[0])
 
         
 
