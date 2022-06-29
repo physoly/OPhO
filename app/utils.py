@@ -165,4 +165,6 @@ def check_answer(attempt, answer, error=Decimal(0.01)):
     return abs(attempt-answer) <= abs(error * answer)
 
 async def get_cutoffs(db, year):
+    vals = await db.fetchall(f'SELECT * from cutoffs_{year}')
+    print(vals)
     return await db.fetchall(f'SELECT * from cutoffs_{year}')
