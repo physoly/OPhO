@@ -99,8 +99,8 @@ async def _invi(request):
 
     qualified = await is_advanced(app.ctx.db, team_id, 2022)
 
-    if not qualified or not in_time_invi():
-        return response.redirect('/')
+   # if not qualified or not in_time_invi():
+       # return response.redirect('/')
     return await render_template(app.ctx.env, request, "opho/invi.html")
     
 @opho.route('/<year>/rankings')

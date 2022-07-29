@@ -24,18 +24,65 @@
   </head>
   {% block body %}
   {{ macros.render_nav(user) }}
+  <body>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+      function show_new_msg(la) {
+        let data = {seen:true}
+        console.log(la)
+        if (la != 0) {
+          Swal.fire(
+                'Announcement',
+                la,
+                'info'
+                ).then(function() {
+                  let data = {seen: true};
+
+                  fetch("/api/seen", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(data)
+                  }).then(res => {
+                    console.log("Request complete! response:", res);
+                  });
+                });
+        }
+      }
+      show_new_msg( {{ latest_announcement|safe }} );
+    </script>
+        <script>
+            let source = new EventSource('/events')
+            source.onmessage = function(event) {
+                Swal.fire(
+                'Announcement',
+                event.data,
+                'info'
+                ).then(function() {
+                  let data = {seen: true};
+
+                  fetch("/api/seen", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(data)
+                  }).then(res => {
+                    console.log("Request complete! response:", res);
+                  });
+                });
+            };
+        </script>
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
-      <h1 class="display-4">OPhO 2021 Invitational Contest</h1>
-      <p class="lead">The theoretical paper is available <a href="/static/files/opho2021_invi.pdf" target="_blank">here</a>. Do not share this paper.</p>
-      <p class="lead">The experimental paper is available <a href="/static/files/opho2021_exp.pdf" target="_blank">here</a>.</p>
+      <h1 class="display-4">OPhO 2022 Invitational Contest</h1>
+      <p class="lead">The theoretical paper is available <a href="/static/files/opho2022_invi.pdf" target="_blank">here</a>. Do not share this paper.</p>
+      <!--<p class="lead">The experimental paper is available <a href="/static/files/opho2022_exp.pdf" target="_blank">here</a>.</p>-->
+      <!--
       <ul>
         <li class="lead">Problem 3.1 data: <a href="/static/files/E1-3.1.csv" download>download</a></li>
         <li class="lead">Problem 3.2 data: <a href="/static/files/E1-3.2.csv" download>download</a></li>
       </ul>
-      <p>(NOT RECOMMENDED) If you are unable to access the Jupyter Notebook linked in the paper, download<a href="/static/files/opho2021_exp_notebook.ipynb" download> here</a>. You will also need to install python 3 and Jupyter.</p>
-      <p class="lead">Request a clarification <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2VpeePbjPK2SV0FRYLlFCeYNtwaQfujlu7KJCWgcqmo2klQ/viewform" target="_blank">here</a></p>
-      <p class="lead">Review all clarifcations <a href="https://docs.google.com/document/d/1cQ0FDffdpxmjiTb6STJuXg0vyHeNNCHdKtr_jBg8EBo/edit" target="_blank">here</a>. CHECK THIS OFTEN.</p>
+      -->
+      <p class="lead">Request a clarification <a href="https://forms.gle/pVWJJqdjTbgMWaWk7 " target="_blank">here</a></p>
+      <p class="lead">Review all clarifcations <a href="https://docs.google.com/document/d/14t7Vf9rDfox1xBe9XkX9N0Jo4N00ZEu25kEKDn6clCs/edit?usp=sharing " target="_blank">here</a>. CHECK THIS OFTEN.</p>
     </div>
     <!-- <div data-type="countdown" data-id="2581810" class="tickcounter" style="width: 60%; position: relative; margin: auto; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/2581810/opho-ends-in" title="OPhO Ends In">OPhO Ends In</a><a href="//www.tickcounter.com/" title="Countdown">Countdown</a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script> -->
   </div>
