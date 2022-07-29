@@ -223,7 +223,7 @@ async def _create_contest(request):
 
 @opho.route('/')
 async def _contest_home(request):
-    return await render_template(app.ctx.env, request, 'opho/contest_home.html', in_time_open=in_time_open())
+    return await render_template(app.ctx.env, request, 'opho/contest_home.html', in_time_open=in_time_open(),in_time_invi=in_time_invi())
 
 @opho.get('/logout')
 async def _logout(request):

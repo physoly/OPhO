@@ -28,7 +28,7 @@
         <div class="container">
           <h1 class="display-4">OPHO Home Page</h1>
           <p class="lead">The Online Physics Olympiad (OPhO) is an annual team based physics competition for both high school students and undergraduates of all levels. Originally inspired by the Online Physics Brawl, the competition started in 2020, and thousands of participants from around the world has participated since. Teams of up to three will compete in the open round and invitational round.</p>
-          <p class="lead">The 2022 open contest will take place from June 10, 12 am UTC to June 13, 12 am UTC, and the 2022 invitational contest will take place in July (Dates will be finalized soon).</p>
+          <p class="lead">The 2022 open contest will take place from June 10, 12 am UTC to June 13, 12 am UTC, and the 2022 invitational contest will take place from July 30 to August 1.</p>
           <p class="lead" style="border:3px; border-style:solid; border-color:solid green; padding: 1em;">Registration for the 2022 OPhO is closed.</p>
           <p class="lead">Please check out the <a href="/archives">archives</a> to view past Open and Invitational question papers and solutions.</p>
 
@@ -43,25 +43,29 @@
 
         </div>
         <!-- <div data-type="countdown" data-id="2581810" class="tickcounter" style="width: 60%; position: relative; margin: auto; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/2581810/opho-ends-in" title="OPhO Ends In">OPhO Ends In</a><a href="//www.tickcounter.com/" title="Countdown">Countdown</a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script> -->
-        <a data-type="countdown" data-id="3291422" class="tickcounter" style="display: block; width: 40%; position: relative; margin: auto; padding-bottom: 25%" title="Countdown" href="//www.tickcounter.com/">Countdown</a><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script>
+        <a data-type="countdown" data-id="3382205" class="tickcounter" style="display: block; width: 40%; position: relative; margin: auto; padding-bottom: 25%" title="Countdown" href="//www.tickcounter.com/">Countdown</a><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script>
       </div>
       <div class="card-group" style="margin-left:20px; margin-right: 20px;">
         <div class="card">
           <div class="card-body">
-            
+            <!--
             <h4 class="card-title">Contest Portal</h5>
-            <p class="card-text">Enter the contest portal to submit answers. Opens on June 10 at 12 am UTC. Closes on June 13 at 12 am UTC.</p>
+            <p class="card-text">Enter the contest portal to submit answers.</p>
             {% if in_time_open %}
             <a href="/contest" class="btn btn-info">Contest Portal</a>
             {% else %}
             <button type="button" class="btn btn-info" disabled>Contest Portal</button>
             {% endif %}
-            
-            <!--
-            <h4 class="card-title">Invitational Portal</h5>
-              <p class="card-text">Enter the invitational portal to view the paper. Opens August 13, 00:01 am GMT</p>
-              <a href="/invitational" class="btn btn-info">Portal</a>
             -->
+            
+            <h4 class="card-title">Invitational Portal</h5>
+              <p class="card-text">Enter the invitational portal to view the paper. Opens July 30, 12 am UTC</p>
+              {% if in_time_invi %}
+              <a href="/invitational class="btn btn-info">Invitational Portal</a>
+              {% else %}
+              <button type="button" class="btn btn-info" disabled>Invitational Portal</button>
+              {% endif %}
+            </h4>
           </div>
         </div>
         <div class="card">
