@@ -71,10 +71,8 @@ async def _contest(request):
     
     not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
     latest_announcement = 0
-    print("NOS", not_seen)
     if not_seen:
         latest_announcement = await app.ctx.db.fetchval("SELECT msg FROM announcements ORDER BY timestamp DESC LIMIT 1")
-        print("LA", latest_announcement);
     problems = await fetch_problems(db=app.ctx.db, team_id=team_id)
     team_stats = await fetch_team_stats(db=app.ctx.db, team_id=team_id)
 
@@ -101,7 +99,11 @@ async def _invi(request):
 
    # if not qualified or not in_time_invi():
        # return response.redirect('/')
-    return await render_template(app.ctx.env, request, "opho/invi.html")
+    not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
+    latest_announcement = 0
+    if not_seen:
+        latest_announcement = await app.ctx.db.fetchval("SELECT msg FROM announcements ORDER BY timestamp DESC LIMIT 1")
+    return await render_template(app.ctx.env, request, "opho/invi.html", latest_announcement=json_dumps(latest_announcement))
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
