@@ -21,10 +21,10 @@ async def server_begin(app, loop):
     )
     
     await app.ctx.db.init();
-    app.ctx.sse_token = await app.ctx.db.fetchval('SELECT token from auth_tokens')
-    webhook_url = await app.ctx.db.fetchval('SELECT url FROM webhook_url')
-    app.ctx.session = aiohttp.ClientSession(loop=loop)
-    app.ctx.webhook = Webhook.Async(webhook_url, session=app.ctx.session)
+    #app.ctx.sse_token = await app.ctx.db.fetchval('SELECT token from auth_tokens')
+    #webhook_url = await app.ctx.db.fetchval('SELECT url FROM webhook_url')
+   # app.ctx.session = aiohttp.ClientSession(loop=loop)
+#app.ctx.webhook = Webhook.Async(webhook_url, session=app.ctx.session)
 
 
 @listeners.listener('after_server_stop')
