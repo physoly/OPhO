@@ -14,7 +14,7 @@ Jinja2==3.0.1
 MarkupSafe==2.0.1
 multidict==5.1.0
 python-dotenv==0.17.1
-requests==2.28.1
+requests==2.31.0
 sanic==21.3.4
 sanic-routing==0.6.2
 sanic-session==0.8.0
