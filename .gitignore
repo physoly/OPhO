@@ -1,6 +1,7 @@
 app/__pycache__
 .DS_Store
 /env
+/venv
 config/
 data/
 .vscode/
