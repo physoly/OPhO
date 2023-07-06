@@ -32,8 +32,24 @@
 
       gtag('config', 'UA-161438140-1');
     </script>
-    
 
+    <style>
+      .aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: 120%; /* Adjust this value to set the desired aspect ratio (e.g., 75% for 4:3, 100% for 1:1) */
+  overflow: hidden;
+}
+
+.aspect-ratio img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+    </style>
   </head>
   <body>
 
@@ -49,7 +65,9 @@
 
   <div class="card-group" style="margin-left:5%; margin-right: 5%;">
     <div class="card">
+      <div class="aspect-ratio">
         <img class="card-img-top" src="https://media.discordapp.net/attachments/690964040209530960/700739647118114967/adithya_pic.jpg?width=500&height=600" alt="Card image cap">
+        </div>
         <div class="card-body">
           <h5 class="card-title">Adithya Balachandran</h5>
           <p class="card-text">Adithya Balachandran is a freshman studying mathematics and computer science at MIT.  In high school, he was a USAPhO gold medalist, and he was selected to the USA team for IOAA where he earned a gold medal in the Global e-Competition in Astronomy and Astrophysics. Additionally, Adithya won the 2019 USAJMO and attended MOP. Adithya's favorite physics subject is electromagnetism. Other than physics and math, Adithya also enjoys coding and playing card games.
@@ -57,14 +75,18 @@
         </div>
     </div>
     <div class="card">
+      <div class="aspect-ratio">
       <img class="card-img-top" src="https://media.discordapp.net/attachments/524074426770391042/700769438135353364/unknown.png?width=500&height=600" alt="Card image cap">
+    </div>
       <div class="card-body">
         <h5 class="card-title">Eddie Chen</h5>
         <p class="card-text">Eddie is a first year undergraduate at MIT planning on majoring in physics. During his high school years, he has participated in various olympiads. He is an IPhO Gold Medalist and a USAMO qualifier. His favorite topic in physics is statistical physics. In his free time, he likes to play the violin as well as hex.</p>
       </div>
     </div>
     <div class="card">
+      <div class="aspect-ratio">
         <img class="card-img-top" src="https://cdn.discordapp.com/attachments/757090357350760472/1122972947339038790/IMG_7932.png?width=500&height=600" alt="Card image cap">
+      </div>
         <div class="card-body">
           <h5 class="card-title">Ashmit Dutta</h5>
           <p class="card-text">Ashmit Dutta is an undergraduate student at the University of Illinois Urbana-Champaign, where he plans to pursue a double major in Mathematics and Computer Engineering. In addition to physics and astronomy olympiads, he placed as a top 5 team in the Online Physics Brawl A Division and was a top 20 shortlisted team in the Beamline for School Competition. Ashmit has helped teach at the nonprofit Everaise Academy and was a TA at Awesome Math's Physics 3 class. In his free time, you can see him talking in the Physics Olympiads server, or playing video games/musical instruments.
@@ -124,9 +146,11 @@
 </div>
 </div>
 
-<div class="card-group" style="margin-left:15%; margin-right: 15%;">
+<div class="card-group" style="margin-left:5%; margin-right: 5%;">
   <div class="card">
+    <div class="aspect-ratio">
     <img class="card-img-top" src="https://cdn.discordapp.com/attachments/714879883096096800/799638780146483260/Ronald_Dobos.jpg?width=500&height=600" alt="Card image cap">
+    </div>
     <div class="card-body">
       <h5 class="card-title">Ronald Dobos</h5>
       <p class="card-text">Ronald Dobos is an undergraduate from Slovakia currently studying mathematics and physics at the University of Cambridge. He enjoyed competing in various physics olympiads during high school and his proudest achievements are silver medals from IYPT, IPhO and a gold medal from EuPhO. In his free time Rony likes to run, play ultimate frisbee or do street photography.
@@ -134,7 +158,9 @@
     </div>
 </div>
 <div class="card">
+  <div class="aspect-ratio">
   <img class="card-img-top" src="https://cdn.discordapp.com/attachments/714879883096096800/799839043881795624/IMG_7377.jpg?width=500&height=600" alt="Card image cap">
+  </div>
   <div class="card-body">
     <h5 class="card-title">Evan Kim</h5>
     <p class="card-text">Evan Kim is a junior at Tesla STEM High School. He discovered physics through science bowl and has been fascinated with its beauty ever since. And preparing for physics competitions over the last couple years has made him appreciate it even more. In particular, he has grown especially fond of thermodynamics for all the nice arguments that can be made, along with its practical applications and connections to other subjects. Some of his achievements include qualifying for the 2021 US Physics Team, getting a silver medal at PUPC 2020 (4th overall), and qualifying for NSB nationals. In his free time, he can be found consuming large amounts of boba tea or watching interesting youtube videos (like those from Slipping Hexagons).
@@ -142,7 +168,9 @@
   </div>
 </div>
 <div class="card">
+  <div class="aspect-ratio">
   <img class="card-img-top" src="https://cdn.discordapp.com/attachments/714879883096096800/798955942250283078/jacob.jpg?width=500&height=600" alt="Card image cap">
+</div>
   <div class="card-body">
     <h5 class="card-title">Jacob Nie</h5>
     <p class="card-text">Jacob Nie is a freshman studying physics at UC Santa Barbara.  In high school, he attended the 2019 US Physics Olympiad Training Camp and also earned other accolades in several other physics competitions.  Currently, his primary field of interest is condensed matter physics, which he is fond of for its emergent phenomena and close collaboration between theory and experiment.  In his endless spare time, he likes to plan for his next backpacking trip.
@@ -150,32 +178,74 @@
   </div>
 </div>
 <div class="card">
-  <img class="card-img-top" src="https://cdn.discordapp.com/attachments/816115026078335047/832716075669520384/unknown.png" alt="Card image cap">
+  <div class="aspect-ratio">
+  <img class="card-img-top" src="https://media.discordapp.net/attachments/931930117838610432/1125211081518891038/Screen_Shot_2023-07-03_at_8.25.38_AM.png?width=812&height=1028" alt="Card image cap">
+</div>
   <div class="card-body">
-    <h5 class="card-title">Rohan Bhowmik</h5>
-    <p class="card-text">Rohan Bhowmik is a junior at the Harker School in San Jose, California. Rohan has been deeply passionate for STEM-related topics since early childhood. He qualified for the USAJMO, USAPhO, USACO Gold, USABO Semifinals, as well as National Astronomy Competition (NAC) Invitational. He is also an avid researcher, qualifying for state-level science fairs and Broadcom MASTERS Top 300. An active member of the science community, Rohan is a founding officer of his school’s Public Health Club and a Middle School Science Bowl team coach. His favorite physicist is Louis de Broglie because he wrote the shortest Ph.D. dissertation and had an impressive haircut.
+    <h5 class="card-title">Daniel Lee</h5>
+    <p class="card-text">Daniel is a rising sophomore at UC Berkeley, where he's majoring in physics and applied mathematics. He finds beauty in the mathematical structures of physics - the way abstract mathematical concepts come to life when applied to the description of the universe! Having declared his double major, he's currently applying to condensed matter research positions at UC Berkeley. In high school, he competed in physics competitions such as USAPhO and PUPC. He wishes to write OPhO problems that would test the contestant's abilities to apply unfamiliar math to physics - an area that he believes deserves more coverage in olympiads. When he isn't working on physics, he enjoys playing chess, going to the gym with his friends, and making beats on FL studio.
     </p>
   </div>
 </div>
-<div class="card">
-  <img class="card-img-top" src="https://cdn.discordapp.com/attachments/820522535069679658/1124036494944907386/IMG_2522.png" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Vardhan Agnihotri</h5>
-    <p class="card-text">Vardhan Agnihotri is a rising senior from Dallas, Texas, and is a backend developer of the OPhO. He enjoys studying physics and copmuter science (specifically machine learning). Over the past two summers, he has used data science to analyze temporal data of particulate matter concentrations in the atmosphere and joined a quantum computing lab at a local university. Aside from research, he enjoys playing video games with his friends, participating in hackathons, attending quiz/science bowl tournaments, and speedcubing.
-    </p>
-  </div>
-</div>
-<div class="card">
-  <img class="card-img-top" src="https://cdn.discordapp.com/attachments/757090357350760472/1124119433032519690/Screen_Shot_2023-06-29_at_7.29.14_PM.png" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Zian Shi</h5>
-    <p class="card-text"> Zian Shi is a sophomore at Clovis North High School. He loves physics for its application and intuitive properties. Zian started physics by chance in eighth grade, and made USAPhO Camp 3 months later. He also actively participates in other subjects – he is currently in USACO Platinum and earned an Honorable Mention in the USAJMO. He attended the SPARC summer program and loved the connections he made there. In his free time, Zian loves to hike, kayak, and go camping.  
-    </p>
-  </div>
 </div>
 
 
+<div class="card-group" style="margin-left:5%; margin-right: 5%;">
+  <div class="card">
+    <div class="aspect-ratio">
+    <img class="card-img-top" src="https://media.discordapp.net/attachments/820522535069679658/1124529947172667493/VAopho_1.png?width=591&height=741" alt="Card image cap">
+  </div>
+    <div class="card-body">
+      <h5 class="card-title">Vardhan Agnihotri</h5>
+      <p class="card-text">Vardhan Agnihotri is a rising senior from the St. Mark's School of Texas in Dallas, Texas, and is a backend developer/outreach officer for the OPhO. He enjoys studying physics and copmuter science (specifically machine learning). Since freshman year, he has used data science to analyze temporal data of particulate matter concentrations in the atmosphere, qualified for USABO semifinals, made USACO silver, and has started a robotics startup with his friends. Aside from these extracurriculars, he enjoys playing video games with his friends, attending quiz/science bowl tournaments, speedcubing, and watching Tom Brady highlights.
+      </p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="aspect-ratio">
+    <img class="card-img-top" src="https://cdn.discordapp.com/attachments/757090357350760472/1124119433032519690/Screen_Shot_2023-06-29_at_7.29.14_PM.png" alt="Card image cap">
+  </div>
+    <div class="card-body">
+      <h5 class="card-title">Zian Shi</h5>
+      <p class="card-text"> Zian Shi is a sophomore at Clovis North High School. He loves physics for its application and intuitive properties. Zian started physics by chance in eighth grade, and made USAPhO Camp 3 months later. He also actively participates in other subjects – he is currently in USACO Platinum and earned an Honorable Mention in the USAJMO. He attended the SPARC summer program and loved the connections he made there. In his free time, Zian loves to hike, kayak, and go camping.  
+      </p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="https://www.pngarts.com/files/10/Default-Profile-Picture-Transparent-Image.png" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Zhening Li</h5>
+      <p class="card-text"> Problem Writer 2022. 
+      </p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="https://www.pngarts.com/files/10/Default-Profile-Picture-Transparent-Image.png" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Brian Zhang</h5>
+      <p class="card-text"> Problem Writer 2023. 
+      </p>
+    </div>
+  </div>
+</div>
 
+<div class="card-group" style="margin-left:30%; margin-right: 30%;">
+  <div class="card">
+    <img class="card-img-top" src="https://www.pngarts.com/files/10/Default-Profile-Picture-Transparent-Image.png" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Abhiram Cherukupalli</h5>
+      <p class="card-text"> Problem Writer 2023. 
+      </p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="https://www.pngarts.com/files/10/Default-Profile-Picture-Transparent-Image.png" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Yehong Jiang</h5>
+      <p class="card-text"> Problem Writer 2023. 
+      </p>
+    </div>
+  </div>
 </div>
 
 <div class="jumbotron">
@@ -183,27 +253,43 @@
       <div><h1 class="display-6">Alumni</h1></div>
       <p class=lead>Former members of the OPhO team</lead>
   </div>
-  <div class="card-group" style="margin-left:20%; margin-right: 20%;">
+  <div class="card-group" style="margin-left:5%; margin-right: 5%;">
   <div class="card">
+    <div class="aspect-ratio">
     <img class="card-img-top" src="https://media.discordapp.net/attachments/690964040209530960/700399513956778085/PSX_20200416_134003.jpg?width=500&height=600" alt="Card image cap">
+  </div>
     <div class="card-body">
       <h5 class="card-title">Ethan Hu</h5>
       <p class="card-text">Ethan Hu is a junior from Marc Garneau Collegiate Institute from the Toronto area in Canada. He often spends his time reading up on the latest scientific advancements or working on physics problems in front of a whiteboard. Having participated in many related contests, he scored first in Canada in Physics Bowl Div 1, Top Gold in BPHO, and was a finalist in the team selection of 2019. His favourite subject is mechanics.  In his leisure time, you may find him answering physics questions online, playing music, working out, or tinkering with remote controlled toys.</p>
     </div>
 </div>
 <div class="card">
+  <div class="aspect-ratio">
   <img class="card-img-top" src="https://cdn.discordapp.com/attachments/722277655663214693/1126554293655314432/UNADJUSTEDNONRAW_thumb_23e0.jpg?width=500&height=600" alt="Card image cap" >
+</div>
   <div class="card-body">
     <h5 class="card-title">Viraj Jayam</h5>
     <p class="card-text">Originally from Long Island, New York, Viraj Jayam is an undergraduate physics and computer science student at Stanford University. As a high schooler, Viraj competed in various physics and math contests (including the AIME, USAPhO, and USAAAO) which eventually streamlined into his love for physics research. Viraj is now especially passionate about and involved in the fields of quantum computing and quantum engineering. In his free time, Viraj enjoys going on hikes, promising to cook Indian food, and thrifting.</p>
   </div>
 </div>
 <div class="card">
+  <div class="aspect-ratio">
   <img class="card-img-top" src="https://cdn.discordapp.com/attachments/711071403339677757/993310346762801172/IMG_1337.PNG" alt="Card image cap" >
+</div>
   <div class="card-body">
     <h5 class="card-title">Max Wang</h5>
     <p class="card-text">Max Wang is a freshman at the University of Pennsylvania. He is studying Mathematics and Computer Science and plans to minor in Physics. He enjoys being involved with physics: organizing OPhO and TAing Physics at Awesome Math Academy. In his free time, he likes to get buckets at Pottruck and play around with interesting math and physics problems. 
 </p>
+  </div>
+</div>
+<div class="card">
+  <div class="aspect-ratio">
+  <img class="card-img-top" src="https://cdn.discordapp.com/attachments/816115026078335047/832716075669520384/unknown.png" alt="Card image cap">
+</div>
+  <div class="card-body">
+    <h5 class="card-title">Rohan Bhowmik</h5>
+    <p class="card-text">Rohan Bhowmik is a junior at the Harker School in San Jose, California. Rohan has been deeply passionate for STEM-related topics since early childhood. He qualified for the USAJMO, USAPhO, USACO Gold, USABO Semifinals, as well as National Astronomy Competition (NAC) Invitational. He is also an avid researcher, qualifying for state-level science fairs and Broadcom MASTERS Top 300. An active member of the science community, Rohan is a founding officer of his school’s Public Health Club and a Middle School Science Bowl team coach. His favorite physicist is Louis de Broglie because he wrote the shortest Ph.D. dissertation and had an impressive haircut.
+    </p>
   </div>
 </div>
 </div>
