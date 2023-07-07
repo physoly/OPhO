@@ -19,18 +19,18 @@ from decimal import Decimal
 
 import datetime
 
-OPEN_START_DAY = 10
-OPEN_END_DAY = 13
-OPEN_START_MONTH = 6
-OPEN_END_MONTH = 6
+OPEN_START_DAY = 22
+OPEN_END_DAY = 24
+OPEN_START_MONTH = 7
+OPEN_END_MONTH = 7
 
-INVI_START_DAY = 30
-INVI_END_DAY = 2
-INVI_START_MONTH = 7
+INVI_START_DAY = 5
+INVI_END_DAY = 6
+INVI_START_MONTH = 8
 INVI_END_MONTH = 8
 
-INVI_START = datetime.datetime(2022,7,30)
-INVI_END = datetime.datetime(2022,8,2)
+INVI_START = datetime.datetime(2023,8,5)
+INVI_END = datetime.datetime(2023,8,6)
 
 def in_time_open():
     utc_now = datetime.datetime.utcnow()

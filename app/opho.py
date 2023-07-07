@@ -95,7 +95,7 @@ async def _invi(request):
     admin = user['admin']
     team_id = user['id']
 
-    qualified = await is_advanced(app.ctx.db, team_id, 2022)
+    qualified = await is_advanced(app.ctx.db, team_id, 2023)
 
     if not qualified or not in_time_invi():
         return response.redirect('/')
