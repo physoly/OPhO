@@ -7,6 +7,7 @@ data/
 .vscode/
 app/.vscode/
 .env
+__pycache__/
 
 scripts/opho.csv
 data/
