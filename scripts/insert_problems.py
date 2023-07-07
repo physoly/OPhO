@@ -3,8 +3,8 @@ from utils import get_connection, run_async
 
 import csv
 
-
-with open('../data/2022/opho_ans.csv') as csvin:
+#change to 2022 if needed
+with open('../data/2023/opho_ans.csv') as csvin:
     questions = [(i+1, Decimal(line[0].rstrip()),Decimal(line[1].rstrip())) for i, line in enumerate(csv.reader(csvin))]
 # print(questions)
 

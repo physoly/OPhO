@@ -1,6 +1,7 @@
 import csv
 import string
 import random
+#changes not necessary as of rn
 
 from utils import get_connection, run_async
 
@@ -12,7 +13,7 @@ PASSWORD_LENGTH = 12
 
 emails = []
 
-YEAR = 2022
+YEAR = 2023
 
 def valid_entry(line):
     for field in REQUIRED_FIELDS:
@@ -28,8 +29,8 @@ async def execute():
     conn = await get_connection()
     insert_details_query = await conn.prepare(f'''INSERT INTO user_details_{YEAR}(username, password) VALUES ($1, $2) RETURNING user_id''')
     insert_into_rankings = await conn.prepare(f'''INSERT INTO rankings_{YEAR}(team_id, score) VALUES ($1, 0) RETURNING team_id''')
-    with open('../data/2022/opho2022-late.csv', 'r') as csvin:
-        with open('../data/2022/opho2022-late-logins.csv', 'w') as csvout:
+    with open('opho2023.csv', 'r') as csvin:
+        with open('opho2023-logins.csv', 'w') as csvout:
             writer = csv.writer(csvout)
 
             for line in csv.reader(csvin):
