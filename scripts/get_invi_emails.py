@@ -1,5 +1,6 @@
 from utils import run_async, get_connection
 import csv
+#explore this later
 
 async def execute():
     conn = await get_connection()
