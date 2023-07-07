@@ -7,7 +7,7 @@ data/
 .vscode/
 app/.vscode/
 .env
-_pycache_/
+
 scripts/opho.csv
 data/
 .gitignore
