@@ -78,6 +78,7 @@ async def _contest(request):
 
     print(problems[0].attempts)
 
+    #TODO upload opho2023_open.pdf to static files and add to gitignore
     return await render_template(
         app.ctx.env,
         request,

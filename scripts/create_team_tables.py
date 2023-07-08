@@ -1,7 +1,7 @@
 from utils import run_async, get_connection
 
 problem_number = 35
-
+#run after creating user_details_2023
 async def execute():
     conn = await get_connection()
     team_ids = await conn.fetch('SELECT user_id FROM user_details_2023')

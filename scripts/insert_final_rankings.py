@@ -2,9 +2,9 @@ import csv
 from utils import get_connection, run_async
 
 async def execute():
-    root = "INSERT INTO rankings_2022(team_id, score) VALUES "   
+    root = "INSERT INTO rankings_2023(team_id, score) VALUES "   
     entries = [] 
-    with open('../data/2022/rankings.csv', 'r') as csvin:
+    with open('../data/2023/rankings.csv', 'r') as csvin:
         for line in csv.reader(csvin):
             team_id = line[0]
             score = round(float(line[2]), 3)
