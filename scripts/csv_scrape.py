@@ -21,16 +21,27 @@ def valid_entry(line):
             return False
     return True
 
-def string_generator(size, chars=string.ascii_letters + string.digits):
+def string_generator(size, chars=string.ascii_letters):
     return ''.join(random.choice(chars) for _ in range(size))
 
+async def delete_first():
+    conn = await get_connection()
+    delete_details = await conn.prepare(f'''DELETE FROM user_details_2023 WHERE user_id = 1;''')
+    delete_rankings = await conn.repare(f'''DELETE FROM rankings_2023 WHERE user_id = 1;''')
+
+    await conn.execute(delete_details)
+    await conn.execute(delete_rankings)
+
+
+#replace csv names with local dir names
 async def execute():
+    id_num = 1
     names = []
     conn = await get_connection()
-    insert_details_query = await conn.prepare(f'''INSERT INTO user_details_{YEAR}(username, password) VALUES ($1, $2) RETURNING user_id''')
+    insert_details_query = await conn.prepare(f'''INSERT INTO user_details_{YEAR}(user_id, username, password) VALUES ($1, $2, $3) RETURNING user_id''')
     insert_into_rankings = await conn.prepare(f'''INSERT INTO rankings_{YEAR}(team_id, score) VALUES ($1, 0) RETURNING team_id''')
-    with open('opho2023.csv', 'r') as csvin:
-        with open('opho2023-logins.csv', 'w') as csvout:
+    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/opho2023.csv', 'r') as csvin:
+        with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/opho2023-logins.csv', 'w') as csvout:
             writer = csv.writer(csvout)
 
             for line in csv.reader(csvin):
@@ -45,22 +56,24 @@ async def execute():
                     while uname in names:
                         uname = uname + str(idx)
                         idx = idx + 1
-
+                    
                     password = string_generator(PASSWORD_LENGTH)
 
                     writer.writerow([email, uname, password])
 
-                    user_id = await insert_details_query.fetchval(uname, password)
+                    user_id = await insert_details_query.fetchval(id_num, uname, password)
                     team_id = await insert_into_rankings.fetchval(user_id)
 
-                    print(f"INSERTING ({uname, password}")
+                    print(f"INSERTING ({id_num, uname, password}")
 
                     names.append(uname)
                     emails.append(email)
+                    id_num = id_num + 1
 
 
 
 run_async(execute())
+run_async(delete_first())
 
 p = [item for item, count in collections.Counter(emails).items() if count > 1]
 print(p)

@@ -8,8 +8,9 @@ def valid_entry(line):
             return False
     return True
 
+
 names = []
-with open ('/mnt/c/Users/va648/downloads/vscode/OPhO/scripts/data/2023/opho2023.csv', 'r') as csvin:
+with open ('scripts/data/2023/opho2023.csv', 'r') as csvin:
     for line in csv.reader(csvin):
         if valid_entry(line):
                 uname = line[2].strip().replace(" ", "_")
