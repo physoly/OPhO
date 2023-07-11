@@ -138,14 +138,14 @@ async def fetch_teams(db, year):
     return teams
 
 async def fetch_team_stats(db,team_id):
-    teams = await fetch_teams(db, 2023)
+    teams = await fetch_teams(db, 2022)
     for team in teams:
         if team.id == team_id:
             return team
     return None 
 
 async def fetchuser(db, username):
-    return await db.fetchrow('SELECT * FROM user_details_2023 WHERE username = $1', username)
+    return await db.fetchrow('SELECT * FROM user_details_2022 WHERE username = $1', username)
 
 async def login_user(session, user):
     if session.get('logged_in', False):
