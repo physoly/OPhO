@@ -60,11 +60,26 @@ async def update_user_details():
             id_num = id_num + 1
 
 
+def check_duplicates():
+    list_names = []
+    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/opho2023-updated-logins.csv', 'r') as csvin:
+
+        for line in csv.reader(csvin):
+            uname = line[0]
+            if(uname in list_names):
+                print(uname + ' ' + line[1])
+            else:
+                list_names.append(uname)
+
+    print(len(list_names))
+
+
 
 # run_async(clear_ranking_user_details(CURRENT_YEAR))
 # run_async(execute_user_details(CURRENT_YEAR))
 # run_async(execute_rankings(CURRENT_YEAR))
-
 #run_async(fix_rankings())
-run_async(update_user_details())
+#run_async(update_user_details())
+check_duplicates()
+
 #manually set the table primary keys by doing ALTER TABLE tablename ADD PRIMARY KEY (columname)
