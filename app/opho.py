@@ -158,7 +158,7 @@ async def _answer_submit(request):
     
     if is_correct:
         await app.ctx.db.execute_job(f"""
-            UPDATE rankings_2022 SET score = score + 1 WHERE team_id=$1
+            UPDATE rankings_2023 SET score = score + 1 WHERE team_id=$1
         """, team_id
         )
 
