@@ -43,7 +43,7 @@ async def execute():
     
     query = await conn.prepare(f'SELECT username from user_details_2023 where user_id=$1')
 
-    with open('../data/2023/final_rankings.csv', 'a') as f:
+    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/final_rankings.csv', 'a') as f:
         count = 1
         for team_id, score in sorted_scores:
             teamname = await query.fetchval(team_id)

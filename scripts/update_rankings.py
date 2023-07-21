@@ -9,7 +9,7 @@ async def execute():
     conn = await get_connection()
     team_ids = await conn.fetch('SELECT user_id FROM user_details_2023')
 
-    with open('../data/2023/final_rankings.csv', 'r') as csvin:
+    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/final_rankings.csv', 'r') as csvin:
         for line in csv.reader(csvin):
             print(line)
             uname = line[1]
