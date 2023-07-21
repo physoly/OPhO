@@ -1,4 +1,5 @@
 from utils import run_async, get_connection
+import csv
 
 CURRENT_YEAR = 2023
 
@@ -41,9 +42,29 @@ async def fix_rankings():
         INSERT INTO rankings_2023 (team_id, score) VALUES """ + ', '.join(f"({number}, 0)" for number in range(2, 938)) + ";"
     await conn.execute(insert_query)
 
+async def update_user_details():
+    id_num = 1
+    conn = await get_connection()
+
+    insert_details_query = await conn.prepare(f'''INSERT INTO user_details_2023(user_id, username, password) VALUES ($1, $2, $3)''')
+    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/opho2023-updated-logins.csv', 'r') as csvin:
+
+        for line in csv.reader(csvin):
+
+            uname = line[1]
+            password = line[2]
+
+            user_id = await insert_details_query.fetchval(id_num, uname, password)
+            print(f"INSERTING ({id_num, uname, password}")
+
+            id_num = id_num + 1
+
+
+
 # run_async(clear_ranking_user_details(CURRENT_YEAR))
 # run_async(execute_user_details(CURRENT_YEAR))
 # run_async(execute_rankings(CURRENT_YEAR))
 
-run_async(fix_rankings())
+#run_async(fix_rankings())
+run_async(update_user_details())
 #manually set the table primary keys by doing ALTER TABLE tablename ADD PRIMARY KEY (columname)
