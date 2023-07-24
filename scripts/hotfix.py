@@ -1,10 +1,9 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-#problems to hotfix: 10, 21
-problem_no = 19
-answer = Decimal(0.000699) # updated answer here
-error= Decimal(0.01)
+problem_no = 11
+answer = Decimal(25.21) # updated answer here
+error= Decimal(0.05)
 check_solved = True
 
 def check_answer(attempt, answer, error=error):
@@ -19,35 +18,55 @@ def get_attempt_details(answers, answer):
 async def execute():
     conn = await get_connection()
     team_ids = await conn.fetch('SELECT user_id FROM user_details_2023')
+    incorrect = []
+    correct = [] # teams that answered p1 on the first try
 
     for team_id in team_ids:
         data = await conn.fetchrow(f'SELECT * from team{team_id[0]} WHERE problem_no=$1', problem_no)
         answers = data['answers']
         solved = data['solved']
 
-        #block 1
-        #if solved and check_solved:
-            #print('SOLVED TEAM ID: ', team_id[0], "USERNAME: ", await conn.fetchval('SELECT username from user_details_2022 where user_id=$1', team_id[0]))
+        # block 1
+        if answer is not None:
+            if solved:
+                print(team_id[0])
 
-        #block 2
-        if answers is not None:
-            print(str(team_id[0]), answers)
-            # attempts, is_correct = get_attempt_details(answers, answer)
-            # if solved:
-            #     print(str(team_id[0]) + ' has solved it incorrectly but received points')
-            # else:
-            #     if is_correct:
-            #         print(str(team_id[0]) + ' has solved it correctly but received no points')
-            #     else:
-            #         print(str(team_id[0]) + ' was flat out wrong')
-            #         print(answers)
+        # block 2
+        # logic for problem 1 fix
+        # if answers is not None:
+        #     list = []
+        #     list.append(answers[0]) # append the first answer to a list which we can throw into the function below
+        #     attempts, is_correct = get_attempt_details(list, answer)
+        #     if is_correct:
+        #         print(str(team_id[0]) + ' has solved it correctly on their first try')
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no)
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
+        #         if not solved: # if the user gave up after first try
+        #             await conn.execute(f'UPDATE rankings_2023 SET score=score+1 WHERE team_id=$1', team_id[0])
+        #     else:
+        #         print(str(team_id[0]) + ' has solved it incorrectly on their first try')
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no)
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', False, problem_no)
+        #         if solved: # if the user
+        #             await conn.execute(f'UPDATE rankings_2023 SET score=score-1 WHERE team_id=$1', team_id[0])
 
-        #block 3
+        # block 3 for initializing/updating single answer problems e.g. 1, 27
+        # if answers is not None:
+        #     if solved and len(answers) >1:
+        #         print(team_id[0])
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no)
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', False, problem_no)
+        #         await conn.execute(f'UPDATE rankings_2023 SET score=score-1 WHERE team_id=$1', team_id[0])
+        #     if not solved:
+        #         print(team_id[0])
+        #         await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no)
+
+        # block 4
         # if answers is not None:
         #     attempts, is_correct = get_attempt_details(answers, answer) 
         #     if is_correct:
         #         if not solved: # if correct according to updated answer and not solved, update shit
-        #             print(team_id[0], len(answers))
+        #             print(team_id[0])
         #             if len(answers) == 1:
         #                 print(team_id[0])
         #                 await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
@@ -57,10 +76,23 @@ async def execute():
         #                 await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
         #                 await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
         #                 await conn.execute(f'UPDATE rankings_2023 SET score=score+1 WHERE team_id=$1', team_id[0])
+        #         else: # if team got it right first try (but it was counted wrong) then got it right (according to incorrect answer key) on the second try, just update that team's attempts
+        #             await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
         #     else:
         #         if solved:
         #             await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', False, problem_no)
         #             await conn.execute(f'UPDATE rankings_2023 SET score=score-1 WHERE team_id=$1', team_id[0])
+        #             print('removed points from ' + str(team_id[0]))
+
+        # block 5 for voiding p6 for all competitors
+        # await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no) # lock teams out
+        # print('updated team attempts for team ', team_id[0])
+        # await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', False, problem_no)
+        # print('updated solved status for team ', team_id[0])
+        # if solved:
+        #     await conn.execute(f'UPDATE rankings_2023 SET score=score-1 WHERE team_id=$1', team_id[0])
+        #     print('removed points for team ', team_id[0])
+
         
        
         
