@@ -2,7 +2,7 @@ from utils import get_connection, run_async
 from math import exp, log, floor
 
 time_factor = False
-total_problems = 35
+total_problems = 36 # make it one more than the actual number of problems
 
 def get_score(attempts, num_teams_solved, question_num, day_solved=0):
     c1 = pow(0.9, attempts + day_solved - 1) # accounts for fact that attempts are 012 not 123

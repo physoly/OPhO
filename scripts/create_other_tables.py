@@ -73,6 +73,14 @@ def check_duplicates():
 
     print(len(list_names))
 
+async def convert_log():
+    conn = await get_connection()
+    team_ids = await conn.fetch('SELECT team_id FROM log')
+
+    for team_id in team_ids:
+        data = await conn.fetchrow(f'SELECT * from log WHERE team_id=$1', team_id)
+        print(data)
+
 
 
 # run_async(clear_ranking_user_details(CURRENT_YEAR))
@@ -80,6 +88,7 @@ def check_duplicates():
 # run_async(execute_rankings(CURRENT_YEAR))
 #run_async(fix_rankings())
 #run_async(update_user_details())
-check_duplicates()
+# check_duplicates()
+run_async(convert_log())
 
 #manually set the table primary keys by doing ALTER TABLE tablename ADD PRIMARY KEY (columname)

@@ -1,10 +1,11 @@
 from utils import get_connection, run_async
 from decimal import Decimal
 
-problem_no = 11
-answer = Decimal(25.21) # updated answer here
-error= Decimal(0.05)
+problem_no = 29
+answer = Decimal(150.5) # updated answer here
+error= Decimal(0.993355482)
 check_solved = True
+
 
 def check_answer(attempt, answer, error=error):
     return abs(attempt-answer) <= abs(error * answer)
@@ -27,9 +28,12 @@ async def execute():
         solved = data['solved']
 
         # block 1
-        if answer is not None:
-            if solved:
-                print(team_id[0])
+        # if answers is not None:
+        #     attempts, is_correct = get_attempt_details(answers, answer)
+        #     if is_correct:
+        #         print(team_id[0])
+        #         print(answers)
+        #         print('')
 
         # block 2
         # logic for problem 1 fix
@@ -62,27 +66,27 @@ async def execute():
         #         await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no)
 
         # block 4
-        # if answers is not None:
-        #     attempts, is_correct = get_attempt_details(answers, answer) 
-        #     if is_correct:
-        #         if not solved: # if correct according to updated answer and not solved, update shit
-        #             print(team_id[0])
-        #             if len(answers) == 1:
-        #                 print(team_id[0])
-        #                 await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
-        #                 await conn.execute(f'UPDATE rankings_2023 SET score=score+1 WHERE team_id=$1', team_id[0])
-        #             else:
-        #                 print(team_id[0])
-        #                 await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
-        #                 await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
-        #                 await conn.execute(f'UPDATE rankings_2023 SET score=score+1 WHERE team_id=$1', team_id[0])
-        #         else: # if team got it right first try (but it was counted wrong) then got it right (according to incorrect answer key) on the second try, just update that team's attempts
-        #             await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
-        #     else:
-        #         if solved:
-        #             await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', False, problem_no)
-        #             await conn.execute(f'UPDATE rankings_2023 SET score=score-1 WHERE team_id=$1', team_id[0])
-        #             print('removed points from ' + str(team_id[0]))
+        if answers is not None:
+            attempts, is_correct = get_attempt_details(answers, answer) 
+            if is_correct:
+                if not solved: # if correct according to updated answer and not solved, update shit
+                    if len(answers) == 1:
+                        print(team_id[0])
+                        await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
+                        await conn.execute(f'UPDATE rankings_2023 SET score=score+1 WHERE team_id=$1', team_id[0])
+                    else:
+                        print(team_id[0])
+                        await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
+                        await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', True, problem_no)
+                        await conn.execute(f'UPDATE rankings_2023 SET score=score+1 WHERE team_id=$1', team_id[0])
+                else: # if team got it right first try (but it was counted wrong) then got it right (according to incorrect answer key) on the second try, just update that team's attempts
+                    await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', attempts, problem_no)
+                    print('updated team', team_id[0])
+            else:
+                if solved:
+                    await conn.execute(f'UPDATE team{team_id[0]} SET solved=$1 where problem_no=$2', False, problem_no)
+                    await conn.execute(f'UPDATE rankings_2023 SET score=score-1 WHERE team_id=$1', team_id[0])
+                    print('removed points from ' + str(team_id[0]))
 
         # block 5 for voiding p6 for all competitors
         # await conn.execute(f'UPDATE team{team_id[0]} SET attempts=$1 where problem_no=$2', 3, problem_no) # lock teams out

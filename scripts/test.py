@@ -1,4 +1,5 @@
 import csv
+from utils import get_connection, run_async
 
 # REQUIRED_FIELDS = [0,2,3,4,5]
 
@@ -27,7 +28,7 @@ import csv
 #         print(names)
 #         names = []
 
-problem_list = []
-for i in range(35):
-    problem_list.append(i + 1)
-print(problem_list)
+total_problems = 35
+
+for problem_no in range(1, total_problems):
+    print(problem_no)
