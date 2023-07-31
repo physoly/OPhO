@@ -27,28 +27,28 @@ async def execute():
     
     print(solve_stats)
     
-    for team_id, data in all_team_stats.items():
-        for problem in data:
-            if problem['solved']:
-                problem_no = problem['problem_no']
-                num_solved = solve_stats[problem_no]
-                # day_number = problem['timestamp'].day - 25
-                num_attempts = problem['attempts']
+    # for team_id, data in all_team_stats.items():
+    #     for problem in data:
+    #         if problem['solved']:
+    #             problem_no = problem['problem_no']
+    #             num_solved = solve_stats[problem_no]
+    #             # day_number = problem['timestamp'].day - 25
+    #             num_attempts = problem['attempts']
 
-                # print("DAY NUMBER: ", day_number)
-                raw_score = get_score(attempts=num_attempts,num_teams_solved=num_solved, question_num=problem_no)
-                scores[team_id] = scores[team_id] + round(raw_score, 3)
+    #             # print("DAY NUMBER: ", day_number)
+    #             raw_score = get_score(attempts=num_attempts,num_teams_solved=num_solved, question_num=problem_no)
+    #             scores[team_id] = scores[team_id] + round(raw_score, 3)
 
-    sorted_scores = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
+    # sorted_scores = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
     
-    query = await conn.prepare(f'SELECT username from user_details_2023 where user_id=$1')
+    # query = await conn.prepare(f'SELECT username from user_details_2023 where user_id=$1')
 
-    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/final_rankings.csv', 'a') as f:
-        count = 1
-        for team_id, score in sorted_scores:
-            teamname = await query.fetchval(team_id)
-            f.write(f'{count},{teamname},{team_id},{score}\n')
-            count = count + 1
+    # with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/final_rankings.csv', 'a') as f:
+    #     count = 1
+    #     for team_id, score in sorted_scores:
+    #         teamname = await query.fetchval(team_id)
+    #         f.write(f'{count},{teamname},{team_id},{score}\n')
+    #         count = count + 1
 
 async def get_team_stats(conn, team_id):
     query = await conn.prepare(f'SELECT * from team{team_id}')
