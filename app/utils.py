@@ -24,12 +24,12 @@ OPEN_END_DAY = 23
 OPEN_START_MONTH = 7
 OPEN_END_MONTH = 7
 
-INVI_START_DAY = 5
+INVI_START_DAY = 4
 INVI_END_DAY = 6
 INVI_START_MONTH = 8
 INVI_END_MONTH = 8
 
-INVI_START = datetime.datetime(2023,8,5)
+INVI_START = datetime.datetime(2023,8,4)
 INVI_END = datetime.datetime(2023,8,6)
 
 def in_time_open():

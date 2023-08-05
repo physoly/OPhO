@@ -1,3 +1,5 @@
+#just do this shit by hand
+
 from decimal import Decimal
 from utils import get_connection, run_async
 
