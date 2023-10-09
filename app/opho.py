@@ -121,7 +121,7 @@ async def _rankings(request, year):
 async def _invi_rankings(request,year):
     if int(year) not in past_contest_years:
         return response.redirect('/archives')
-    if int(year) == 2021 or int(year) == 2022:
+    if int(year) == 2021 or int(year) == 2022 or int(year) == 2023:
         return await render_template(app.ctx.env, request, f"opho/invi_rankings_{year}.html", invi_records=await app.ctx.db.fetchall(f'SELECT * FROM invi_scores_{year}'))
     return await render_template(app.ctx.env, request, f"opho/invi_rankings_{year}.html", invi_records=await get_all_invi_scores(app.ctx.db, year))
 

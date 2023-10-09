@@ -1,0 +1,70 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-166042318-1');
+        </script>
+        <meta charset="utf-8">
+        <title>Rankings</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+        
+    </head>
+    {% block body %}
+    {{ macros.render_nav(user) }}
+    <body>
+        <h1 class="display-4">Invitational Results</h1>
+        <p class="lead">Here are the final invitational results and awards.</p>
+        <p>
+            <img src="/static/files/gold_medal.png" height="42" width="42"> = Gold Medalist &nbsp; 
+            <img src="/static/files/silver_medal.png" height="42" width="42"> = Silver Medalist &nbsp;
+            <img src="/static/files/bronze_medal.png" height="42" width="42"> = Bronze Medalist &nbsp;
+            <img src="/static/files/win.png" height="42" width="42"> = Honorable Mention &nbsp;
+        </p>
+        <p>For more advanced insights, see <a href="/static/files/opho2023_invi_final - Total.pdf" target="_blank">this</a>.</p>
+    </div>
+        <table class="table">
+            <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>T1</th>
+                <th>T2</th>
+                <th>T3</th>
+                <th>Exp</th>
+                <th>Score</th>
+                <th>Award</th>
+            </tr>
+
+              {% for record in invi_records %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ record["team_name"] }}</td>
+                    <td>{{ record["t1"] }}</td>
+                    <td>{{ record["t2"] }}</td>
+                    <td>{{ record["t3"] }}</td>
+                    <td>{{ record["exp"] }}</td>
+                    <td>{{ record["total"] }}</td>
+                    {% if loop.index < 7 %}
+                    <td><img src="/static/files/gold_medal.png" height="42" width="42"></td>
+                    {% elif loop.index < 14 %}
+                    <td><img src="/static/files/silver_medal.png" height="42" width="42"></td>
+                    {% elif loop.index < 20  %}
+                    <td><img src="/static/files/bronze_medal.png" height="42" width="42"></td>
+    
+                    {% endif %}
+                </tr>
+                {% endfor %}
+        </table>
+        <p>[U] indicates a university team and they will be exempt from prizes.</p>
+    </body>
+    {% endblock %}
+</html>
