@@ -22,6 +22,15 @@ async def execute_rankings(year):
 
     print(f'CREATING RANKINGS TABLE FOR {year}')
 
+async def execute_invi_rankings(year):
+    conn = await get_connection()
+    create_rankings_table = f'''
+    CREATE TABLE invi_scores_2023(team_name text, t1 decimal, t2 decimal, t3 decimal, exp decimal, total decimal);
+    '''
+    await conn.execute(create_rankings_table)
+
+    print(f'CREATING INVI SCORE TABLE FOR {year}')
+
 #oops
 async def clear_ranking_user_details(year, table):
     conn = await get_connection()
@@ -89,6 +98,6 @@ async def convert_log():
 #run_async(fix_rankings())
 #run_async(update_user_details())
 # check_duplicates()
-run_async(convert_log())
+run_async(execute_invi_rankings(CURRENT_YEAR))
 
 #manually set the table primary keys by doing ALTER TABLE tablename ADD PRIMARY KEY (columname)

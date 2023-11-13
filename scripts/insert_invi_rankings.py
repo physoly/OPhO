@@ -2,9 +2,9 @@ import csv
 from utils import get_connection, run_async
 
 async def execute():
-    root = "INSERT INTO invi_scores_2023(team_name,t1, t2, t3, exp, total) VALUES "
+    root = "INSERT INTO invi_scores_2023(team_name, t1, t2, t3, exp, total) VALUES "
     entries = [] 
-    with open('./scripts/opho2023_invi_final.csv', 'r') as csvin:
+    with open('/mnt/c/Users/va648/Downloads/VSCode/OPhO/scripts/opho2023_invi_final.csv', 'r') as csvin:
         for line in csv.reader(csvin):
             team = line[0]
             t1,t2,t3 = line[1], line[2], line[3]
@@ -15,6 +15,7 @@ async def execute():
         query = root + ','.join(entries)
         conn = await get_connection()
         print(query)
+        print('\n')
         await conn.execute(query)
 
 
