@@ -19,18 +19,18 @@ from decimal import Decimal
 
 import datetime
 
-OPEN_START_DAY = 21
-OPEN_END_DAY = 23
-OPEN_START_MONTH = 7
-OPEN_END_MONTH = 7
+OPEN_START_DAY = 12
+OPEN_END_DAY = 14
+OPEN_START_MONTH = 8
+OPEN_END_MONTH = 8
 
-INVI_START_DAY = 4
-INVI_END_DAY = 8
+INVI_START_DAY = 26
+INVI_END_DAY = 27
 INVI_START_MONTH = 8
 INVI_END_MONTH = 8
 
-INVI_START = datetime.datetime(2023,8,4)
-INVI_END = datetime.datetime(2023,8,8)
+INVI_START = datetime.datetime(2024,8,26)
+INVI_END = datetime.datetime(2024,8,27)
 
 def in_time_open():
     utc_now = datetime.datetime.utcnow()
@@ -138,7 +138,7 @@ async def fetch_teams(db, year):
     return teams
 
 async def fetch_team_stats(db,team_id):
-    teams = await fetch_teams(db, 2023)
+    teams = await fetch_teams(db, 2024)
     for team in teams:
         if team.id == team_id:
             return team

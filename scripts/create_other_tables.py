@@ -1,7 +1,7 @@
 from utils import run_async, get_connection
 import csv
 
-CURRENT_YEAR = 2023
+CURRENT_YEAR = 2024
 
 #might be a problem with the password constraint type?
 async def execute_user_details(year):
