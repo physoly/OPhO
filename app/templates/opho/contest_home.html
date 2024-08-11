@@ -48,10 +48,15 @@
       <div class="card-group" style="margin-left:20px; margin-right: 20px;">
         <div class="card">
           <div class="card-body">
+            <!-- Open Contest Portal -->
+            <h4 class="card-title">Open Contest Portal</h4>
+            <p class="card-text">Enter the open contest portal to view the contest. Opens August 12, 12 am UTC.</p>
+            {% if in_time_open %}
+              <a href="/contest" class="btn btn-success">Open Contest Portal</a>
+            {% else %}
+              <button type="button" class="btn btn-success" disabled>Open Contest Portal</button>
+            {% endif %}
 
-            <h4 class="card-title">2023 Invitational Exam Results</h5>
-            <p class="card-text">View the results for the 2023 invitational exam here.</p>
-            <a href="/2023/invitational_rankings" class="btn btn-info" disabled>2023 Invitational Results</a>
             <!-- most recent code: -->
             <!-- {% if in_time_invi %}
             <a href="/invitational" class="btn btn-info">Invitational Contest Portal</a>
