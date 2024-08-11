@@ -11,7 +11,7 @@ def get_score(attempts, num_teams_solved, question_num, day_solved=0):
 
 async def execute():
     conn = await get_connection()
-    team_ids = [team_id[0] for team_id in await conn.fetch('SELECT user_id from user_details_2023')]
+    team_ids = [team_id[0] for team_id in await conn.fetch('SELECT user_id from user_details_2024')]
 
     all_team_stats = {}
     scores = {}
