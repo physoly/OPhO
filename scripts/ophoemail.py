@@ -36,7 +36,7 @@ with open('opho-2-logins.csv', 'r', encoding='utf-8') as file:
         mail_content = f"""
 Hello OPhO Team Leader,<br><br>
 
-Here is your login information for the Online Physics Olympiad. You may access the login page <a href='https://opho.physoly.tech/login'>here</a>.<br><br>
+Here is your login information for the Online Physics Olympiad starting on August 12, 12 AM UTC. You may access the login page <a href='https://opho.physoly.tech/login'>here</a>.<br><br>
 
 <b>Username:</b> {username}<br>
 <b>Password:</b> {password}<br><br>
@@ -47,7 +47,9 @@ In addition, please periodically check <a href='https://opho.physoly.tech/announ
 
 Good luck!<br>
 
-The Online Physics Olympiad Committee
+The Online Physics Olympiad Committee<br><br>
+
+For more contests like this, check out the <a href='https://physicsbrawl.org/'>Online Physics Brawl</a> in the Fall!
 """
         message.attach(MIMEText(mail_content, 'html'))  # use 'html' instead of 'plain'
 
