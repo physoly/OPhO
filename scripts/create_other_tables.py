@@ -92,12 +92,12 @@ async def convert_log():
 
 
 
-# run_async(clear_ranking_user_details(CURRENT_YEAR))
+run_async(clear_ranking_user_details(CURRENT_YEAR))
 # run_async(execute_user_details(CURRENT_YEAR))
 # run_async(execute_rankings(CURRENT_YEAR))
 #run_async(fix_rankings())
 #run_async(update_user_details())
 # check_duplicates()
-run_async(execute_invi_rankings(CURRENT_YEAR))
+# run_async(execute_invi_rankings(CURRENT_YEAR))
 
 #manually set the table primary keys by doing ALTER TABLE tablename ADD PRIMARY KEY (columname)
