@@ -96,7 +96,7 @@ async def _invi(request):
     admin = user['admin']
     team_id = user['id']
 
-    qualified = await is_advanced(app.ctx.db, team_id, 2023)
+    qualified = await is_advanced(app.ctx.db, team_id, 2024)
 
     if not qualified or not in_time_invi():
         return response.redirect('/')
@@ -158,7 +158,7 @@ async def _answer_submit(request):
     
     if is_correct:
         await app.ctx.db.execute_job(f"""
-            UPDATE rankings_2023 SET score = score + 1 WHERE team_id=$1
+            UPDATE rankings_2024 SET score = score + 1 WHERE team_id=$1
         """, team_id
         )
 
