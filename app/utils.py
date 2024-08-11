@@ -145,7 +145,7 @@ async def fetch_team_stats(db,team_id):
     return None 
 
 async def fetchuser(db, username):
-    return await db.fetchrow('SELECT * FROM user_details_2023 WHERE username = $1', username)
+    return await db.fetchrow('SELECT * FROM user_details_2024 WHERE username = $1', username)
 
 async def login_user(session, user):
     if session.get('logged_in', False):

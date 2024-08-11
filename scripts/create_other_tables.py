@@ -16,7 +16,7 @@ async def execute_user_details(year):
 async def execute_rankings(year):
     conn = await get_connection()
     create_rankings_table = f'''
-    CREATE TABLE rankings_2023(team_id integer, score decimal);
+    CREATE TABLE rankings_{year}(team_id integer, score decimal);
     '''
     await conn.execute(create_rankings_table)
 
@@ -25,7 +25,7 @@ async def execute_rankings(year):
 async def execute_invi_rankings(year):
     conn = await get_connection()
     create_rankings_table = f'''
-    CREATE TABLE invi_scores_2023(team_name text, t1 decimal, t2 decimal, t3 decimal, exp decimal, total decimal);
+    CREATE TABLE invi_scores_{year}(team_name text, t1 decimal, t2 decimal, t3 decimal, exp decimal, total decimal);
     '''
     await conn.execute(create_rankings_table)
 
@@ -55,8 +55,8 @@ async def update_user_details():
     id_num = 1
     conn = await get_connection()
 
-    insert_details_query = await conn.prepare(f'''INSERT INTO user_details_2023(user_id, username, password) VALUES ($1, $2, $3)''')
-    with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/opho2023-updated-logins.csv', 'r') as csvin:
+    insert_details_query = await conn.prepare(f'''INSERT INTO user_details_2024(user_id, username, password) VALUES ($1, $2, $3)''')
+    with open('/Users/ashmitdutta/OPhO/scripts/data/details.csv', 'r') as csvin:
 
         for line in csv.reader(csvin):
 
@@ -92,10 +92,10 @@ async def convert_log():
 
 
 
-run_async(clear_ranking_user_details(CURRENT_YEAR))
-# run_async(execute_user_details(CURRENT_YEAR))
-# run_async(execute_rankings(CURRENT_YEAR))
-#run_async(fix_rankings())
+#run_async(clear_ranking_user_details(CURRENT_YEAR))
+#run_async(execute_user_details(CURRENT_YEAR))
+#run_async(execute_rankings(CURRENT_YEAR))
+# run_async(fix_rankings())
 #run_async(update_user_details())
 # check_duplicates()
 # run_async(execute_invi_rankings(CURRENT_YEAR))
