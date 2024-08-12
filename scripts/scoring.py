@@ -4,8 +4,8 @@ from math import exp, log, floor
 time_factor = False
 total_problems = 36 # make it one more than the actual number of problems
 
-def get_score(attempts, num_teams_solved, question_num, day_solved=0):
-    c1 = pow(0.9, attempts + day_solved - 1) # accounts for fact that attempts are 012 not 123
+def get_score(attempts, num_teams_solved, question_num):
+    c1 = pow(0.9, attempts - 1) # accounts for fact that attempts are 012 not 123
     c2 = exp(question_num/35) + max(5.5 - floor(log(num_teams_solved)), 2)
     return c1 * c2
 
