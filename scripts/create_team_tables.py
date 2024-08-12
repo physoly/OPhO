@@ -4,8 +4,9 @@ problem_number = 35
 #run after creating user_details_2023
 async def execute():
     conn = await get_connection()
-    # team_ids = await conn.fetch('SELECT user_id FROM user_details_2023')
-    team_ids = [951]
+    team_ids = []
+    for i in range(1,978):
+        team_ids.append(i)
     
     for team_id in team_ids:
         create_table = f"""
