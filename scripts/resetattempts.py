@@ -34,7 +34,7 @@ async def main():
     conn = await get_connection()
 
     # Specify the problem number to reset
-    problem_no = 30
+    problem_no = 20
 
     # Reset attempts for the specified problem
     await reset_attempts_for_problem(conn, problem_no)
