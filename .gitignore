@@ -18,3 +18,4 @@ app/test.txt
 
 scripts/snooper.py
 run.py
+scripts/hotfix.py
