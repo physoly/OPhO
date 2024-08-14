@@ -29,13 +29,24 @@ INVI_END_DAY = 27
 INVI_START_MONTH = 8
 INVI_END_MONTH = 8
 
-INVI_START = datetime.datetime(2024,8,26)
-INVI_END = datetime.datetime(2024,8,27)
+INVI_START = datetime.datetime(2024, 8, 26)
+INVI_END = datetime.datetime(2024, 8, 27)
 
+# Adjust the logic for end time
 def in_time_open():
     utc_now = datetime.datetime.utcnow()
+
+    # Check if today is the last day and time is within the 4-hour extended period
+    if utc_now.month == OPEN_END_MONTH and utc_now.day == OPEN_END_DAY:
+        end_time = datetime.datetime(utc_now.year, OPEN_END_MONTH, OPEN_END_DAY, 4)  # 4 AM UTC of the last day
+        in_extended_time = utc_now < end_time
+    else:
+        in_extended_time = False
+
+    # Check if the current date is within the open period or within the extended 4 hours on the last day
     right_month = utc_now.month >= OPEN_START_MONTH and utc_now.month <= OPEN_END_MONTH
-    right_day = utc_now.day >= OPEN_START_DAY and utc_now.day < OPEN_END_DAY
+    right_day = (utc_now.day >= OPEN_START_DAY and utc_now.day < OPEN_END_DAY) or (utc_now.day == OPEN_END_DAY and in_extended_time)
+    
     print("IN TIME", right_month and right_day)
     return right_month and right_day
 
