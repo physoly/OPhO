@@ -7,7 +7,7 @@ def check_answer(attempt, answer, error=Decimal(0.01)):
 
 async def execute():
     conn = await get_connection()
-    team_ids = await conn.fetch('SELECT user_id FROM user_details_2023')
+    team_ids = await conn.fetch('SELECT user_id FROM user_details_2024')
 
     with open('/mnt/c/Users/va648/downloads/vscode/opho/scripts/data/2023/final_rankings.csv', 'r') as csvin:
         for line in csv.reader(csvin):
@@ -16,6 +16,6 @@ async def execute():
             id = int(line[2])
             score = round(Decimal(line[3]),2)
 
-            await conn.execute('UPDATE rankings_2023 SET score=$1 WHERE team_id=$2', score, id)
+            await conn.execute('UPDATE rankings_2024 SET score=$1 WHERE team_id=$2', score, id)
 
 run_async(execute())
