@@ -1,5 +1,5 @@
 from app.utils import render_template, fetch_problems, \
-    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, is_advanced, get_all_invi_scores, in_time_open, get_cutoffs, in_time_invi
+    fetch_team_stats, fetch_teams, fetchuser, login_user, auth_required, float_eq, check_answer, get_all_invi_scores, in_time_open, get_cutoffs, in_time_invi
 
 from app.config import Config
 from app.models import RankedTeam, User
@@ -107,7 +107,7 @@ async def _invi(request):
     ]
 
     # Allow access if the team_id is in the allowed list
-    if team_id in allowed_teams or await is_advanced(app.ctx.db, team_id, 2024):
+    if team_id in allowed_teams:
         if not in_time_invi():
             return json({'message': 'Access denied: The invitational period has ended.'})
 

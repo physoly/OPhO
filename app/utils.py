@@ -80,21 +80,6 @@ async def render_template(env, request, tpl,*args, **kwargs):
     # kwargs.update(globals())
     return html(await template.render_async(*args,**kwargs))
 
-async def is_advanced(db, team_id, year):
-    # List of specific teams allowed to access the invitational
-    allowed_teams = [
-        768, 963, 670, 349, 576, 709, 652, 673, 793, 702,
-        748, 624, 56, 368, 305, 29, 655, 887, 573, 515,
-        846, 37, 825, 569, 848, 714, 270, 618, 11, 551,
-        107, 700, 577, 819, 711, 844, 622, 632, 75, 326,
-        88, 554, 525, 476, 594, 698, 653, 827, 39, 342,
-        852, 870, 27, 514
-    ]
-    
-    # Check if team_id is in the allowed list
-    if team_id in allowed_teams:
-        return True
-
 def auth_required(admin_required=False):
     def decorator(f):
         @wraps(f)
