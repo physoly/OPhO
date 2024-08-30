@@ -29,8 +29,8 @@ INVI_END_DAY = 2
 INVI_START_MONTH = 8
 INVI_END_MONTH = 9
 
-INVI_START = datetime.datetime(2024, 8, 26)
-INVI_END = datetime.datetime(2024, 8, 27)
+INVI_START = datetime.datetime(2024, 8, 29)
+INVI_END = datetime.datetime(2024, 9, 2)
 
 # Adjust the logic for end time
 def in_time_open():
