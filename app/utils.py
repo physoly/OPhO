@@ -81,7 +81,7 @@ async def render_template(env, request, tpl,*args, **kwargs):
     return html(await template.render_async(*args,**kwargs))
 
 async def is_advanced(db, team_id, year):
-    return await db.fetchval(f'SELECT score FROM rankings_{year} WHERE team_id = $1', team_id) > 90
+    return await db.fetchval(f'SELECT score FROM rankings_{year} WHERE team_id = $1', team_id) > 0
 
 def auth_required(admin_required=False):
     def decorator(f):
