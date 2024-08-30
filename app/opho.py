@@ -99,7 +99,7 @@ async def _invi(request):
     qualified = await is_advanced(app.ctx.db, team_id, 2024)
 
     if not qualified or not in_time_invi():
-        return response.redirect('/')
+        return json({'message': 'Access denied: Your team has not qualified for the invitational.'})
     not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
     latest_announcement = 0
     if not_seen:
