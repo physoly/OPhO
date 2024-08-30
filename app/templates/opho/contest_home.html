@@ -76,12 +76,12 @@
         <div class="card">
           <div class="card-body">
             <!-- Open Contest Portal -->
-            <h4 class="card-title">Open Contest Portal</h4>
-            <p class="card-text">Enter the open contest portal to view the contest. Will open at or before August 13.</p>
+            <h4 class="card-title">Invitational Contest Portal</h4>
+            <p class="card-text">Enter the invitational contest portal to view the contest. Will open at or before August 13.</p>
             {% if in_time_open %}
-              <a href="/contest" class="btn btn-success">Open Contest Portal</a>
+              <a href="/invitational" class="btn btn-success">Invitational Contest Portal</a>
             {% else %}
-              <button type="button" class="btn btn-success" disabled>Open Contest Portal</button>
+              <button type="button" class="btn btn-success" disabled>Invitational Contest Portal</button>
             {% endif %}
 
             <!-- most recent code: -->
@@ -104,22 +104,10 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Contest Countdown</h4>
-            <p class="card-text">Countdown to the end of the competition:</p>
-            <script>
-              (function(d, s, id) { 
-                var js, pjs = d.getElementsByTagName(s)[0]; 
-                if (d.getElementById(id)) return; 
-                js = d.createElement(s); 
-                js.id = id; 
-                js.src = "//www.tickcounter.com/static/js/loader.js"; 
-                pjs.parentNode.insertBefore(js, pjs); 
-              }(document, "script", "tickcounter-sdk"));
-            </script>
-            <a data-type="countdown" data-id="5648452" class="tickcounter" style="display:block; left:0; width:100%; height:0; position:relative; padding-bottom:25%; margin:0 auto;" title="Open Competition" href="//www.tickcounter.com/">End of Open Competition</a>
+            <h4 class="card-title">Archives</h4>
+            <a href="/archives" class="btn btn-primary mt-3">View Past Papers</a>
           </div>
-        </div>           
-    </div>
+        </div>               
         <!--
         <div class="card">
           <div class="card-body">
