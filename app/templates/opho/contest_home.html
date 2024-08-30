@@ -30,35 +30,6 @@
           <h1 class="display-4">OPHO Home Page</h1>
           <p class="lead">The Online Physics Olympiad (OPhO) is an annual team based physics competition for both high school students and undergraduates of all levels. Originally inspired by  <a href="https://physicsbrawl.org/"><b>Physics Brawl Online</b></a>, the competition started in 2020 during COVID-19, and thousands of participants from around the world has participated since. Teams of up to three will compete in the open round and invitational round. For all rules, click <u><b><a href="static/files/rules24.pdf">here</a></b></u>.</p>
           <!-- New Alert for Contest Over and Solutions Available -->
-          <div class="alert alert-warning" role="alert" style="background-color: #fcf8e3; border: 2px solid #8a6d3b; color: #8a6d3b; padding: 10px; margin-top: 20px;">
-            <h3 style="font-weight: bold; text-align: center;">Open Contest is Over</h3>
-            <p class="lead" style="font-size: 1.2em; text-align: center;">
-                The invitational contest will be held August 30 - September 1. Email online.opho@gmail.com for any questions. 
-            </p>
-            <p style="font-size: 1.1em; text-align: center;">
-                Access the solutions <b><a href="/static/files/solutions2024updated.pdf" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
-                <br/><br/>
-                Access livestream of solutions <b><a href="https://www.youtube.com/live/ixndGTnT8EM?si=W5VNc4evdn_OOAOp" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>
-                <br><br/>
-                Final Results: <b><a href="https://docs.google.com/spreadsheets/d/1X3CPjB2bIt8Hb9i7eeGeVyyp3NeyagEMbOjOhTm19tg/edit?usp=sharing" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
-                <div style="text-align: center; margin-top: 20px;">
-                    <img src="/static/files/finalresults.png" alt="Problem Results" style="width: 50%; height: auto; border: 2px solid #8a6d3b; padding: 5px;">
-                </div>
-            </p>
-        </div>        
-          <div class="alert alert-info" role="alert" style="background-color: #d9edf7; border: 2px solid #31708f; color: #31708f;">
-            <h3 style="font-weight: bold; text-align: center;">Open Contest Paper Available</h3>
-            <p class="lead" style="font-size: 1.2em;">
-              <b>The Open Contest Paper is now available!</b> Access it <b><a href="/static/files/open2024_5.pdf" target="_blank" style="color: #000000; text-decoration: underline;">HERE</a></b>.
-            </p>
-            <p style="font-size: 1.1em;">
-              Request a clarification <a href="https://forms.gle/adb6hNCrQFhHVvVe6" target="_blank" style="color: #5bc0de;">here</a>.
-              Review all clarifications <a href="https://docs.google.com/document/d/1W71dFM-XDmuTxXJ_MJ3QfSdE_xxISvIw58FZh1wYEIk/edit" target="_blank" style="color: #5bc0de;">here</a>.
-            </p>
-            <p style="font-size: 1.1em;">
-              Contest portals should now work! If you are unable to login, please try using a different device. Laptops are usually good.
-            </p>
-          </div>
           
           <p class="lead">Join our <a href="https://discord.gg/phods">Discord</a>, <a href="https://www.instagram.com/opholympiad/">Instagram</a>, and <a href="https://www.facebook.com/OPhOlympiad/">Facebook</a>! View the exams for this year in the archives.</p>
         <!-- 
@@ -77,8 +48,8 @@
           <div class="card-body">
             <!-- Open Contest Portal -->
             <h4 class="card-title">Invitational Contest Portal</h4>
-            <p class="card-text">Enter the invitational contest portal to view the contest. Will open at or before August 13.</p>
-            {% if in_time_open %}
+            <p class="card-text">Enter the invitational contest portal to view the contest.</p>
+            {% if in_time_invi %}
               <a href="/invitational" class="btn btn-success">Invitational Contest Portal</a>
             {% else %}
               <button type="button" class="btn btn-success" disabled>Invitational Contest Portal</button>
@@ -105,7 +76,8 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Archives</h4>
-            <a href="/archives" class="btn btn-info">View Past Papers</a>
+            <p class="card-text">View papers from previous competitions up until 2020.</p>
+            <a href="/archives" class="btn btn-info">Archives</a>
           </div>
         </div>    
       </div>           
@@ -136,6 +108,23 @@
       </div>
     </div>  
     <br>
+    <div class="alert alert-warning" role="alert" style="background-color: #fcf8e3; border: 2px solid #8a6d3b; color: #8a6d3b; padding: 10px; margin-top: 20px;">
+      <h3 style="font-weight: bold; text-align: center;">Open Contest is Over</h3>
+      <p class="lead" style="font-size: 1.2em; text-align: center;">
+          The invitational contest will be held August 30 - September 1. Email online.opho@gmail.com for any questions. 
+      </p>
+      <p style="font-size: 1.1em; text-align: center;">
+          Access the solutions <b><a href="/static/files/solutions2024updated.pdf" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
+          <br/><br/>
+          Access livestream of solutions <b><a href="https://www.youtube.com/live/ixndGTnT8EM?si=W5VNc4evdn_OOAOp" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>
+          <br><br/>
+          Final Results: <b><a href="https://docs.google.com/spreadsheets/d/1X3CPjB2bIt8Hb9i7eeGeVyyp3NeyagEMbOjOhTm19tg/edit?usp=sharing" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
+          <div style="text-align: center; margin-top: 20px;">
+              <img src="/static/files/finalresults.png" alt="Problem Results" style="width: 50%; height: auto; border: 2px solid #8a6d3b; padding: 5px;">
+          </div>
+      </p>
+  </div>        
+  <br>
       <div style="margin-left:40px; margin-right: 40px;">
         <h1 class="display-5">Sponsors</h1>
         <p class="lead">It is only with the help of our sponsors that we are able to run our event and provide prizes. In past years, 5000+ students from over 50 countries competed!</p>
