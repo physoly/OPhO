@@ -95,16 +95,29 @@ async def _invi(request):
     user = request.ctx.session['user']
     admin = user['admin']
     team_id = user['id']
+    
+    # List of specific teams allowed to access the invitational
+    allowed_teams = [
+        768, 963, 670, 349, 576, 709, 652, 673, 793, 702,
+        748, 624, 56, 368, 305, 29, 655, 887, 573, 515,
+        846, 37, 825, 569, 848, 714, 270, 618, 11, 551,
+        107, 700, 577, 819, 711, 844, 622, 632, 75, 326,
+        88, 554, 525, 476, 594, 698, 653, 827, 39, 342,
+        852, 870, 27, 514
+    ]
 
-    qualified = await is_advanced(app.ctx.db, team_id, 2024)
+    # Allow access if the team_id is in the allowed list
+    if team_id in allowed_teams or await is_advanced(app.ctx.db, team_id, 2024):
+        if not in_time_invi():
+            return json({'message': 'Access denied: The invitational period has ended.'})
 
-    if not qualified or not in_time_invi():
-        return json({'message': 'Access denied: Your team has not qualified for the invitational.'})
-    not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
-    latest_announcement = 0
-    if not_seen:
-        latest_announcement = await app.ctx.db.fetchval("SELECT msg FROM announcements ORDER BY timestamp DESC LIMIT 1")
-    return await render_template(app.ctx.env, request, "opho/invi.html", latest_announcement=json_dumps(latest_announcement))
+        not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
+        latest_announcement = 0
+        if not_seen:
+            latest_announcement = await app.ctx.db.fetchval("SELECT msg FROM announcements ORDER BY timestamp DESC LIMIT 1")
+        return await render_template(app.ctx.env, request, "opho/invi.html", latest_announcement=json_dumps(latest_announcement))
+
+    return json({'message': 'Access denied: Your team has not qualified for the invitational.'})
     
 @opho.route('/<year>/rankings')
 async def _rankings(request, year):
