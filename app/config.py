@@ -3,7 +3,6 @@ import os
 
 load_dotenv(find_dotenv('.env'))
 
-
 class Config:
     ENV = os.getenv('ENV')
     DEV_DOMAIN = os.getenv('DEV_DOMAIN')

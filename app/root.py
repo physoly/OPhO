@@ -36,4 +36,3 @@ async def _problems(request):
 @root.get('/potd')
 async def _problems(request):
     return await render_template(app.ctx.env,request, "potd.html")
-
