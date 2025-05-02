@@ -69,15 +69,9 @@
       line-height: 1.5;
     }
 
-    @media (max-aspect-ratio: 3/4){ /* landscape */
+    @media (min-aspect-ratio: 3/4){ /* landscaope screens*/
       .last-card-group{
-        width: 50%; /* ADJUST BASED ON # of cards in last group*/
-      }
-    }
-
-    @media (min-aspect-ratio: 3/4){ /* mobile screens*/
-      .last-card-group{
-        width: 100%;
+        width: 50%; /* ADJUST BASED ON # of cards in last group */
       }
     }
 
