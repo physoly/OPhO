@@ -33,42 +33,55 @@
       gtag('config', 'UA-161438140-1');
     </script>
 
-    <style>
-      .aspect-ratio {
-  position: relative;
-  width: 100%;
-  padding-bottom: 120%; /* Adjust this value to set the desired aspect ratio (e.g., 75% for 4:3, 100% for 1:1) */
-  overflow: hidden;
-}
 
-.aspect-ratio img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center; /* Center the crop */
-}
-
-  .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0.2rem;
+  <style>
+        .aspect-ratio {
+    position: relative;
+    width: 100%;
+    padding-bottom: 120%; /* Adjust this value to set the desired aspect ratio (e.g., 75% for 4:3, 100% for 1:1) */
+    overflow: hidden;
   }
 
-  .card-role {
-    font-size: .95rem;
-    color: #6c757d; /* light gray for subtitle */
-    margin-bottom: 0.6rem;
+  .aspect-ratio img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Center the crop */
   }
 
-  .card-text {
-    font-size: 0.85rem;
-    line-height: 1.5;
-  }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
 
-    </style>
+    .card-role {
+      font-size: .95rem;
+      color: #6c757d; /* light gray for subtitle */
+      margin-bottom: 0.6rem;
+    }
+
+    .card-text {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    @media (max-aspect-ratio: 3/4){ /* landscape */
+      .last-card-group{
+        width: 50%; /* ADJUST BASED ON # of cards in last group*/
+      }
+    }
+
+    @media (min-aspect-ratio: 3/4){ /* mobile screens*/
+      .last-card-group{
+        width: 100%;
+      }
+    }
+
+  </style>
 
   </head>
   <body>
@@ -150,7 +163,7 @@
     </div>
     <div class="card">
       <div class="aspect-ratio">
-        <img class="card-img-top" src="/static/files/2025TeamPictures/issac.webp" alt="Card image cap">
+        <img class="card-img-top" src="/static/files/2025TeamPictures/isaac.webp" alt="Card image cap">
       </div>
       <div class="card-body">
         <h5 class="card-title">Isaac Chang</h5>
@@ -288,7 +301,7 @@
     </div>
   </div>
 
-  <div class="card-group" style="margin-left:5%; margin-right: 5%; width: 50%">
+  <div class="card-group last-card-group" style="margin-left:5%; margin-right: 5%;">
     <div class="card">
       <div class="aspect-ratio">
         <img class="card-img-top" src="/static/files/2025TeamPictures/matias.webp" alt="Card image cap">
