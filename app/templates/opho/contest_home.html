@@ -3,100 +3,102 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Dz8hf6xrJ6yUyr4fexFH24rRbub6+BCPmDg1OojxAs+dySTZ5HNJleE9G/YILyF50ACme2On9xZ+Oem44mEifw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Dz8hf6xrJ6yUyr4fexFH24rRbub6+BCPmDg1OojxAs+dySTZ5HNJleE9G/YILyF50ACme2On9xZ+Oem44mEifw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'UA-166042318-1');
-    </script>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <title>OPhO Contest Page</title>
-    <link rel="stylesheet" href="/static/css/contest.css">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    gtag('config', 'UA-166042318-1');
+  </script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <title>OPhO Contest Page</title>
+  <link rel="stylesheet" href="/static/css/contest.css">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  </head>
-  {% block body %}
-  {{ macros.render_nav(user) }}
-  <body>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">OPHO Home Page</h1>
-          <p class="lead">The Online Physics Olympiad (OPhO) is an annual team based physics competition for both high school students and undergraduates of all levels. Originally inspired by  <a href="https://physicsbrawl.org/"><b>Physics Brawl Online</b></a>, the competition started in 2020 during COVID-19, and thousands of participants from around the world has participated since. Teams of up to three will compete in the open round and invitational round. For all rules, click <u><b><a href="static/files/rules24.pdf">here</a></b></u>.</p>
-          <!-- New Alert for Contest Over and Solutions Available -->
+</head>
+{% block body %}
+{{ macros.render_nav(user) }}
+<body>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">OPHO Home Page</h1>
+    <p class="lead">The Online Physics Olympiad (OPhO) is an annual team based physics competition for both high school students and undergraduates of all levels. Originally inspired by  <a href="https://physicsbrawl.org/"><b>Physics Brawl Online</b></a>, the competition started in 2020 during COVID-19, and thousands of participants from around the world has participated since. Teams of up to three will compete in the open round and invitational round. For all rules, click <u><b><a href="static/files/rules24.pdf">here</a></b></u>.</p>
+    <!-- New Alert for Contest Over and Solutions Available -->
 
-          <p class="lead">Join our <a href="https://discord.gg/phods">Discord</a>, <a href="https://www.instagram.com/opholympiad/">Instagram</a>, and <a href="https://www.facebook.com/OPhOlympiad/">Facebook</a>! View the exams for this year in the archives.</p>
+    <p class="lead">Join our <a href="https://discord.gg/phods">Discord</a>, <a href="https://www.instagram.com/opholympiad/">Instagram</a>, and <a href="https://www.facebook.com/OPhOlympiad/">Facebook</a>! View the exams for this year in the archives.</p>
 
-          <div class="alert alert-info" role="alert">
-            <p class="lead">2025 OPhO Registration is available <a href="https://forms.gle/YshZQCo6oEGHa7tdA">here</a>.</p>
-          </div>
-
-<!--            <div class="alert alert-info" role="alert">-->
-<!--            <img src="static/files/online_physics_brawl_en_logo.png" height="40em"/><br>-->
-<!--            If you enjoyed this competition, you may like the <a href="https://physicsbrawl.org/"><b>Online Physics Brawl</b></a>, a 3-hour team competition, which initially inspired our competition, happening on November 24 2021!-->
-<!--        </div>-->
-
-      <div class="card-group" style="margin-left:20px; margin-right: 20px;">
-        <div class="card">
-          <div class="card-body">
-            <!-- Open Contest Portal -->
-            <h4 class="card-title">Invitational Contest Portal</h4>
-            <p class="card-text">Enter the invitational contest portal to view the contest.</p>
-            {% if in_time_invi %}
-              <a href="/invitational" class="btn btn-success">Invitational Contest Portal</a>
-            {% else %}
-              <button type="button" class="btn btn-success" disabled>Invitational Contest Portal</button>
-            {% endif %}
-
-            <!-- most recent code: -->
-            <!-- {% if in_time_invi %}
-            <a href="/invitational" class="btn btn-info">Invitational Contest Portal</a>
-            {% else %}
-            <button type="button" class="btn btn-info">Invitational Contest Portal</button>
-            {% endif %} -->
-              <!--
-              <h4 class="card-title">Invitational Portal</h5>
-                <p class="card-text">Enter the invitational portal to view the paper. Opens August 5, 12 am UTC</p>
-                {% if in_time_invi %}
-                <a href="/invitational" class="btn btn-info">Invitational Portal</a>
-                {% else %}
-                <button type="button" class="btn btn-info" disabled>Invitational Portal</button>
-                {% endif %}
-              </h4>
-              -->
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Archives</h4>
-            <p class="card-text">View papers from previous competitions up until 2020.</p>
-            <a href="/archives" class="btn btn-info">Archives</a>
-          </div>
-        </div>
-      </div>
-
-<!--        <div class="card">-->
-<!--          <div class="card-body">-->
-<!--            <h4 class="card-title">Invitational Rankings</h5>-->
-<!--            <p class="card-text">The invitational rankings have been released. View them here.</p>-->
-<!--            <a href="/2022/invitational_rankings" class="btn btn-info">Invitational Rankings</a>-->
-<!--          </div>-->
-        </div>
-
+    <div class="alert alert-info" role="alert">
+      <p class="lead">2025 OPhO Registration is available <a href="https://forms.gle/YshZQCo6oEGHa7tdA">here</a>.</p>
     </div>
 
+
+    <!--
+              <div class="alert alert-info" role="alert">
+              <img src="static/files/online_physics_brawl_en_logo.png" height="40em"/><br>
+
+              If you enjoyed this competition, you may like the <a href="https://physicsbrawl.org/"><b>Online Physics Brawl</b></a>, a 3-hour team competition, which initially inspired our competition, happening on November 24 2021!
+            </div>
+          -->
+    <div class="card-group" style="margin-left:20px; margin-right: 20px;">
+      <div class="card">
+        <div class="card-body">
+          <!-- Open Contest Portal -->
+          <h4 class="card-title">Invitational Contest Portal</h4>
+          <p class="card-text">Enter the invitational contest portal to view the contest.</p>
+          {% if in_time_invi %}
+          <a href="/invitational" class="btn btn-success">Invitational Contest Portal</a>
+          {% else %}
+          <button type="button" class="btn btn-success" disabled>Invitational Contest Portal</button>
+          {% endif %}
+
+          <!-- most recent code: -->
+          <!-- {% if in_time_invi %}
+          <a href="/invitational" class="btn btn-info">Invitational Contest Portal</a>
+          {% else %}
+          <button type="button" class="btn btn-info">Invitational Contest Portal</button>
+          {% endif %} -->
+          <!--
+          <h4 class="card-title">Invitational Portal</h5>
+            <p class="card-text">Enter the invitational portal to view the paper. Opens August 5, 12 am UTC</p>
+            {% if in_time_invi %}
+            <a href="/invitational" class="btn btn-info">Invitational Portal</a>
+            {% else %}
+            <button type="button" class="btn btn-info" disabled>Invitational Portal</button>
+            {% endif %}
+          </h4>
+          -->
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Archives</h4>
+          <p class="card-text">View papers from previous competitions up until 2020.</p>
+          <a href="/archives" class="btn btn-info">Archives</a>
+        </div>
+      </div>
+    </div>
+    <!--
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Invitational Rankings</h5>
+        <p class="card-text">The invitational rankings have been released. View them here.</p>
+        <a href="/2022/invitational_rankings" class="btn btn-info">Invitational Rankings</a>
+      </div>
+    </div>
+</div>
+-->
     <div class="card-group" style="margin-left:20px; margin-right: 20px;">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Leaderboard</h5>
-          <p class="card-text">Live leaderboard for the 2024 contest.</p>
-          <a href="/2024/rankings" class="btn btn-info">Leaderboard</a>
+            <p class="card-text">Live leaderboard for the 2024 contest.</p>
+            <a href="/2024/rankings" class="btn btn-info">Leaderboard</a>
         </div>
       </div>
       <div class="card">
@@ -107,7 +109,6 @@
         </div>
       </div>
     </div>
-
     <br>
 
     <div style="text-align: center; padding: 10px;">
@@ -119,72 +120,72 @@
     <div class="alert alert-warning" role="alert" style="background-color: #fcf8e3; border: 2px solid #8a6d3b; color: #8a6d3b; padding: 10px; margin-top: 20px;">
       <h3 style="font-weight: bold; text-align: center;">Open Contest is Over</h3>
       <p class="lead" style="font-size: 1.2em; text-align: center;">
-          The invitational contest will be held August 30 - September 1. Email online.opho@gmail.com for any questions.
+        The invitational contest will be held August 30 - September 1. Email online.opho@gmail.com for any questions.
       </p>
       <p style="font-size: 1.1em; text-align: center;">
-          Access the solutions <b><a href="/static/files/solutions2024updated.pdf" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
-          <br/><br/>
-          Access livestream of solutions <b><a href="https://www.youtube.com/live/ixndGTnT8EM?si=W5VNc4evdn_OOAOp" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>
-          <br><br/>
-          Final Results: <b><a href="https://docs.google.com/spreadsheets/d/1X3CPjB2bIt8Hb9i7eeGeVyyp3NeyagEMbOjOhTm19tg/edit?usp=sharing" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
-          <div style="text-align: center; margin-top: 20px;">
-              <img src="/static/files/finalresults.png" alt="Problem Results" style="width: 50%; height: auto; border: 2px solid #8a6d3b; padding: 5px;">
-          </div>
+        Access the solutions <b><a href="/static/files/solutions2024updated.pdf" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
+        <br/><br/>
+        Access livestream of solutions <b><a href="https://www.youtube.com/live/ixndGTnT8EM?si=W5VNc4evdn_OOAOp" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>
+        <br><br/>
+        Final Results: <b><a href="https://docs.google.com/spreadsheets/d/1X3CPjB2bIt8Hb9i7eeGeVyyp3NeyagEMbOjOhTm19tg/edit?usp=sharing" target="_blank" style="color: #8a6d3b; text-decoration: underline;">HERE</a></b>.
+      <div style="text-align: center; margin-top: 20px;">
+        <img src="/static/files/finalresults.png" alt="Problem Results" style="width: 50%; height: auto; border: 2px solid #8a6d3b; padding: 5px;">
+      </div>
       </p>
-  </div>
-  <br>
-      <div style="margin-left:40px; margin-right: 40px;">
-        <h1 class="display-5">Sponsors</h1>
-        <p class="lead">It is only with the help of our sponsors that we are able to run our event and provide prizes. In past years, 5000+ students from over 50 countries competed!</p>
-        <ul>
-          <li class="lead">Jane Street</li>
-          <li class="lead">Citadel</li>
-          <li class="lead">Wolfram</li>
-            <li class="lead">AwesomeMath | Competitive Physics</li>
-            <li class="lead">Desmos</li>
-            <li class="lead">PhysOlymp</li>
-            <li class="lead">Art of Problem Solving</li>
-            <li class="lead">Taskade</li>
-            <li class="lead">Interview Buddy</li>
-        </ul>
-        <p class="lead">Here's a sneak peak at some of our prizes:</p>
-        <ul>
-          <li class="lead">Top three teams will receive cash prizes.</li>
-          <li class="lead">Premium memberships for the newly released PhysOlymp site.</li>
-            <li class="lead">Subscriptions to Wolfram's Alpha Notebook Edition</li>
-            <li class="lead">and more!</li>
-        </ul>
-          <center>
-            <div>
-              <a href=https://www.janestreet.com/><img src="/static/files/jane-street.png" width=15%/></a>
-              <a href=https://www.wolfram.com/wolfram-alpha-notebook-edition/><img src="https://content.wolfram.com/uploads/sites/10/2016/06/wolfram-language-text-logo.png" width=10%/></a>
-              <a href=https://www.awesomemath.org/academy/online-courses/#tab-id-4><img src="/static/files/awesome-math.png" width=15%/></a>
-              <a href=https://www.desmos.com><img src="/static/files/desmos-logo.jpg" width=7%/></a>
-              <a href=https://www.physolymp.com><img src="/static/files/physolymp.jpg" width=5%/></a>
-              <a href=https://www.artofproblemsolving.com><img src="/static/files/aops.png" width=10%/></a>
-              <a href=https://www.citadel.com><img src="/static/files/citadel.jpg" width=10%/></a>
-              <a href=https://www.taskade.com><img src="/static/files/taskade.png" width=10%/></a>
-              <a href=https://interviewbuddy.in><img src="/static/files/interviewbuddy.jpg" width=10%/></a>
-            </div>
-          </center>
-      </div>
-      <div style="text-align: center;">
-        <a href="https://www.facebook.com/YourPage" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-facebook-square fa-2x" style="margin-right: 10px;"></i>
-        </a>
-        <a href="https://twitter.com/YourHandle" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-twitter-square fa-2x" style="margin-right: 10px;"></i>
-        </a>
-        <a href="https://www.instagram.com/YourAccount" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram-square fa-2x" style="margin-right: 10px;"></i>
-        </a>
-      </div>
-      <br><br><br><br>
+    </div>
+    <br>
+    <div style="margin-left:40px; margin-right: 40px;">
+      <h1 class="display-5">Sponsors</h1>
+      <p class="lead">It is only with the help of our sponsors that we are able to run our event and provide prizes. In past years, 5000+ students from over 50 countries competed!</p>
+      <ul>
+        <li class="lead">Jane Street</li>
+        <li class="lead">Citadel</li>
+        <li class="lead">Wolfram</li>
+        <li class="lead">AwesomeMath | Competitive Physics</li>
+        <li class="lead">Desmos</li>
+        <li class="lead">PhysOlymp</li>
+        <li class="lead">Art of Problem Solving</li>
+        <li class="lead">Taskade</li>
+        <li class="lead">Interview Buddy</li>
+      </ul>
+      <p class="lead">Here's a sneak peak at some of our prizes:</p>
+      <ul>
+        <li class="lead">Top three teams will receive cash prizes.</li>
+        <li class="lead">Premium memberships for the newly released PhysOlymp site.</li>
+        <li class="lead">Subscriptions to Wolfram's Alpha Notebook Edition</li>
+        <li class="lead">and more!</li>
+      </ul>
+      <center>
+        <div>
+          <a href=https://www.janestreet.com/><img src="/static/files/jane-street.png" width=15%/></a>
+          <a href=https://www.wolfram.com/wolfram-alpha-notebook-edition/><img src="https://content.wolfram.com/uploads/sites/10/2016/06/wolfram-language-text-logo.png" width=10%/></a>
+          <a href=https://www.awesomemath.org/academy/online-courses/#tab-id-4><img src="/static/files/awesome-math.png" width=15%/></a>
+          <a href=https://www.desmos.com><img src="/static/files/desmos-logo.jpg" width=7%/></a>
+          <a href=https://www.physolymp.com><img src="/static/files/physolymp.jpg" width=5%/></a>
+          <a href=https://www.artofproblemsolving.com><img src="/static/files/aops.png" width=10%/></a>
+          <a href=https://www.citadel.com><img src="/static/files/citadel.jpg" width=10%/></a>
+          <a href=https://www.taskade.com><img src="/static/files/taskade.png" width=10%/></a>
+          <a href=https://interviewbuddy.in><img src="/static/files/interviewbuddy.jpg" width=10%/></a>
+        </div>
+      </center>
+    </div>
+    <div style="text-align: center;">
+      <a href="https://www.facebook.com/YourPage" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-square fa-2x" style="margin-right: 10px;"></i>
+      </a>
+      <a href="https://twitter.com/YourHandle" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-twitter-square fa-2x" style="margin-right: 10px;"></i>
+      </a>
+      <a href="https://www.instagram.com/YourAccount" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram-square fa-2x" style="margin-right: 10px;"></i>
+      </a>
+    </div>
+    <br><br><br><br>
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-  {% endblock %}
+</body>
+{% endblock %}
 </html>
