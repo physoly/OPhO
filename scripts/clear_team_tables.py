@@ -1,4 +1,4 @@
-from utils import run_async, get_connection
+fllrom utils import run_async, get_connection
 
 async def execute():
     conn = await get_connection()
