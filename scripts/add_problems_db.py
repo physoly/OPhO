@@ -5,13 +5,24 @@ from decimal import Decimal, getcontext
 async def execute():
     conn = await get_connection()
 
+
+    insert_problems = await conn.execute(
+        '''
+        CREATE TABLE IF NOT EXISTS problems (
+            problem_no INTEGER PRIMARY KEY,
+            answer DECIMAL NOT NULL,
+            error_bound DECIMAL NOT NULL DEFAULT 0.01
+        );
+        '''
+    )
+
     # Prepare the query for inserting into problems table
     insert_problems_query = await conn.prepare(
         '''INSERT INTO problems(problem_no, answer, error_bound) VALUES ($1, $2, $3)'''
     )
 
     # Open the CSV file with the problem details
-    with open('/Users/ashmitdutta/OPhO/scripts/data/problems.csv', 'r') as csvin:
+    with open('/problems.csv', 'r') as csvin:
         # Read each line from the CSV
         for line in csv.reader(csvin):
             # Assume columns: [problem_no, answer, error_bound]
@@ -25,3 +36,7 @@ async def execute():
 
 # Run the execute function asynchronously
 run_async(execute())
+
+'''
+docker run --rm --network opho-net --env-file .env opho python3 scripts/add_problems_db.py
+'''

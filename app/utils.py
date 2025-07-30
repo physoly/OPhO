@@ -19,6 +19,9 @@ from decimal import Decimal
 
 import datetime
 
+
+OPEN_TIMESTAMP = datetime.datetime(2025, 7, 29, 2, 10)
+                                  #Y/M/D/H/M
 OPEN_START_DAY = 12
 OPEN_END_DAY = 15
 OPEN_START_MONTH = 8
@@ -29,30 +32,35 @@ INVI_END_DAY = 2
 INVI_START_MONTH = 8
 INVI_END_MONTH = 9
 
+INVI_TIMESTAMP = datetime.datetime(2024, 7, 29, 2, 10)
+                                  #Y/M/D/H/M
+
 INVI_START = datetime.datetime(2024, 8, 29)
 INVI_END = datetime.datetime(2024, 9, 2)
 
 # Adjust the logic for end time
 def in_time_open():
-    utc_now = datetime.datetime.utcnow()
+    #utc_now = datetime.datetime.utcnow()
 
     # Check if today is the last day and time is within the 4-hour extended period
-    if utc_now.month == OPEN_END_MONTH and utc_now.day == OPEN_END_DAY:
-        end_time = datetime.datetime(utc_now.year, OPEN_END_MONTH, OPEN_END_DAY, 4)  # 4 AM UTC of the last day
-        in_extended_time = utc_now < end_time
-    else:
-        in_extended_time = False
+    #if utc_now.month == OPEN_END_MONTH and utc_now.day == OPEN_END_DAY:
+    #    end_time = datetime.datetime(utc_now.year, OPEN_END_MONTH, OPEN_END_DAY, 4)  # 4 AM UTC of the last day
+    #    in_extended_time = utc_now < end_time
+    #else:
+    #    in_extended_time = False
 
     # Check if the current date is within the open period or within the extended 4 hours on the last day
-    right_month = utc_now.month >= OPEN_START_MONTH and utc_now.month <= OPEN_END_MONTH
-    right_day = (utc_now.day >= OPEN_START_DAY and utc_now.day < OPEN_END_DAY) or (utc_now.day == OPEN_END_DAY and in_extended_time)
+    #right_month = utc_now.month >= OPEN_START_MONTH and utc_now.month <= OPEN_END_MONTH
+    #right_day = (utc_now.day >= OPEN_START_DAY and utc_now.day < OPEN_END_DAY) or (utc_now.day == OPEN_END_DAY and in_extended_time)
     
-    print("IN TIME", right_month and right_day)
-    return right_month and right_day
+    #print("IN TIME", right_month and right_day)
+    #return right_month and right_day
+    return OPEN_TIMESTAMP == datetime.datetime.now()
 
 def in_time_invi():
-    utc_now = datetime.datetime.utcnow()
-    return utc_now >= INVI_START and utc_now < INVI_END
+    #utc_now = datetime.datetime.now()
+    #return utc_now >= INVI_START and utc_now < INVI_END
+    return INVI_TIMESTAMP == datetime.datetime.now()
 
 def get_stack_variable(name):
     stack = inspect.stack()
