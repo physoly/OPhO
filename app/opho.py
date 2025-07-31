@@ -27,35 +27,65 @@ from dhooks import Embed
 
 app = Sanic.get_app()
 
-past_contest_years = [2020, 2021,2022, 2023]
+past_contest_years = [2020, 2021,2022, 2023, 2024]
 
-CURRENT_YEAR = 2024
+CURRENT_YEAR = datetime.datetime.now().year
 
+import hashlib
+'''
+CREATE TABLE device_fingerprints (
+  id                SERIAL PRIMARY KEY,
+  team_id           INTEGER   NOT NULL,
+  ip                INET      NOT NULL,
+  fingerprint       JSONB     NOT NULL,
+  fingerprint_hash  TEXT      NOT NULL,
+  created_at        TIMESTAMPTZ DEFAULT current_timestamp
+);
+
+'''
 @opho.route('/login', methods=['GET','POST'])
-async def _login(request):
+async def _login(request: Request):
     form = LoginForm(request.form)
-
     if request.method == 'POST':
         if form.validate():
+            #Auth user
             username = form.username.data
             password = form.password.data
             user_raw = await fetchuser(app.ctx.db, username)
-            if user_raw is not None:
-                if user_raw['password'] == password:
-                    query = "SELECT username FROM admins WHERE username=$1"
-                    is_admin = await app.ctx.db.fetchval(query, username)
-                    user = User(
-                        id=user_raw['user_id'],
-                        username=username, 
-                        admin=False if is_admin is None else True
-                    )
-                    res = await login_user(request.ctx.session, user)
-                    if not res:
-                        return await render_template(app.ctx.env, request, 'home.html', user=user)
-                    return response.redirect('/')
+            if user_raw and user_raw['password'] == password:
+                #Find JA3 fingerprint
+                ja3_hash = request.headers.get('X-JA3-Fingerprint', None)
+                #Persist device fingerprint record
+                insert = """
+                INSERT INTO device_fingerprints
+                  (team_id, ip, fingerprint, fingerprint_hash, ja3_hash)
+                VALUES
+                  ($1, $2, $3::jsonb, $4, $5)
+                """
+                #Fingerprint
+                await app.ctx.db.execute(
+                    insert,
+                    user_raw['team_id'],
+                    request.remote_addr,
+                    '{}',  # or your JSON blob
+                    hashlib.sha256(b'{}').hexdigest(),
+                    ja3_hash
+                )
+                query = "SELECT username FROM admins WHERE username=$1"
+                is_admin = await app.ctx.db.fetchval(query, username)
+                user = User(
+                    id=user_raw['user_id'],
+                    username=username, 
+                    admin=False if is_admin is None else True
+                )
+                res = await login_user(request.ctx.session, user)
+                if not res:
+                    return await render_template(app.ctx.env, request, 'home.html', user=user)
+                return response.redirect('/')
             form.username.errors.append('Incorrect username or password')
         return await render_template(app.ctx.env, request, "opho/login.html", form=form)
     return await render_template(app.ctx.env, request, 'opho/login.html', form=LoginForm())
+
 
 @opho.route('/contest', methods=['GET', 'POST'])
 @auth_required()
@@ -159,6 +189,8 @@ async def _answer_submit(request):
         return response.json({'error': 'forbidden'}, status=403)
     print("REQUEST IP", request.remote_addr)
     await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.remote_addr, team_answer, current['attempts']+1)
+    
+    #await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.remote_addr, team_answer, current['attempts']+1)
 
     real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
     error_bound = await app.ctx.db.fetchval("SELECT (error_bound) FROM problems where problem_no=$1", problem_no)
