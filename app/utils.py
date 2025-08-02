@@ -19,6 +19,7 @@ from decimal import Decimal
 
 import datetime
 
+getcontext().prec = 250
 
 OPEN_TIMESTAMP = datetime.datetime(2025, 7, 29, 2, 10)
                                   #Y/M/D/H/M
