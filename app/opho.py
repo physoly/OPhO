@@ -184,12 +184,24 @@ async def _answer_submit(request):
     team_answer = Decimal(payload['answer'][0])
     team_id = request.ctx.session['user']['id']
     current = await app.ctx.db.fetchrow(f"SELECT * from team{team_id} WHERE problem_no = $1", problem_no)
-
-    if current['solved'] or current['attempts'] >= 3:
-        return response.json({'error': 'forbidden'}, status=403)
-    print("REQUEST IP", request.remote_addr)
-    await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.remote_addr, team_answer, current['attempts']+1)
+    f = False
+    #1 attempt on p20
+    if problem_no != 20:
+        if current['solved'] or current['attempts'] >= 3:
+            return response.json({'error': 'forbidden'}, status=403)
+        print("REQUEST IP", request.remote_addr)
+        await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.remote_addr, team_answer, current['attempts']+1)
     
+    else: 
+        f = True
+        attempts_left = max(1 - solve_data['attempts'], 0)
+        #If the problem is p20, we need to check if the user(s) has already solved it or attempted it
+        if current['solved'] or current['attempts'] >= 1:
+            return response.json({'error': 'forbidden'}, status=403)
+        #Insert log for p20
+        print("REQUEST IP", request.remote_addr)
+        await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.remote_addr, team_answer, current['attempts']+1)
+
     #await app.ctx.db.execute_job("INSERT INTO log(team_id, problem_no, ip, answer, attempt_no, timestamp) VALUES ($1,$2,$3, $4,$5, current_timestamp)", team_id, problem_no, request.remote_addr, team_answer, current['attempts']+1)
 
     real_answer = await app.ctx.db.fetchval(f"SELECT (answer) FROM problems WHERE problem_no=$1", problem_no)
@@ -208,10 +220,10 @@ async def _answer_submit(request):
         )
 
     stats = await fetch_team_stats(app.ctx.db, team_id)   
-
+    attempt_val = 3 if f == False else 1
     return response.json({
         'correct' : is_correct, 
-        'attempts_left' : 3 - solve_data['attempts'], 
+        'attempts_left' : attempt_val - solve_data['attempts'], 
         'answers' : solve_data['answers'], 
         'rank' : stats.rank, 
         'problems_solved' : stats.score
