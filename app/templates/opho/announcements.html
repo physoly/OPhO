@@ -3,42 +3,50 @@
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
-        <script>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-    
         gtag('config', 'UA-166042318-1');
-        </script>
-        <meta charset="utf-8">
-        <title>Rankings</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
-        
-    </head>
-    {% block body %}
-    {{ macros.render_nav(user) }}
-    <body>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            let source = new EventSource('/events')
-            source.onmessage = function(event) {
-                Swal.fire(
-                'Announcement',
-                event.data,
-                'info'
-                )
-            };
-        </script>
-        <h1 class="display-4">Announcements</h1>
-        <ul>
-        {% for an in announcements %}
-        <li style="padding-top: 20px;"><b>{{ an[0] }} UTC: </b>{{ an[1]['msg'] }}</li>
-        {% endfor %}
-        </ul>
-        </body>
-        {% endblock %}
+    </script>
+    <meta charset="utf-8">
+    <title>Announcements</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+{% block body %}
+{{ macros.render_nav(user) }}
+<body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    let source = new EventSource('/events');
+    source.onmessage = function(event) {
+        Swal.fire(
+            'Announcement',
+            event.data,
+            'info'
+        );
+    };
+</script>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4 text-center my-5">Announcements</h1>
+            <ul class="list-unstyled">
+                {% for an in announcements %}
+                <li class="mb-4">
+                    <strong>{{ an[0] }} UTC:</strong> {{ an[1]['msg'] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}
 </html>
