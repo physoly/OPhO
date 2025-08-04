@@ -1,7 +1,15 @@
 import csv
 import smtplib
+import time
+import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+logging.basicConfig(
+    filename='email_log.txt',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 # The mail addresses and password
 sender_address = 'EMAIL'
@@ -16,7 +24,13 @@ session = smtplib.SMTP(smtp_server, smtp_port)
 session.starttls()  # enable security
 
 # Login to the session
-session.login(sender_address, sender_pass)
+try:
+    session.login(sender_address, sender_pass)
+    logging.info('Successfully logged in to SMTP server.')
+except smtplib.SMTPAuthenticationError as e:
+    logging.error(f'Login failed: {e}')
+    raise
+
 
 # Read the CSV file
 with open('opho-2-logins.csv', 'r', encoding='utf-8') as file:
@@ -54,8 +68,18 @@ For more contests like this, check out the <a href='https://physicsbrawl.org/'>O
         message.attach(MIMEText(mail_content, 'html'))  # use 'html' instead of 'plain'
 
         # Send the email
-        text = message.as_string()
-        session.sendmail(sender_address, receiver_address, text)
+
+
+
+        try:
+            text = message.as_string()
+            session.sendmail(sender_address, receiver_address, text)
+            logging.info(f"Email sent to {receiver_address} (username: {username})")
+        except Exception as e:
+            logging.error(f"Failed to send email to {receiver_address}: {e}")
+
+        time.sleep(1) # maybe helps with rate limit idk
 
 # Quit the session
 session.quit()
+logging.info("SMTP session ended.")
