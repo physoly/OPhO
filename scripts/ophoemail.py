@@ -4,6 +4,7 @@ import time
 import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import html
 
 logging.basicConfig(
     filename='email_log.txt',
@@ -40,6 +41,9 @@ with open('opho-2-logins.csv', 'r', encoding='utf-8') as file:
     for row in reader:
         receiver_address, username, password = row[0], row[1], row[2]
 
+        escaped_username = html.escape(username)
+        escaped_password = html.escape(password)
+
         # Setup the MIME
         message = MIMEMultipart()
         message['From'] = sender_address
@@ -52,10 +56,10 @@ Hello OPhO Team Leader,<br><br>
 
 Here is your login information for the Online Physics Olympiad starting on August 7, 12 AM UTC. You may access the login page <a href='https://opho.physoly.tech/login'>here</a>.<br><br>
 
-<b>Username:</b> {username}<br>
-<b>Password:</b> {password}<br><br>
+<b>Username:</b> {escaped_username}<br>
+<b>Password:</b> {escaped_password}<br><br>
 
-You may share these with the rest of your team so they can log in as well but do not share them with anyone else. Please note that the submission portal will not be open until the contest starts. After the contest begins, go to "Submission Portal" to begin entering your answers. Please let us know if you have any issues logging in.<br><br>
+You may share these with the rest of your team so they can log in as well but do not share them with anyone else. Please note that the submission portal will not be open until the contest starts, meaning you will not be able to log in or access the portal until the contest begins. After the contest begins, go to "Submission Portal" to begin entering your answers. Please let us know if you have any issues logging in.<br><br>
 
 In addition, please periodically check <a href='https://opho.physoly.tech/announcements'>https://opho.physoly.tech/announcements</a> for important info regarding the contest. Also, feel free to join our discord server: <a href='https://discord.gg/phods'>https://discord.gg/phods</a>.<br><br>
 
