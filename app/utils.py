@@ -15,7 +15,7 @@ N = 1.0
 n = 1.0
 
 from math import exp, floor, log
-from decimal import Decimal
+from decimal import Decimal, getcontext
 
 import datetime
 
