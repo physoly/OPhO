@@ -9,65 +9,92 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-    
+
         gtag('config', 'UA-166042318-1');
         </script>
         <meta charset="utf-8">
         <title>Rankings</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166042318-1"></script>
-        
+
     </head>
     {% block body %}
     {{ macros.render_nav(user) }}
     <body>
-        <h1 class="display-4">Archives</h1>
-        <div style="width: 400px;
-        border: 25px blue;
-        padding: 10px;
-        margin: 20px;">
-            <h3>2023</h3>
-            <ul>
-                <li style="font-size: 20px;"><a href="/static/files/opho2023_open.pdf" style="color:cornflowerblue">Open Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2023_open_sols.pdf" style="color:cornflowerblue">Open Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/2023_OPhO_Theory.pdf" style="color:cornflowerblue">Invitational Theory Exam</a>
-                <li style="font-size: 20px;"><a href="/static/files/Invitational23.pdf" style="color:cornflowerblue">Invitational Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/2023ophoexp.pdf" style="color:cornflowerblue">Invitational Experimental Exam</a>
-                <li style="font-size: 20px;"><a href="/2023/rankings" style="color:cornflowerblue">Open Rankings</a></li>
-                <li style="font-size: 20px;"><a href="/2023/invitational_rankings" style="color:cornflowerblue">Invitational Rankings</a></li>
-            </ul>
-            <h3>2022</h3>
-            <ul>
-                <li style="font-size: 20px;"><a href="/static/files/opho2022_open.pdf" style="color:cornflowerblue">Open Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2022_open_sols.pdf" style="color:cornflowerblue">Open Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/2022_OPhO_Invi_Theory.pdf" style="color:cornflowerblue">Invitational Theory Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/2022_OPhO_Invi_Solutions (1).pdf" style="color:cornflowerblue">Invitational Theory Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/OPhO__Experimental (2).pdf" style="color:cornflowerblue">Invitational Experimental Paper</a></li>
-                <li style="font-size: 20px;"><a href="/2022/rankings" style="color:cornflowerblue">Open Rankings</a></li>
-                <li style="font-size: 20px;"><a href="/2022/invitational_rankings" style="color:cornflowerblue">Invitational Rankings</a></li>
-            </ul>
-            <h3>2021</h3>
-            <ul>
-                <li style="font-size: 20px;"><a href="/static/files/opho2021_open.pdf" style="color:cornflowerblue">Open Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2021_open_sols.pdf" style="color:cornflowerblue">Open Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2021_invi.pdf" style="color:cornflowerblue">Invitational Theory Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2021_invi_sols.pdf" style="color:cornflowerblue">Invitational Theory Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/Interference_Experimental.pdf" style="color:cornflowerblue">Invitational Experimental Paper</a></li>
-                <li style="font-size: 20px;"><a href="/2021/rankings" style="color:cornflowerblue">Open Rankings</a></li>
-                <li style="font-size: 20px;"><a href="/2021/invitational_rankings" style="color:cornflowerblue">Invitational Rankings</a></li>
-            </ul>
-            <h3>2020</h3>
-            <ul>
-                <li style="font-size: 20px;"><a href="/static/files/opho2020_open.pdf" style="color:cornflowerblue">Open Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2020_open_sols.pdf" style="color:cornflowerblue">Open Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/opho2020_invi.pdf" style="color:cornflowerblue">Invitational Paper</a></li>
-                <li style="font-size: 20px;"><a href="/static/files/OPhO_Invitational_2020_Solutions (1).pdf" style="color:cornflowerblue">Invitational Solutions</a></li>
-                <li style="font-size: 20px;"><a href="/2020/rankings" style="color:cornflowerblue">Open Rankings</a></li>
-                <li style="font-size: 20px;"><a href="/2020/invitational_rankings" style="color:cornflowerblue">Invitational Rankings</a></li>
-            </ul>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="display-4 text-center my-5">Archives</h1>
+                <div class="mb-5">
+                    <h3 class="mb-3">2024</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/static/files/opho2024_open.pdf" target="_blank" class="link-primary">Open Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2024_open_sols.pdf" target="_blank" class="link-primary">Open Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2024_invi_theory.pdf" target="_blank" class="link-primary">Invitational Theory Exam</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2024_invi_theory_sols.pdf" target="_blank" class="link-primary">Invitational Theory Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2024_invi_exp.pdf" target="_blank" class="link-primary">Invitational Experimental Exam</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2024_invi_exp_sol.pdf" target="_blank" class="link-primary">Invitational Experimental Solutions</a></li>
+<!--                        <li class="mb-2"><a href="/2024/rankings" target="_blank" class="link-primary">Open Rankings</a></li>-->
+<!--                        <li class="mb-2"><a href="/2024/invitational_rankings" target="_blank" class="link-primary">Invitational Rankings</a></li>-->
+                    </ul>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="mb-3">2023</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/static/files/opho2023_open.pdf" target="_blank" class="link-primary">Open Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2023_open_sols.pdf" target="_blank" class="link-primary">Open Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/2023_OPhO_Theory.pdf" target="_blank" class="link-primary">Invitational Theory Exam</a></li>
+                        <li class="mb-2"><a href="/static/files/Invitational23.pdf" target="_blank" class="link-primary">Invitational Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/2023ophoexp.pdf" target="_blank" class="link-primary">Invitational Experimental Exam</a></li>
+                        <li class="mb-2"><a href="/2023/rankings" target="_blank" class="link-primary">Open Rankings</a></li>
+                        <li class="mb-2"><a href="/2023/invitational_rankings" target="_blank" class="link-primary">Invitational Rankings</a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="mb-3">2022</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/static/files/opho2022_open.pdf" target="_blank" class="link-primary">Open Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2022_open_sols.pdf" target="_blank" class="link-primary">Open Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/2022_OPhO_Invi_Theory.pdf" target="_blank" class="link-primary">Invitational Theory Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/2022_OPhO_Invi_Solutions (1).pdf" target="_blank" class="link-primary">Invitational Theory Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/OPhO__Experimental (2).pdf" target="_blank" class="link-primary">Invitational Experimental Paper</a></li>
+                        <li class="mb-2"><a href="/2022/rankings" target="_blank" class="link-primary">Open Rankings</a></li>
+                        <li class="mb-2"><a href="/2022/invitational_rankings" target="_blank" class="link-primary">Invitational Rankings</a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="mb-3">2021</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/static/files/opho2021_open.pdf" target="_blank" class="link-primary">Open Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2021_open_sols.pdf" target="_blank" class="link-primary">Open Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2021_invi.pdf" target="_blank" class="link-primary">Invitational Theory Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2021_invi_sols.pdf" target="_blank" class="link-primary">Invitational Theory Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/Interference_Experimental.pdf" target="_blank" class="link-primary">Invitational Experimental Paper</a></li>
+                        <li class="mb-2"><a href="/2021/rankings" target="_blank" class="link-primary">Open Rankings</a></li>
+                        <li class="mb-2"><a href="/2021/invitational_rankings" target="_blank" class="link-primary">Invitational Rankings</a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="mb-3">2020</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/static/files/opho2020_open.pdf" target="_blank" class="link-primary">Open Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2020_open_sols.pdf" target="_blank" class="link-primary">Open Solutions</a></li>
+                        <li class="mb-2"><a href="/static/files/opho2020_invi.pdf" target="_blank" class="link-primary">Invitational Paper</a></li>
+                        <li class="mb-2"><a href="/static/files/OPhO_Invitational_2020_Solutions (1).pdf" target="_blank" class="link-primary">Invitational Solutions</a></li>
+                        <li class="mb-2"><a href="/2020/rankings" target="_blank" class="link-primary">Open Rankings</a></li>
+                        <li class="mb-2"><a href="/2020/invitational_rankings" target="_blank" class="link-primary">Invitational Rankings</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+    </div>
     </body>
     {% endblock %}
-    
+
 </html>
