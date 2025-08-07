@@ -5,7 +5,7 @@ problem_number = 35
 async def execute():
     conn = await get_connection()
     team_ids = []
-    for i in range(1,978):
+    for i in range(1,1231):
         team_ids.append(i)
     
     for team_id in team_ids:

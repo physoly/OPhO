@@ -44,7 +44,7 @@ CREATE TABLE device_fingerprints (
 
 '''
 @opho.route('/login', methods=['GET','POST'])
-async def _login(request: Request):
+async def _login(request):
     form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate():
@@ -54,8 +54,9 @@ async def _login(request: Request):
             user_raw = await fetchuser(app.ctx.db, username)
             if user_raw and user_raw['password'] == password:
                 #Find JA3 fingerprint
-                ja3_hash = request.headers.get('X-JA3-Fingerprint', None)
+                #ja3_hash = request.headers.get('X-JA3-Fingerprint', None)
                 #Persist device fingerprint record
+                '''
                 insert = """
                 INSERT INTO device_fingerprints
                   (team_id, ip, fingerprint, fingerprint_hash, ja3_hash)
@@ -71,6 +72,7 @@ async def _login(request: Request):
                     hashlib.sha256(b'{}').hexdigest(),
                     ja3_hash
                 )
+                '''
                 query = "SELECT username FROM admins WHERE username=$1"
                 is_admin = await app.ctx.db.fetchval(query, username)
                 user = User(
@@ -96,7 +98,7 @@ async def _contest(request):
 
     team_id = request.ctx.session['user']['id']
 
-    if request.method== 'POST':
+    if request.method == 'POST':
         return response.redirect('/contest')
     
     not_seen = not await app.ctx.db.fetchval("SELECT seen from seen where team_id=$1", team_id)
@@ -185,8 +187,8 @@ async def _answer_submit(request):
     team_id = request.ctx.session['user']['id']
     current = await app.ctx.db.fetchrow(f"SELECT * from team{team_id} WHERE problem_no = $1", problem_no)
     f = False
-    #1 attempt on p20
-    if problem_no != 20:
+    #1 attempt on p10
+    if problem_no != 10:
         if current['solved'] or current['attempts'] >= 3:
             return response.json({'error': 'forbidden'}, status=403)
         print("REQUEST IP", request.remote_addr)

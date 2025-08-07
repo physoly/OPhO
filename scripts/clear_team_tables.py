@@ -4,12 +4,12 @@ async def execute():
     conn = await get_connection()
     
 
-    await conn.execute("""
-        CREATE TABLE IF NOT EXISTS user_details_2024 (
-           team_id INTEGER NOT NULL PRIMARY KEY,
-           score INTEGER NOT NULL DEFAULT 0
-        );
-    """)
+    #await conn.execute("""
+    #    CREATE TABLE IF NOT EXISTS user_details_2024 (
+    #       team_id INTEGER NOT NULL PRIMARY KEY,
+   #        score INTEGER NOT NULL DEFAULT 0
+    #    );
+    #""")
 
     
     #team_ids = await conn.fetch('SELECT team_id FROM user_details_2024')
@@ -40,10 +40,10 @@ async def drop_team_table(team_id: int):
 
 if __name__ == "__main__":
     run_async(execute())
-    n = 1e9
-    for i in range(1, n):
-        run_async(drop_team_table(i))
-    run_async(drop_team_table(500))
+    #n = 1232
+    #for i in range(1, n):
+    #    run_async(drop_team_table(i))
+    run_async(drop_team_table(1))
 
 
 '''

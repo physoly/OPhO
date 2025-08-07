@@ -13,7 +13,7 @@ async def execute():
     )
 
     # Open the CSV file with the updated user details
-    with open('/Users/ashmitdutta/OPhO/scripts/data/details.csv', 'r') as csvin:
+    with open('/logins.csv', 'r') as csvin:
         # Read each line from the CSV, starting user_id at 1 and incrementing
         for user_id, line in enumerate(csv.reader(csvin), start=1):
             # Assume columns: [email, username, password]

@@ -48,7 +48,7 @@ async def fix_rankings():
     conn = await get_connection()
     
     insert_query = f"""
-        INSERT INTO rankings_2023 (team_id, score) VALUES """ + ', '.join(f"({number}, 0)" for number in range(2, 938)) + ";"
+        INSERT INTO rankings_2023 (team_id, score) VALUES """ + ', '.join(f"({number}, 0)" for number in range(2, 1232)) + ";"
     await conn.execute(insert_query)
 
 async def update_user_details():

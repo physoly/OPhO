@@ -165,10 +165,11 @@ async def fetchuser(db, username):
     return await db.fetchrow('SELECT * FROM user_details_2024 WHERE username = $1', username)
 
 async def login_user(session, user):
-    if session.get('logged_in', False):
-        return False
-    session['logged_in'] = True
-    session['user'] = user.to_dict()
+    session['user'] = {
+      'id':       user.id,
+      'username': user.username,
+      'admin':    user.admin
+    }
     return True
 
 async def get_all_invi_scores(db, year):
@@ -179,7 +180,7 @@ def float_eq(f1, f2):
     # f1 is real answer
     return abs(f1 - f2) < sys.float_info.epsilon
 
-def check_answer(attempt, answer, error=Decimal(0.01)):
+def check_answer(attempt, answer, error):
     return abs(attempt-answer) <= abs(error * answer)
 
 async def get_cutoffs(db, year):
