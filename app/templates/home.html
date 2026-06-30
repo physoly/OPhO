@@ -23,10 +23,7 @@
   </head>
   {% block body %}
   {{ macros.render_nav(None) }}
-  <div class="alert alert-warning text-center mb-4" role="alert">
-    <strong>Important: </strong> The contest start time has been delayed, please join the discord server for more announcements https://discord.gg/phods .
-  </div>
-  <body>
+  <body style="display:flex; flex-direction:column; min-height:100vh;">
     <div class="jumbotron">
       <div class="container">
         <div class="logo"><img class ="opho" src="/static/files/opho.png" style="height:100px; width:100px"></div>
@@ -34,22 +31,11 @@
   
         <p class="lead">This page is intended for passionate high school students exploring the realm of contest physics. It acts as a resource hub containing detailed notes, handouts, and a wide variety of problems from different olympiads all around the world.</p><br>
         
-        <p class="lead">Join our <a href="https://discord.gg/phods">official discord</a> to connect with other students training for olympiads!</p>
+        <p class="lead">Join our <a href="https://discord.gg/8ShAZsHyat">official discord</a> to connect with other students training for olympiads!</p>
       </div>
       <a href="/team/" class="btn btn-primary">Meet the Team</a>
   
     </div>
-    </div>
-    <div class="card">
-      <div class="card-body" style="margin-left:10%; margin-right: 10%;">
-        <h1 class="display-5">Recent News</h1>
-        <ul>
-          <li class="lead">Registration for the <a href="https://opho.physoly.tech">2023 Online Physics Olympiad</a> has closed.</li> 
-          <li class="lead">New translations/solutions will be added for summer 2023. If you wish to contribute, join our online community!</a></li>
-          <li class="lead"><a href="/potd/">Problem of the Day</a> - Over 400 problems, either taken or modified from a diverse range of sources, used as problems of the day on the Physics Olympiad Discord Server.</li>
-        </ul>
-        <p>If you would like to be a volunteer to help curate content for this site, please fill out this <a href="https://forms.gle/MXpgZvUgDDMcy29u9">form.</a></p>
-      </div>
     </div>
     <div class="card text-center">
       <div class="card text-center">
@@ -73,16 +59,14 @@
         <a href="/kalda/" class="btn btn-primary">View</a>
       </div>
     </div>
-    <div class="card text-center">
-      <div class="card-body">
-        <h5 class="card-title">Problem Collection</h5>
-        <p class="card-text">See a collection of problems from past olympiads such as IPhO, APhO, USAPhO, NBPhO, CAP, CPhO... <br> sorted by topic and difficulty.</p>
-        <a href="/problems" class="btn btn-primary">View</a>
-      </div>
     </div>
 
 
   <!-- Main jumbotron for a primary marketing message or call to action -->
+
+  <footer class="text-center mb-3" style="margin-top:auto;">
+    <p class="text-muted">Contact: +1 647-807-2145</p>
+  </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
